@@ -50,11 +50,9 @@ const Prospect = () => {
       ) : (
         <>
           {!!prospectSlug ? (
-            <>
-              <ProspectProfileContainer />
-            </>
+            <ProspectProfileContainer />
           ) : (
-            <>show error</>
+            <>not a valid linkedin profile</>
           )}
         </>
       )}
