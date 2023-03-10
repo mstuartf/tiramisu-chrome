@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Seasmoke",
+  "version": "1.0",
+  "icons": {
+    "16": "128.png",
+    "48": "128.png",
+    "128": "128.png"
+  },
+  "action": {
+    "default_icon": "128.png",
+    "default_popup": "index.html",
+    "default_title": "open popup"
+  },
+  "permissions": ["tabs"],
+  "background": {
+    "service_worker": "./static/js/background.js"
+  }
+}
