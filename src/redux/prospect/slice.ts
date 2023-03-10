@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LinkedInProfile, State } from "./types";
+import { LinkedInProfile, MessageSet, State } from "./types";
 
 const initialState: State = {
   isLoadingProfile: false,
+  isLoadingMessages: false,
 };
 
 export const prospectSlice = createSlice({
@@ -12,6 +13,7 @@ export const prospectSlice = createSlice({
     setProfileSlug: (state, { payload }: PayloadAction<string | undefined>) => {
       state.profileSlug = payload;
       state.profile = undefined;
+      state.messages = undefined;
     },
     fetchProspectProfilePending: (state, action) => {
       state.isLoadingProfile = true;
@@ -22,6 +24,16 @@ export const prospectSlice = createSlice({
     ) => {
       state.isLoadingProfile = false;
       state.profile = payload;
+    },
+    generateMessagesPending: (state, action) => {
+      state.isLoadingMessages = true;
+    },
+    generateMessagesSuccess: (
+      state,
+      { payload }: PayloadAction<MessageSet>
+    ) => {
+      state.isLoadingMessages = false;
+      state.messages = payload;
     },
   },
 });

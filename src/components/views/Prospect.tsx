@@ -6,6 +6,8 @@ import {
   selectProspectSlug,
 } from "../../redux/prospect/selectors";
 import { createFetchProspectProfile } from "../../redux/prospect/actions";
+import ProspectProfile from "../molecules/ProspectProfile";
+import ProspectProfileContainer from "../molecules/ProspectProfileContainer";
 
 const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
@@ -20,7 +22,6 @@ const extractProfileSlug = (url: string): string => {
 
 const Prospect = () => {
   const prospectSlug = useSelector(selectProspectSlug);
-  const prospectProfile = useSelector(selectProspectProfile);
   const dispatch = useDispatch();
   const getProspectSlug = () => {
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
@@ -28,7 +29,6 @@ const Prospect = () => {
         try {
           const profileSlug = extractProfileSlug(tabs[0].url);
           dispatch(setProfileSlug(profileSlug));
-          dispatch(createFetchProspectProfile(profileSlug));
         } catch (e) {
           console.log(e);
         }
@@ -43,16 +43,8 @@ const Prospect = () => {
     <div>
       {!!prospectSlug ? (
         <>
-          {prospectProfile ? (
-            <div>
-              <div>
-                {prospectProfile.first_name} {prospectProfile.last_name}
-              </div>
-              <div>{prospectProfile.headline}</div>
-            </div>
-          ) : (
-            <div>Generating for {prospectSlug}...</div>
-          )}
+          <ProspectProfileContainer />
+
           <div>
             <button onClick={clearProspectSlug}>reset</button>
           </div>
