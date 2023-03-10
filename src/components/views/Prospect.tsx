@@ -1,12 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { setProfileSlug } from "../../redux/prospect/slice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectProspectProfile,
-  selectProspectSlug,
-} from "../../redux/prospect/selectors";
-import { createFetchProspectProfile } from "../../redux/prospect/actions";
-import ProspectProfile from "../molecules/ProspectProfile";
+import { selectProspectSlug } from "../../redux/prospect/selectors";
 import ProspectProfileContainer from "../molecules/ProspectProfileContainer";
 
 const extractProfileSlug = (url: string): string => {
@@ -21,36 +16,47 @@ const extractProfileSlug = (url: string): string => {
 };
 
 const Prospect = () => {
+  const [isChecking, setIsChecking] = useState(false);
+
   const prospectSlug = useSelector(selectProspectSlug);
   const dispatch = useDispatch();
-  const getProspectSlug = () => {
+
+  const check = () => {
+    setIsChecking(true);
     chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
       if (tabs.length && tabs[0].url) {
         try {
           const profileSlug = extractProfileSlug(tabs[0].url);
-          dispatch(setProfileSlug(profileSlug));
+          if (profileSlug !== prospectSlug) {
+            dispatch(setProfileSlug(profileSlug));
+          }
+          setIsChecking(false);
         } catch (e) {
-          console.log(e);
+          dispatch(setProfileSlug(undefined));
+          setIsChecking(false);
         }
       }
     });
   };
-  const clearProspectSlug = () => {
-    dispatch(setProfileSlug(undefined));
-  };
+
+  useEffect(() => {
+    check();
+  }, []);
 
   return (
     <div>
-      {!!prospectSlug ? (
-        <>
-          <ProspectProfileContainer />
-
-          <div>
-            <button onClick={clearProspectSlug}>reset</button>
-          </div>
-        </>
+      {isChecking ? (
+        <>Loading...</>
       ) : (
-        <button onClick={getProspectSlug}>get url</button>
+        <>
+          {!!prospectSlug ? (
+            <>
+              <ProspectProfileContainer />
+            </>
+          ) : (
+            <>show error</>
+          )}
+        </>
       )}
     </div>
   );

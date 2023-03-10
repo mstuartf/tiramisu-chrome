@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectProspectProfile,
@@ -13,12 +13,18 @@ const ProspectProfileContainer = () => {
   const prospectSlug = useSelector(selectProspectSlug);
   const prospectProfile = useSelector(selectProspectProfile);
   const prospectProfileIsLoading = useSelector(selectProspectProfileIsLoading);
-  useEffect(() => {
+  const generate = () => {
     dispatch(createFetchProspectProfile(prospectSlug));
-  }, []);
-  if (prospectProfileIsLoading || !prospectProfile) {
+  };
+
+  if (!prospectProfile && !prospectProfileIsLoading) {
+    return <button onClick={generate}>GENERATE</button>;
+  }
+
+  if (!prospectProfile) {
     return <>Loading...</>;
   }
+
   return <ProspectProfile {...prospectProfile} />;
 };
 

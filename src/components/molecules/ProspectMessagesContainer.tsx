@@ -19,7 +19,9 @@ const ProspectMessagesContainer = () => {
   };
 
   useEffect(() => {
-    generate();
+    if (!messages && !messagesIsLoading) {
+      generate();
+    }
   }, []);
 
   if (!messages || messagesIsLoading) {
