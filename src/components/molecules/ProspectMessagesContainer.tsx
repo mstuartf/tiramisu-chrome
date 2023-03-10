@@ -26,7 +26,7 @@ const ProspectMessagesContainer = () => {
     return <>Loading...</>;
   }
 
-  return <ProspectMessages {...messages} />;
+  return <ProspectMessages {...messages} onRegenerate={generate} />;
 };
 
 export default ProspectMessagesContainer;
