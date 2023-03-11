@@ -5,6 +5,7 @@ export interface State {
   profileError?: string;
   isLoadingMessages: boolean;
   messages?: MessageSet;
+  messagesError?: number;
 }
 
 export interface LinkedInProfile {

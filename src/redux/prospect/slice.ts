@@ -15,6 +15,7 @@ export const prospectSlice = createSlice({
       state.profile = undefined;
       state.messages = undefined;
       state.profileError = undefined;
+      state.messagesError = undefined;
     },
     fetchProspectProfilePending: (state, action) => {
       state.isLoadingProfile = true;
@@ -40,6 +41,13 @@ export const prospectSlice = createSlice({
     ) => {
       state.isLoadingMessages = false;
       state.messages = payload;
+    },
+    generateMessagesFailure: (
+      state,
+      { payload: { status } }: PayloadAction<{ status: number }>
+    ) => {
+      state.isLoadingMessages = false;
+      state.messagesError = status;
     },
   },
 });

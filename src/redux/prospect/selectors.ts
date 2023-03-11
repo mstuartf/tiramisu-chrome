@@ -12,3 +12,5 @@ export const selectProspectMessagesIsLoading = (state: RootState) =>
   state.prospect.isLoadingMessages;
 export const selectProspectMessages = (state: RootState) =>
   state.prospect.messages;
+export const selectProspectMessagesError = (state: RootState) =>
+  state.prospect.messagesError;
