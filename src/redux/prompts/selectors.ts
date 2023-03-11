@@ -11,7 +11,7 @@ export const selectPromptIds = (state: RootState): string[] | undefined => {
   return Object.values(state.prompts.prompts.values)
     .sort((a, b) => {
       if (a.custom === b.custom) {
-        return b.name > a.name ? -1 : 1;
+        return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
       }
       return b.custom > a.custom ? -1 : 1;
     })

@@ -51,7 +51,6 @@ export const promptSlice = createSlice({
     deletePromptSuccess: (
       state,
       {
-        payload,
         meta: {
           originalRequest: { url },
         },
@@ -62,6 +61,17 @@ export const promptSlice = createSlice({
       delete state.prompts!.values[id];
     },
     deletePromptFailure: (state) => {
+      state.promptSaving = false;
+    },
+    createPromptPending: (state) => {
+      state.promptSaving = true;
+    },
+    createPromptSuccess: (state, { payload }: PayloadAction<Prompt>) => {
+      state.promptSaving = false;
+      state.prompts!.ids.push(payload.id);
+      state.prompts!.values[payload.id] = payload;
+    },
+    createPromptFailure: (state) => {
       state.promptSaving = false;
     },
   },

@@ -62,3 +62,20 @@ export const createDeletePrompt = createRequestAction<null>(
     },
   })
 );
+
+export const createCreatePrompt = createRequestAction<Prompt>(
+  `prompts/createPrompt`,
+  (payload: Omit<Prompt, "id" | "custom">) => ({
+    url: `prompts`,
+    method: "POST",
+    payload,
+    mockData: {
+      status: 204,
+      body: {
+        id: "new123",
+        custom: true,
+        ...payload,
+      },
+    },
+  })
+);

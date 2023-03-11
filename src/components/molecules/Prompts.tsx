@@ -1,5 +1,6 @@
 import React from "react";
 import Prompt from "../atoms/Prompt";
+import AddPrompt from "./AddPrompt";
 
 const Prompts = ({ ids }: { ids: string[] }) => (
   <>
@@ -9,6 +10,7 @@ const Prompts = ({ ids }: { ids: string[] }) => (
         <Prompt key={id} id={id} />
       ))}
     </div>
+    <AddPrompt />
   </>
 );
 
