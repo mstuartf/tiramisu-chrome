@@ -32,7 +32,16 @@ const ProspectProfileContainer = () => {
   }
 
   if (!prospectProfile && !prospectProfileIsLoading) {
-    return <GenerateMessages onGenerate={generate} btnText="Generate" />;
+    return (
+      <div className="grid gap-4">
+        <div className="text-gray-700">
+          To generate ice breakers for this profile, select the style of message
+          that you would like then click the button. To add new styles, go to
+          the Settings tab.
+        </div>
+        <GenerateMessages onGenerate={generate} btnText="Generate" />
+      </div>
+    );
   }
 
   if (!prospectProfile) {

@@ -31,23 +31,23 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
         messages: [
           {
             id: "1",
-            text: "1. Wow - two digital banks in 2021 and 2022? That's some serious hustle!",
+            text: "Wow - two digital banks in 2021 and 2022? That's some serious hustle!",
           },
           {
             id: "2",
-            text: "2. So, I hear you like to take on big challenges?",
+            text: "So, I hear you like to take on big challenges?",
           },
           {
             id: "3",
-            text: "3. You must be an expert on financial regulations after all that experience in risk management!",
+            text: "You must be an expert on financial regulations after all that experience in risk management!",
           },
           {
             id: "4",
-            text: "4. I'm impressed by your ability to build high performing teams. Any tips you can share?",
+            text: "I'm impressed by your ability to build high performing teams. Any tips you can share?",
           },
           {
             id: "5",
-            text: "5. Looks like you know how to make the most of a LinkedIn profile!",
+            text: "Looks like you know how to make the most of a LinkedIn profile!",
           },
         ],
       },
