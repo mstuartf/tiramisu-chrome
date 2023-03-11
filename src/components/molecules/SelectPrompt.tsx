@@ -6,6 +6,7 @@ import {
 } from "../../redux/prompts/selectors";
 import PromptOption from "../atoms/PromptOption";
 import { selectPrompt } from "../../redux/prompts/slice";
+import Slct from "../atoms/Slct";
 
 const SelectPrompt = () => {
   const dispatch = useDispatch();
@@ -16,12 +17,11 @@ const SelectPrompt = () => {
   };
   return (
     <div>
-      Prompt:
-      <select onChange={({ target: { value } }) => onChange(value)}>
+      <Slct onChange={onChange}>
         {promptIds!.map((id) => (
           <PromptOption id={id} key={id} selected={id === selectedPromptId} />
         ))}
-      </select>
+      </Slct>
     </div>
   );
 };

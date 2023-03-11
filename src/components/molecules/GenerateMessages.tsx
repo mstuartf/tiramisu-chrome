@@ -4,7 +4,7 @@ import Btn from "../atoms/Btn";
 
 const GenerateMessages = ({ onGenerate }: { onGenerate: () => void }) => {
   return (
-    <div className="grid">
+    <div className="grid grid-cols-2 gap-2">
       <SelectPrompt />
       <Btn onClick={onGenerate}>GENERATE</Btn>
     </div>
