@@ -12,6 +12,9 @@ export const promptSlice = createSlice({
   name: "prompts",
   initialState,
   reducers: {
+    selectPrompt: (state, { payload }: PayloadAction<string>) => {
+      state.selectedPrompt = payload;
+    },
     listPromptsPending: (state) => {
       state.promptsLoading = true;
     },
@@ -30,6 +33,7 @@ export const promptSlice = createSlice({
           {}
         ),
       };
+      state.selectedPrompt = state.prompts.ids[0];
     },
     listPromptsFailure: (state) => {
       state.promptsLoading = false;
@@ -77,4 +81,4 @@ export const promptSlice = createSlice({
   },
 });
 
-export const {} = promptSlice.actions;
+export const { selectPrompt } = promptSlice.actions;

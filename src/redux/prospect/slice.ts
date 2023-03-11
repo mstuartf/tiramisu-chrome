@@ -10,6 +10,12 @@ export const prospectSlice = createSlice({
   name: "prospect",
   initialState,
   reducers: {
+    reset: (state) => {
+      state.profile = undefined;
+      state.messages = undefined;
+      state.profileError = undefined;
+      state.messagesError = undefined;
+    },
     setProfileSlug: (state, { payload }: PayloadAction<string | undefined>) => {
       state.profileSlug = payload;
       state.profile = undefined;
@@ -55,4 +61,4 @@ export const prospectSlice = createSlice({
   },
 });
 
-export const { setProfileSlug } = prospectSlice.actions;
+export const { setProfileSlug, reset } = prospectSlice.actions;

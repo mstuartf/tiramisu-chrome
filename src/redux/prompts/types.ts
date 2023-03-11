@@ -18,4 +18,5 @@ export interface State {
     };
   };
   promptSaving: boolean;
+  selectedPrompt?: string;
 }

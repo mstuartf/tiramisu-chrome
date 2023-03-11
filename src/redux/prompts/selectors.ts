@@ -25,3 +25,6 @@ export const createSelectPrompt = (id: string) =>
 
 export const selectPromptsIsSaving = (state: RootState) =>
   state.prompts.promptSaving;
+
+export const selectSelectedPrompt = (state: RootState) =>
+  state.prompts.selectedPrompt;
