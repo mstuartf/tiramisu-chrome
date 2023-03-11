@@ -8,9 +8,11 @@ const ProspectMessages = ({
   onRegenerate,
 }: MessageSet & { onRegenerate: () => void }) => (
   <div>
-    {messages.map(({ text, id }) => (
-      <Message text={text} key={id} id={id} />
-    ))}
+    <div className="grid gap-4 mb-4">
+      {messages.map(({ text, id }) => (
+        <Message text={text} key={id} id={id} />
+      ))}
+    </div>
     <div>
       <SelectPrompt />
       <button onClick={onRegenerate}>regenerate</button>

@@ -16,7 +16,7 @@ const SelectPrompt = () => {
   };
   return (
     <div>
-      Prompt {selectedPromptId}:
+      Prompt:
       <select onChange={({ target: { value } }) => onChange(value)}>
         {promptIds!.map((id) => (
           <PromptOption id={id} key={id} selected={id === selectedPromptId} />

@@ -4,6 +4,20 @@ import { useDispatch } from "react-redux";
 import { createRecordCopy } from "../../redux/prospect/actions";
 import { Message as Msg } from "../../redux/prospect/types";
 
+const Feedback = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => (
+  <div
+    className={`text-gray-400 italic transition ease-in duration-100 ${className}`}
+  >
+    {children}
+  </div>
+);
+
 const Message = ({ text, id }: Msg) => {
   const dispatch = useDispatch();
 
@@ -19,13 +33,15 @@ const Message = ({ text, id }: Msg) => {
 
   return (
     <CopyToClipboard text={text} onCopy={onCopy}>
-      <button className="text-left group border p-2">
+      <button className="text-left group border p-2 rounded shadow text-gray-600 hover:bg-gray-100 hover:scale-[1.02] transition ease-in duration-300">
         <div>{text}</div>
-        <div className="h-4">
+        <div className="h-4 flex justify-end">
           {showCopied ? (
-            <>Copied!</>
+            <Feedback>Copied!</Feedback>
           ) : (
-            <div className="hidden group-hover:block">Click to copy</div>
+            <Feedback className="hidden group-hover:block">
+              Click to copy
+            </Feedback>
           )}
         </div>
       </button>
