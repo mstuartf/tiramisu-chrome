@@ -41,7 +41,7 @@ const Prompt = ({ id }: { id: string }) => {
     <div className="border p-2 rounded shadow">
       <div className="flex justify-between">
         <div className="font-semibold">{name}</div>
-        {custom && (
+        {custom && !isEditing && (
           <div className="">
             <Btn onClick={() => setIsEditing(true)} disabled={isSaving}>
               edit
@@ -63,8 +63,8 @@ const Prompt = ({ id }: { id: string }) => {
                 value={localText}
                 onChange={({ target: { value } }) => setLocalText(value)}
               />
-              <div>
-                <Btn disabled={isSaving} onClick={onCancel}>
+              <div className="flex justify-between">
+                <Btn disabled={isSaving} onClick={onCancel} kind="outline">
                   cancel
                 </Btn>
                 <Btn

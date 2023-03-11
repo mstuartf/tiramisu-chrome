@@ -20,7 +20,7 @@ const Btn = ({
     {...rest}
     className={`${rest.disabled ? "opacity-60" : ""} ${
       styling[kind]
-    } inline-block px-7 py-3 font-medium leading-snug uppercase rounded focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out ${className}`}
+    } inline-block px-4 py-2 font-medium leading-snug uppercase rounded focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out ${className}`}
   />
 );
 

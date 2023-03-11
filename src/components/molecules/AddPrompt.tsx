@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectPromptsIsSaving } from "../../redux/prompts/selectors";
 import { createCreatePrompt } from "../../redux/prompts/actions";
 import Btn from "../atoms/Btn";
+import Inpt from "../atoms/Inpt";
+import TxtAra from "../atoms/TxtAra";
 
 const AddPrompt = () => {
   const dispatch = useDispatch();
@@ -37,26 +39,28 @@ const AddPrompt = () => {
   }
 
   return (
-    <>
-      <input
+    <div className="grid gap-2">
+      <Inpt
         value={name}
-        onChange={({ target: { value } }) => setName(value)}
+        onChange={setName}
         disabled={isSaving}
+        placeholder="Enter a name for this style"
       />
-      <textarea
+      <TxtAra
         value={text}
-        onChange={({ target: { value } }) => setText(value)}
+        onChange={setText}
         disabled={isSaving}
+        placeholder="Enter a description of the style"
       />
-      <div>
-        <Btn disabled={isSaving} onClick={onCancel}>
+      <div className="flex justify-between mt-2">
+        <Btn disabled={isSaving} onClick={onCancel} kind="outline">
           cancel
         </Btn>
         <Btn onClick={onSave} disabled={isSaving || !text || !name}>
           save
         </Btn>
       </div>
-    </>
+    </div>
   );
 };
 

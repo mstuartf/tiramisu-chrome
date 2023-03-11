@@ -1,8 +1,6 @@
 import React from "react";
 import { MessageSet } from "../../redux/prospect/types";
 import Message from "../atoms/Message";
-import SelectPrompt from "./SelectPrompt";
-import Btn from "../atoms/Btn";
 import GenerateMessages from "./GenerateMessages";
 
 const ProspectMessages = ({
