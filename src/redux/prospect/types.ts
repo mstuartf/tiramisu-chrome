@@ -2,7 +2,7 @@ export interface State {
   profileSlug?: string;
   isLoadingProfile: boolean;
   profile?: LinkedInProfile;
-  profileError?: string;
+  profileError?: number;
   isLoadingMessages: boolean;
   messages?: MessageSet;
   messagesError?: number;

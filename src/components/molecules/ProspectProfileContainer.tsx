@@ -8,6 +8,7 @@ import {
 } from "../../redux/prospect/selectors";
 import ProspectProfile from "./ProspectProfile";
 import { createFetchProspectProfile } from "../../redux/prospect/actions";
+import Retry from "../atoms/Retry";
 
 const ProspectProfileContainer = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,13 @@ const ProspectProfileContainer = () => {
   };
 
   if (prospectProfileError) {
-    return <>{prospectProfileError}</>;
+    return (
+      <Retry
+        status={prospectProfileError}
+        onRetry={generate}
+        noRetryMessage="Unable to scrape profile."
+      />
+    );
   }
 
   if (!prospectProfile && !prospectProfileIsLoading) {
