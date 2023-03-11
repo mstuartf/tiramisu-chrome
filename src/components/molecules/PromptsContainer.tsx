@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectPrompts,
+  selectPromptIds,
   selectPromptsIsLoading,
 } from "../../redux/prompts/selectors";
 import { createListPrompts } from "../../redux/prompts/actions";
@@ -9,20 +9,20 @@ import Prompts from "./Prompts";
 
 const PromptsContainer = () => {
   const dispatch = useDispatch();
-  const prompts = useSelector(selectPrompts);
+  const promptIds = useSelector(selectPromptIds);
   const promptsIsLoading = useSelector(selectPromptsIsLoading);
 
   useEffect(() => {
-    if (!prompts && !promptsIsLoading) {
+    if (!promptIds && !promptsIsLoading) {
       dispatch(createListPrompts());
     }
-  }, [!!prompts, promptsIsLoading]);
+  }, [!!promptIds, promptsIsLoading]);
 
-  if (!prompts) {
+  if (!promptIds) {
     return <>Loading...</>;
   }
 
-  return <Prompts prompts={prompts} />;
+  return <Prompts ids={promptIds} />;
 };
 
 export default PromptsContainer;

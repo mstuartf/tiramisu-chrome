@@ -1,13 +1,10 @@
 import React from "react";
-import { Prompt } from "../../redux/prompts/types";
+import Prompt from "../atoms/Prompt";
 
-const Prompts = ({ prompts }: { prompts: Prompt[] }) => (
-  <div>
-    {prompts.map(({ id, name, text }) => (
-      <div key={id}>
-        <div>{name}</div>
-        <div>{text}</div>
-      </div>
+const Prompts = ({ ids }: { ids: string[] }) => (
+  <div className="grid gap-2">
+    {ids.map((id) => (
+      <Prompt key={id} id={id} />
     ))}
   </div>
 );

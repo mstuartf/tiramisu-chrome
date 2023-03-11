@@ -11,5 +11,11 @@ export interface ListPromptsRes {
 
 export interface State {
   promptsLoading: boolean;
-  prompts?: Prompt[];
+  prompts?: {
+    ids: string[];
+    values: {
+      [id: string]: Prompt;
+    };
+  };
+  promptSaving: boolean;
 }
