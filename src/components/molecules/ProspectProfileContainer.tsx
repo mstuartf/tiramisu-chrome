@@ -9,6 +9,7 @@ import {
 import ProspectProfile from "./ProspectProfile";
 import { createFetchProspectProfile } from "../../redux/prospect/actions";
 import Retry from "../atoms/Retry";
+import GenerateMessages from "./GenerateMessages";
 
 const ProspectProfileContainer = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const ProspectProfileContainer = () => {
   }
 
   if (!prospectProfile && !prospectProfileIsLoading) {
-    return <button onClick={generate}>GENERATE</button>;
+    return <GenerateMessages onGenerate={generate} />;
   }
 
   if (!prospectProfile) {

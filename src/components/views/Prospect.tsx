@@ -3,6 +3,7 @@ import { setProfileSlug } from "../../redux/prospect/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProspectSlug } from "../../redux/prospect/selectors";
 import ProspectProfileContainer from "../molecules/ProspectProfileContainer";
+import { selectPromptIds } from "../../redux/prompts/selectors";
 
 const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
@@ -17,6 +18,7 @@ const extractProfileSlug = (url: string): string => {
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
+  const promptIds = useSelector(selectPromptIds);
 
   const prospectSlug = useSelector(selectProspectSlug);
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ const Prospect = () => {
 
   return (
     <div>
-      {isChecking ? (
+      {isChecking || !promptIds ? (
         <>Loading...</>
       ) : (
         <>
