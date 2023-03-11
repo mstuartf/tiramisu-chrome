@@ -10,7 +10,6 @@ import ProspectProfile from "./ProspectProfile";
 import { createFetchProspectProfile } from "../../redux/prospect/actions";
 import Retry from "../atoms/Retry";
 import GenerateMessages from "./GenerateMessages";
-import { reset } from "../../redux/prospect/slice";
 
 const ProspectProfileContainer = () => {
   const dispatch = useDispatch();
@@ -20,10 +19,6 @@ const ProspectProfileContainer = () => {
   const prospectProfileError = useSelector(selectProspectProfileError);
   const generate = () => {
     dispatch(createFetchProspectProfile(prospectSlug));
-  };
-
-  const onReset = () => {
-    dispatch(reset());
   };
 
   if (prospectProfileError) {
@@ -47,7 +42,6 @@ const ProspectProfileContainer = () => {
   return (
     <>
       <ProspectProfile {...prospectProfile} />
-      <button onClick={onReset}>reset</button>
     </>
   );
 };
