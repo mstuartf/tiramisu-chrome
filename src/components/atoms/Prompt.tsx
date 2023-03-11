@@ -9,6 +9,8 @@ import {
   selectPromptsIsSaving,
 } from "../../redux/prompts/selectors";
 import Btn from "./Btn";
+import TxtAra from "./TxtAra";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 const Prompt = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
@@ -38,45 +40,43 @@ const Prompt = ({ id }: { id: string }) => {
   }, [isSaving]);
 
   return (
-    <div className="border p-2 rounded shadow">
-      <div className="flex justify-between">
+    <div className="border p-2 pb-4 rounded shadow">
+      <div className="flex items-center justify-between mb-2 h-4">
         <div className="font-semibold">{name}</div>
         {custom && !isEditing && (
-          <div className="">
-            <Btn onClick={() => setIsEditing(true)} disabled={isSaving}>
-              edit
-            </Btn>
-            <Btn onClick={onDelete} disabled={isSaving}>
-              delete
-            </Btn>
+          <div className="flex gap-2">
+            <button onClick={() => setIsEditing(true)} disabled={isSaving}>
+              <PencilSquareIcon className="h-4 w-4 text-gray-400" />
+            </button>
+            <button onClick={onDelete} disabled={isSaving}>
+              <TrashIcon className="h-4 w-4 text-gray-400" />
+            </button>
           </div>
         )}
       </div>
-      {custom && (
-        <>
-          {isEditing && (
-            <div>
-              <textarea
-                disabled={isSaving}
-                autoFocus
-                className="w-full border"
-                value={localText}
-                onChange={({ target: { value } }) => setLocalText(value)}
-              />
-              <div className="flex justify-between">
-                <Btn disabled={isSaving} onClick={onCancel} kind="outline">
-                  cancel
-                </Btn>
-                <Btn
-                  onClick={onSave}
-                  disabled={isSaving || !localText || localText === text}
-                >
-                  save
-                </Btn>
-              </div>
-            </div>
-          )}
-        </>
+      {isEditing ? (
+        <div className="grid gap-2">
+          <TxtAra
+            disabled={isSaving}
+            autoFocus
+            className="w-full border"
+            value={localText}
+            onChange={setLocalText}
+          />
+          <div className="flex justify-between mt-2">
+            <Btn disabled={isSaving} onClick={onCancel} kind="outline">
+              cancel
+            </Btn>
+            <Btn
+              onClick={onSave}
+              disabled={isSaving || !localText || localText === text}
+            >
+              save
+            </Btn>
+          </div>
+        </div>
+      ) : (
+        <div className="text-gray-500">{text}</div>
       )}
     </div>
   );

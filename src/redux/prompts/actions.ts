@@ -33,7 +33,7 @@ export const createListPrompts = createRequestAction<ListPromptsRes>(
   })
 );
 
-export const createPatchPrompt = createRequestAction<Prompt>(
+export const createPatchPrompt = createRequestAction<Partial<Prompt>>(
   `prompts/patchPrompt`,
   (id: string, payload: Partial<Prompt>) => ({
     url: `prompts/${id}`,
@@ -43,9 +43,7 @@ export const createPatchPrompt = createRequestAction<Prompt>(
       status: 200,
       body: {
         id,
-        custom: true,
-        name: "Updated header",
-        text: "Updated text",
+        ...payload,
       },
     },
   })

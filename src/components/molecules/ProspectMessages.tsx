@@ -8,7 +8,7 @@ const ProspectMessages = ({
   onRegenerate,
 }: MessageSet & { onRegenerate: () => void }) => (
   <div className="grid gap-4">
-    <GenerateMessages onGenerate={onRegenerate} />
+    <GenerateMessages onGenerate={onRegenerate} btnText="Regenerate" />
     <div className="grid gap-4 mb-4">
       {messages.map(({ text, id }) => (
         <Message text={text} key={id} id={id} />

@@ -32,7 +32,7 @@ const ProspectProfileContainer = () => {
   }
 
   if (!prospectProfile && !prospectProfileIsLoading) {
-    return <GenerateMessages onGenerate={generate} />;
+    return <GenerateMessages onGenerate={generate} btnText="Generate" />;
   }
 
   if (!prospectProfile) {

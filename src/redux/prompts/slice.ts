@@ -43,7 +43,10 @@ export const promptSlice = createSlice({
     },
     patchPromptSuccess: (state, { payload }: PayloadAction<Prompt>) => {
       state.promptSaving = false;
-      state.prompts!.values[payload.id] = payload;
+      state.prompts!.values[payload.id] = {
+        ...state.prompts!.values[payload.id],
+        ...payload,
+      };
     },
     patchPromptFailure: (state) => {
       state.promptSaving = false;
