@@ -1,4 +1,5 @@
 import React from "react";
+import Btn from "./Btn";
 
 interface RetryProps {
   status: number;
@@ -13,7 +14,7 @@ const Retry = ({ status, onRetry, noRetryMessage }: RetryProps) => (
     {retryErrorCodes.includes(status) ? (
       <div>
         <div>Temporary server issue.</div>
-        <button onClick={onRetry}>Retry</button>
+        <Btn onClick={onRetry}>Retry</Btn>
       </div>
     ) : (
       <div>{noRetryMessage}</div>

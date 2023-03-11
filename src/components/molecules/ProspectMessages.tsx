@@ -2,6 +2,7 @@ import React from "react";
 import { MessageSet } from "../../redux/prospect/types";
 import Message from "../atoms/Message";
 import SelectPrompt from "./SelectPrompt";
+import Btn from "../atoms/Btn";
 
 const ProspectMessages = ({
   messages,
@@ -15,7 +16,7 @@ const ProspectMessages = ({
     </div>
     <div>
       <SelectPrompt />
-      <button onClick={onRegenerate}>regenerate</button>
+      <Btn onClick={onRegenerate}>regenerate</Btn>
     </div>
   </div>
 );

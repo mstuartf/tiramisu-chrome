@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPromptsIsSaving } from "../../redux/prompts/selectors";
 import { createCreatePrompt } from "../../redux/prompts/actions";
+import Btn from "../atoms/Btn";
 
 const AddPrompt = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,9 @@ const AddPrompt = () => {
 
   if (!isAdding) {
     return (
-      <button onClick={() => setIsAdding(true)} disabled={isSaving}>
+      <Btn onClick={() => setIsAdding(true)} disabled={isSaving}>
         add
-      </button>
+      </Btn>
     );
   }
 
@@ -48,12 +49,12 @@ const AddPrompt = () => {
         disabled={isSaving}
       />
       <div>
-        <button disabled={isSaving} onClick={onCancel}>
+        <Btn disabled={isSaving} onClick={onCancel}>
           cancel
-        </button>
-        <button onClick={onSave} disabled={isSaving || !text || !name}>
+        </Btn>
+        <Btn onClick={onSave} disabled={isSaving || !text || !name}>
           save
-        </button>
+        </Btn>
       </div>
     </>
   );

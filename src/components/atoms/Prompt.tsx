@@ -8,6 +8,7 @@ import {
   createSelectPrompt,
   selectPromptsIsSaving,
 } from "../../redux/prompts/selectors";
+import Btn from "./Btn";
 
 const Prompt = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
@@ -42,12 +43,12 @@ const Prompt = ({ id }: { id: string }) => {
         <div className="font-semibold">{name}</div>
         {custom && (
           <div className="">
-            <button onClick={() => setIsEditing(true)} disabled={isSaving}>
+            <Btn onClick={() => setIsEditing(true)} disabled={isSaving}>
               edit
-            </button>
-            <button onClick={onDelete} disabled={isSaving}>
+            </Btn>
+            <Btn onClick={onDelete} disabled={isSaving}>
               delete
-            </button>
+            </Btn>
           </div>
         )}
       </div>
@@ -63,15 +64,15 @@ const Prompt = ({ id }: { id: string }) => {
                 onChange={({ target: { value } }) => setLocalText(value)}
               />
               <div>
-                <button disabled={isSaving} onClick={onCancel}>
+                <Btn disabled={isSaving} onClick={onCancel}>
                   cancel
-                </button>
-                <button
+                </Btn>
+                <Btn
                   onClick={onSave}
                   disabled={isSaving || !localText || localText === text}
                 >
                   save
-                </button>
+                </Btn>
               </div>
             </div>
           )}

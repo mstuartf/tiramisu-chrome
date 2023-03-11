@@ -1,11 +1,12 @@
 import React from "react";
 import SelectPrompt from "./SelectPrompt";
+import Btn from "../atoms/Btn";
 
 const GenerateMessages = ({ onGenerate }: { onGenerate: () => void }) => {
   return (
     <div className="grid">
       <SelectPrompt />
-      <button onClick={onGenerate}>GENERATE</button>
+      <Btn onClick={onGenerate}>GENERATE</Btn>
     </div>
   );
 };
