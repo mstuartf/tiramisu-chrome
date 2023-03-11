@@ -20,12 +20,15 @@ const NavBarItem = ({ to, text }: { to: string; text: string }) => {
 const NavBar = () => {
   return (
     <div className="border-b">
-      <ul className="grid grid-cols-2">
+      <ul className="grid grid-cols-3">
         <li>
           <NavBarItem to="/prospect" text="Prospects" />
         </li>
         <li>
           <NavBarItem to="/styles" text="Styles" />
+        </li>
+        <li>
+          <NavBarItem to="/account" text="Account" />
         </li>
       </ul>
     </div>

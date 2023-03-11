@@ -1,42 +1,44 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import Prospect from "./components/views/Prospect";
-import Styles from "./components/views/Styles";
-import NavBar from "./components/molecules/NavBar";
-import { useDispatch } from "react-redux";
-import { createListPrompts } from "./redux/prompts/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { readToken } from "./cache";
+import { setToken } from "./redux/user/slice";
+import { selectTokenLoaded } from "./redux/user/selectors";
+import { Route, Router, Switch } from "react-router-dom";
+import Login from "./components/views/Login";
+import AuthCheck from "./components/molecules/AuthCheck";
+import Private from "./components/views/Private";
 
 const history = createMemoryHistory();
 
 function App() {
   const dispatch = useDispatch();
+  const tokenLoaded = useSelector(selectTokenLoaded);
+
   useEffect(() => {
-    // needed by both views, so dispatch here
-    dispatch(createListPrompts());
+    dispatch(setToken(readToken()));
   }, []);
+
+  if (!tokenLoaded) {
+    return <>Loading...</>;
+  }
+
   return (
-    <div className="w-full h-full">
-      <div className="h-full w-full">
-        <Router history={history}>
-          <NavBar />
-          <div className="px-8 py-6">
-            <Switch>
-              <Route path="/prospect">
-                <Prospect />
-              </Route>
-              <Route path="/styles">
-                <Styles />
-              </Route>
-              <Route path="*">
-                <Redirect to="/prospect" />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      </div>
-    </div>
+    <Router history={history}>
+      <Switch>
+        <Route path="/login">
+          <AuthCheck authRequired={false}>
+            <Login />
+          </AuthCheck>
+        </Route>
+        <Route path="/*">
+          <AuthCheck authRequired={true}>
+            <Private />
+          </AuthCheck>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
