@@ -51,29 +51,31 @@ const Prompt = ({ id }: { id: string }) => {
           </div>
         )}
       </div>
-      {isEditing ? (
-        <div>
-          <textarea
-            disabled={isSaving}
-            autoFocus
-            className="w-full border"
-            value={localText}
-            onChange={({ target: { value } }) => setLocalText(value)}
-          />
-          <div>
-            <button disabled={isSaving} onClick={onCancel}>
-              cancel
-            </button>
-            <button
-              onClick={onSave}
-              disabled={isSaving || !localText || localText === text}
-            >
-              save
-            </button>
-          </div>
-        </div>
-      ) : (
-        <div>{text}</div>
+      {custom && (
+        <>
+          {isEditing && (
+            <div>
+              <textarea
+                disabled={isSaving}
+                autoFocus
+                className="w-full border"
+                value={localText}
+                onChange={({ target: { value } }) => setLocalText(value)}
+              />
+              <div>
+                <button disabled={isSaving} onClick={onCancel}>
+                  cancel
+                </button>
+                <button
+                  onClick={onSave}
+                  disabled={isSaving || !localText || localText === text}
+                >
+                  save
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
