@@ -11,6 +11,7 @@ import {
 import Btn from "./Btn";
 import TxtAra from "./TxtAra";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import Spinner from "./Spinner";
 
 const Prompt = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const Prompt = ({ id }: { id: string }) => {
             <Btn disabled={isSaving} onClick={onCancel} kind="outline">
               cancel
             </Btn>
+            {isSaving && <Spinner />}
             <Btn
               onClick={onSave}
               disabled={isSaving || !localText || localText === text}

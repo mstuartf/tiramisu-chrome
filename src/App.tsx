@@ -9,6 +9,7 @@ import { Route, Router, Switch } from "react-router-dom";
 import Login from "./components/views/Login";
 import AuthCheck from "./components/molecules/AuthCheck";
 import Private from "./components/views/Private";
+import Loading from "./components/molecules/Loading";
 
 const history = createMemoryHistory();
 
@@ -21,7 +22,7 @@ function App() {
   }, []);
 
   if (!tokenLoaded) {
-    return <>Loading...</>;
+    return <Loading />;
   }
 
   return (

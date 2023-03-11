@@ -10,6 +10,7 @@ import ProspectProfile from "./ProspectProfile";
 import { createFetchProspectProfile } from "../../redux/prospect/actions";
 import Retry from "../atoms/Retry";
 import GenerateMessages from "./GenerateMessages";
+import Loading from "./Loading";
 
 const ProspectProfileContainer = () => {
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const ProspectProfileContainer = () => {
   }
 
   if (!prospectProfile) {
-    return <>Loading...</>;
+    return <Loading />;
   }
 
   return (

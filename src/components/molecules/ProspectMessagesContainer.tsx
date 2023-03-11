@@ -9,6 +9,7 @@ import {
 import { createGenerateMessages } from "../../redux/prospect/actions";
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
+import Loading from "./Loading";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
@@ -38,7 +39,7 @@ const ProspectMessagesContainer = () => {
   }
 
   if (!messages || messagesIsLoading) {
-    return <>Loading...</>;
+    return <Loading />;
   }
 
   return <ProspectMessages {...messages} onRegenerate={generate} />;

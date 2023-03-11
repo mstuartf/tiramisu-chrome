@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectProspectSlug } from "../../redux/prospect/selectors";
 import ProspectProfileContainer from "../molecules/ProspectProfileContainer";
 import { selectPromptIds } from "../../redux/prompts/selectors";
+import Loading from "../molecules/Loading";
 
 const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
@@ -48,7 +49,7 @@ const Prospect = () => {
   return (
     <div>
       {isChecking || !promptIds ? (
-        <>Loading...</>
+        <Loading />
       ) : (
         <>
           {!!prospectSlug ? (

@@ -5,6 +5,7 @@ import { createCreatePrompt } from "../../redux/prompts/actions";
 import Btn from "../atoms/Btn";
 import Inpt from "../atoms/Inpt";
 import TxtAra from "../atoms/TxtAra";
+import Spinner from "../atoms/Spinner";
 
 const AddPrompt = () => {
   const dispatch = useDispatch();
@@ -52,10 +53,11 @@ const AddPrompt = () => {
         disabled={isSaving}
         placeholder="Enter a description of the style"
       />
-      <div className="flex justify-between mt-2">
+      <div className="flex justify-between items-center mt-2">
         <Btn disabled={isSaving} onClick={onCancel} kind="outline">
           cancel
         </Btn>
+        {isSaving && <Spinner />}
         <Btn onClick={onSave} disabled={isSaving || !text || !name}>
           save
         </Btn>
