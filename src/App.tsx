@@ -3,7 +3,7 @@ import "./App.css";
 import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Prospect from "./components/views/Prospect";
-import Settings from "./components/views/Settings";
+import Styles from "./components/views/Styles";
 import NavBar from "./components/molecules/NavBar";
 import { useDispatch } from "react-redux";
 import { createListPrompts } from "./redux/prompts/actions";
@@ -26,8 +26,8 @@ function App() {
               <Route path="/prospect">
                 <Prospect />
               </Route>
-              <Route path="/settings">
-                <Settings />
+              <Route path="/styles">
+                <Styles />
               </Route>
               <Route path="*">
                 <Redirect to="/prospect" />
