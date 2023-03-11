@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createRecordCopy } from "../../redux/prospect/actions";
+import { Message as Msg } from "../../redux/prospect/types";
 
-interface MessageProps {
-  text: string;
-}
+const Message = ({ text, id }: Msg) => {
+  const dispatch = useDispatch();
 
-const Message = ({ text }: MessageProps) => {
   const [showCopied, setShowCopied] = useState(false);
 
   const onCopy = () => {
+    dispatch(createRecordCopy(id));
     setShowCopied(true);
     setTimeout(() => {
       setShowCopied(false);

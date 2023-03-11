@@ -7,8 +7,8 @@ const ProspectMessages = ({
   onRegenerate,
 }: MessageSet & { onRegenerate: () => void }) => (
   <div>
-    {messages.map(({ text }) => (
-      <Message text={text} key={text} />
+    {messages.map(({ text, id }) => (
+      <Message text={text} key={id} id={id} />
     ))}
     <div>
       <button onClick={onRegenerate}>regenerate</button>

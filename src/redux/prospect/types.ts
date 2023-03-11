@@ -16,9 +16,14 @@ export interface LinkedInProfile {
   summary: string;
 }
 
+export interface Message {
+  id: string;
+  text: string;
+}
+
 export interface MessageSet {
   id: string;
   prospectId: string;
   promptId: string;
-  messages: { text: string }[];
+  messages: Message[];
 }
