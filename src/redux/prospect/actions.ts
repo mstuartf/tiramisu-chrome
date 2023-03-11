@@ -5,6 +5,7 @@ export const createFetchProspectProfile = createRequestAction<LinkedInProfile>(
   `prospect/fetchProspectProfile`,
   (slug: string) => ({
     url: `prospect/profile/${slug}`,
+    authenticated: true,
     mockData: {
       status: 200,
       body: {
@@ -22,6 +23,7 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
   `prospect/generateMessages`,
   (profileId: string, promptId: string) => ({
     url: `prospect/generate/${profileId}/prompt/${promptId}`,
+    authenticated: true,
     mockData: {
       status: 200,
       body: {
@@ -59,6 +61,7 @@ export const createRecordCopy = createRequestAction<null>(
   `prospect/recordCopy`,
   (msgId: string) => ({
     url: `prospect/message/${msgId}`,
+    authenticated: true,
     method: "PATCH",
     payload: {
       copied: true,

@@ -5,6 +5,7 @@ export const createListPrompts = createRequestAction<ListPromptsRes>(
   `prompts/listPrompts`,
   () => ({
     url: `prompts`,
+    authenticated: true,
     mockData: {
       status: 200,
       body: {
@@ -37,6 +38,7 @@ export const createPatchPrompt = createRequestAction<Partial<Prompt>>(
   `prompts/patchPrompt`,
   (id: string, payload: Partial<Prompt>) => ({
     url: `prompts/${id}`,
+    authenticated: true,
     method: "PATCH",
     payload,
     mockData: {
@@ -52,6 +54,7 @@ export const createPatchPrompt = createRequestAction<Partial<Prompt>>(
 export const createDeletePrompt = createRequestAction<null>(
   `prompts/deletePrompt`,
   (id: string) => ({
+    authenticated: true,
     url: `prompts/${id}`,
     method: "DELETE",
     mockData: {
@@ -65,6 +68,7 @@ export const createCreatePrompt = createRequestAction<Prompt>(
   `prompts/createPrompt`,
   (payload: Omit<Prompt, "id" | "custom">) => ({
     url: `prompts`,
+    authenticated: true,
     method: "POST",
     payload,
     mockData: {
