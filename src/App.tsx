@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-import { Link, Redirect, Route, Router, Switch } from "react-router-dom";
+import { Redirect, Route, Router, Switch } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Prospect from "./components/views/Prospect";
-import Prompts from "./components/views/Prompts";
+import Settings from "./components/views/Settings";
 import NavBar from "./components/molecules/NavBar";
 
 const history = createMemoryHistory();
@@ -19,8 +19,8 @@ function App() {
               <Route path="/prospect">
                 <Prospect />
               </Route>
-              <Route path="/prompts">
-                <Prompts />
+              <Route path="/settings">
+                <Settings />
               </Route>
               <Route path="*">
                 <Redirect to="/prospect" />
