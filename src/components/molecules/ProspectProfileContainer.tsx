@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectProspectProfile,
+  selectProspectProfileError,
   selectProspectProfileIsLoading,
   selectProspectSlug,
 } from "../../redux/prospect/selectors";
@@ -13,9 +14,14 @@ const ProspectProfileContainer = () => {
   const prospectSlug = useSelector(selectProspectSlug);
   const prospectProfile = useSelector(selectProspectProfile);
   const prospectProfileIsLoading = useSelector(selectProspectProfileIsLoading);
+  const prospectProfileError = useSelector(selectProspectProfileError);
   const generate = () => {
     dispatch(createFetchProspectProfile(prospectSlug));
   };
+
+  if (prospectProfileError) {
+    return <>{prospectProfileError}</>;
+  }
 
   if (!prospectProfile && !prospectProfileIsLoading) {
     return <button onClick={generate}>GENERATE</button>;

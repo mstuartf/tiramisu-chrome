@@ -14,6 +14,7 @@ export const prospectSlice = createSlice({
       state.profileSlug = payload;
       state.profile = undefined;
       state.messages = undefined;
+      state.profileError = undefined;
     },
     fetchProspectProfilePending: (state, action) => {
       state.isLoadingProfile = true;
@@ -24,6 +25,10 @@ export const prospectSlice = createSlice({
     ) => {
       state.isLoadingProfile = false;
       state.profile = payload;
+    },
+    fetchProspectProfileFailure: (state) => {
+      state.isLoadingProfile = false;
+      state.profileError = "Unable to scrape profile.";
     },
     generateMessagesPending: (state, action) => {
       state.isLoadingMessages = true;
