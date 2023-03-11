@@ -1,5 +1,6 @@
 import React from "react";
 import { MessageSet } from "../../redux/prospect/types";
+import Message from "../atoms/Message";
 
 const ProspectMessages = ({
   messages,
@@ -7,7 +8,7 @@ const ProspectMessages = ({
 }: MessageSet & { onRegenerate: () => void }) => (
   <div>
     {messages.map(({ text }) => (
-      <div key={text}>{text}</div>
+      <Message text={text} key={text} />
     ))}
     <div>
       <button onClick={onRegenerate}>regenerate</button>
