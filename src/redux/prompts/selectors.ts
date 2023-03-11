@@ -1,3 +1,5 @@
 import { RootState } from "../store";
 
-export const selectPromptTemplates = (state: RootState) => state.prompts.templates;
+export const selectPrompts = (state: RootState) => state.prompts.prompts;
+export const selectPromptsIsLoading = (state: RootState) =>
+  state.prompts.promptsLoading;
