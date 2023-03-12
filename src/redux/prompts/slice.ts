@@ -18,14 +18,11 @@ export const promptSlice = createSlice({
     listPromptsPending: (state) => {
       state.promptsLoading = true;
     },
-    listPromptsSuccess: (
-      state,
-      { payload: { results } }: PayloadAction<ListPromptsRes>
-    ) => {
+    listPromptsSuccess: (state, { payload }: PayloadAction<ListPromptsRes>) => {
       state.promptsLoading = false;
       state.prompts = {
-        ids: results.map(({ id }) => id),
-        values: results.reduce(
+        ids: payload.map(({ id }) => id),
+        values: payload.reduce(
           (prev, next) => ({
             ...prev,
             [next.id]: next,

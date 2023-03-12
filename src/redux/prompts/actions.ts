@@ -8,28 +8,26 @@ export const createListPrompts = createRequestAction<ListPromptsRes>(
     authenticated: true,
     mockData: {
       status: 200,
-      body: {
-        results: [
-          {
-            id: "abc123",
-            custom: false,
-            name: "Funny",
-            text: "Weird, cheeky and informal statements or observations that contain some humour.",
-          },
-          {
-            id: "abc6",
-            custom: true,
-            name: "Risky",
-            text: "Wacky comments or observations.",
-          },
-          {
-            id: "abc456",
-            custom: false,
-            name: "Serious",
-            text: "Polite questions in a professional tone.",
-          },
-        ],
-      },
+      body: [
+        {
+          id: "abc123",
+          custom: false,
+          name: "Funny",
+          text: "Weird, cheeky and informal statements or observations that contain some humour.",
+        },
+        {
+          id: "abc6",
+          custom: true,
+          name: "Risky",
+          text: "Wacky comments or observations.",
+        },
+        {
+          id: "abc456",
+          custom: false,
+          name: "Serious",
+          text: "Polite questions in a professional tone.",
+        },
+      ],
     },
   })
 );

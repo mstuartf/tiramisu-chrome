@@ -23,7 +23,7 @@ export interface Message {
 
 export interface MessageSet {
   id: string;
-  prospectId: string;
-  promptId: string;
+  prospect: string;
+  prompt: string;
   messages: Message[];
 }

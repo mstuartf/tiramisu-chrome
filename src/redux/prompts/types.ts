@@ -5,9 +5,7 @@ export interface Prompt {
   custom: boolean;
 }
 
-export interface ListPromptsRes {
-  results: Prompt[];
-}
+export type ListPromptsRes = Prompt[];
 
 export interface State {
   promptsLoading: boolean;

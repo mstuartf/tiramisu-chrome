@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Feedback from "../atoms/Feedback";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/user/selectors";
 
 const AddTeamMember = () => {
-  const url = "some url";
+  const { company } = useSelector(selectUser)!;
+  const url = `${process.env.REACT_APP_BACKEND_URL}/accounts/signup/${company}`;
   const [showCopied, setShowCopied] = useState(false);
 
   const onCopy = () => {

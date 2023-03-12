@@ -9,13 +9,13 @@ import Header from "../atoms/Header";
 import { selectLoginPending } from "../../redux/user/selectors";
 
 const Login = () => {
-  const [email_address, setEmailAddress] = useState<string>("");
+  const [email, setEmailAddress] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoginPending);
 
   const login = () => {
-    dispatch(createLoginRequest({}));
+    dispatch(createLoginRequest({ email, password }));
   };
 
   return (
@@ -25,7 +25,7 @@ const Login = () => {
         <Inpt
           placeholder="Email address"
           disabled={isLoading}
-          value={email_address}
+          value={email}
           onChange={setEmailAddress}
         />
       </div>
@@ -40,10 +40,7 @@ const Login = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <Btn
-            disabled={isLoading || !email_address || !password}
-            onClick={login}
-          >
+          <Btn disabled={isLoading || !email || !password} onClick={login}>
             Login
           </Btn>
           {isLoading && (
@@ -53,7 +50,10 @@ const Login = () => {
           )}
         </div>
         <div>
-          <ExternalLink target="_blank" href="https://www.google.com">
+          <ExternalLink
+            target="_blank"
+            href={`${process.env.REACT_APP_BACKEND_URL}/accounts/signup`}
+          >
             Don't have an account?
           </ExternalLink>
         </div>

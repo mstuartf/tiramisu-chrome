@@ -10,6 +10,7 @@ import { createGenerateMessages } from "../../redux/prospect/actions";
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
 import Loading from "./Loading";
+import { selectSelectedPrompt } from "../../redux/prompts/selectors";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
@@ -17,9 +18,12 @@ const ProspectMessagesContainer = () => {
   const messagesIsLoading = useSelector(selectProspectMessagesIsLoading);
   const messages = useSelector(selectProspectMessages);
   const messagesError = useSelector(selectProspectMessagesError);
+  const selectedPromptId = useSelector(selectSelectedPrompt);
 
   const generate = () => {
-    dispatch(createGenerateMessages(id, "promptId1234"));
+    dispatch(
+      createGenerateMessages({ prospect: id, prompt: selectedPromptId })
+    );
   };
 
   useEffect(() => {

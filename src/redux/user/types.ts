@@ -17,8 +17,7 @@ export interface User {
   id: string;
   admin: boolean;
   email: string;
+  company: string;
 }
 
-export interface ListUsersRes {
-  results: User[];
-}
+export type ListUsersRes = User[];

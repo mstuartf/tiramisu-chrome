@@ -3,9 +3,11 @@ import { LinkedInProfile, MessageSet } from "./types";
 
 export const createFetchProspectProfile = createRequestAction<LinkedInProfile>(
   `prospect/fetchProspectProfile`,
-  (slug: string) => ({
-    url: `prospect/profile/${slug}`,
+  (payload: { slug: string }) => ({
+    url: `prospects`,
     authenticated: true,
+    method: "POST",
+    payload,
     mockData: {
       status: 200,
       body: {
@@ -21,15 +23,16 @@ export const createFetchProspectProfile = createRequestAction<LinkedInProfile>(
 
 export const createGenerateMessages = createRequestAction<MessageSet>(
   `prospect/generateMessages`,
-  (profileId: string, promptId: string) => ({
-    url: `prospect/generate/${profileId}/prompt/${promptId}`,
+  (payload: { prospect: string; prompt: string }) => ({
+    url: `messages/sets`,
+    payload,
+    method: "POST",
     authenticated: true,
     mockData: {
       status: 200,
       body: {
         id: "abc123",
-        promptId: "asdfasdf",
-        prospectId: "asdgasdgsd",
+        ...payload,
         messages: [
           {
             id: "1",
@@ -60,7 +63,7 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
 export const createRecordCopy = createRequestAction<null>(
   `prospect/recordCopy`,
   (msgId: string) => ({
-    url: `prospect/message/${msgId}`,
+    url: `message/choices/${msgId}`,
     authenticated: true,
     method: "PATCH",
     payload: {

@@ -20,10 +20,10 @@ export const userSlice = createSlice({
     },
     loginSuccess: (
       state,
-      { payload: { token } }: PayloadAction<{ token: string }>
+      { payload: { access } }: PayloadAction<{ access: string }>
     ) => {
       state.loginPending = false;
-      state.token = token;
+      state.token = access;
     },
     loginFailure: (state) => {
       state.loginPending = false;
@@ -44,14 +44,11 @@ export const userSlice = createSlice({
     listTeamPending: (state) => {
       state.teamLoading = true;
     },
-    listTeamSuccess: (
-      state,
-      { payload: { results } }: PayloadAction<ListUsersRes>
-    ) => {
+    listTeamSuccess: (state, { payload }: PayloadAction<ListUsersRes>) => {
       state.teamLoading = false;
       state.team = {
-        ids: results.map(({ id }) => id),
-        values: results.reduce(
+        ids: payload.map(({ id }) => id),
+        values: payload.reduce(
           (prev, next) => ({
             ...prev,
             [next.id]: next,

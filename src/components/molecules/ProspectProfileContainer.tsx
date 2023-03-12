@@ -19,7 +19,7 @@ const ProspectProfileContainer = () => {
   const prospectProfileIsLoading = useSelector(selectProspectProfileIsLoading);
   const prospectProfileError = useSelector(selectProspectProfileError);
   const generate = () => {
-    dispatch(createFetchProspectProfile(prospectSlug));
+    dispatch(createFetchProspectProfile({ slug: prospectSlug }));
   };
 
   if (prospectProfileError) {

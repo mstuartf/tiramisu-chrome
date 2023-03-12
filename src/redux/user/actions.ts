@@ -1,16 +1,16 @@
 import { createRequestAction } from "../middleware/_api";
 import { ListUsersRes, User } from "./types";
 
-export const createLoginRequest = createRequestAction<{ token: string }>(
+export const createLoginRequest = createRequestAction<{ access: string }>(
   `user/login`,
   (payload: { email: string; password: string }) => ({
-    url: `auth/`,
+    url: `auth/token`,
     method: "POST",
     payload,
     mockData: {
       status: 200,
       body: {
-        token: "asldkjhasldfks",
+        access: "asldkjhasldfks",
       },
     },
   })
@@ -19,7 +19,7 @@ export const createLoginRequest = createRequestAction<{ token: string }>(
 export const createFetchUser = createRequestAction<User>(
   `user/fetchUser`,
   () => ({
-    url: `user/me`,
+    url: `accounts/users/me`,
     authenticated: true,
     mockData: {
       status: 200,
@@ -27,6 +27,7 @@ export const createFetchUser = createRequestAction<User>(
         id: "asldkjhasldfks",
         admin: true,
         email: "test@mike.com",
+        company: "asdf",
       },
     },
   })
@@ -35,24 +36,24 @@ export const createFetchUser = createRequestAction<User>(
 export const createListTeam = createRequestAction<ListUsersRes>(
   `user/listTeam`,
   () => ({
-    url: `user/list`,
+    url: `accounts/users`,
     authenticated: true,
     mockData: {
       status: 200,
-      body: {
-        results: [
-          {
-            id: "1",
-            email: "test@1.com",
-            admin: false,
-          },
-          {
-            id: "2",
-            email: "test@2.com",
-            admin: false,
-          },
-        ],
-      },
+      body: [
+        {
+          id: "1",
+          email: "test@1.com",
+          admin: false,
+          company: "asdf",
+        },
+        {
+          id: "2",
+          email: "test@2.com",
+          admin: false,
+          company: "asdf",
+        },
+      ],
     },
   })
 );

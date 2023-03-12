@@ -6,10 +6,12 @@ export const apiMiddleware = buildApiMiddleware(
   () => process.env.REACT_APP_BACKEND_URL,
   (store) => {
     const state = store.getState() as RootState;
-    return state.user.token;
+    return {
+      Authorization: `Bearer ${state.user.token}`,
+    };
   },
   {
-    useMocksWhen: () => true,
+    // useMocksWhen: () => true,
     appendSlash: true,
   }
 );

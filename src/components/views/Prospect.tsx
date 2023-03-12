@@ -38,6 +38,9 @@ const Prospect = () => {
           dispatch(setProfileSlug(undefined));
           setIsChecking(false);
         }
+      } else {
+        dispatch(setProfileSlug(undefined));
+        setIsChecking(false);
       }
     });
   };
@@ -55,7 +58,7 @@ const Prospect = () => {
           {!!prospectSlug ? (
             <ProspectProfileContainer />
           ) : (
-            <>not a valid linkedin profile</>
+            <>This is not a valid linkedin profile</>
           )}
         </>
       )}
