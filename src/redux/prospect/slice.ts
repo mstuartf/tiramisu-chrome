@@ -16,6 +16,8 @@ export const prospectSlice = createSlice({
       state.messages = undefined;
       state.profileError = undefined;
       state.messagesError = undefined;
+      state.isLoadingProfile = false;
+      state.isLoadingMessages = false;
     },
     fetchProspectProfilePending: (state, action) => {
       state.isLoadingProfile = true;

@@ -49,6 +49,8 @@ const Prospect = () => {
     check();
   }, []);
 
+  console.log({ isChecking, promptIds });
+
   return (
     <div>
       {isChecking || !promptIds ? (
