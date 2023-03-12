@@ -6,6 +6,7 @@ import NavBar from "../../components/molecules/NavBar";
 import { useDispatch } from "react-redux";
 import { createListPrompts } from "../../redux/prompts/actions";
 import Account from "./Account";
+import { createFetchUser } from "../../redux/user/actions";
 
 const Private = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Private = () => {
   useEffect(() => {
     // needed by both views, so dispatch here
     dispatch(createListPrompts());
+    dispatch(createFetchUser());
   }, []);
 
   return (

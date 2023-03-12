@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { State } from "./types";
+import { State, User } from "./types";
 
 const initialState: State = {
   loginPending: false,
+  userLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -27,6 +28,16 @@ export const userSlice = createSlice({
     },
     logout: (state) => {
       state.token = null;
+    },
+    fetchUserPending: (state) => {
+      state.userLoading = true;
+    },
+    fetchUserSuccess: (state, { payload }: PayloadAction<User>) => {
+      state.userLoading = false;
+      state.user = payload;
+    },
+    fetchUserFailure: (state) => {
+      state.userLoading = false;
     },
   },
 });
