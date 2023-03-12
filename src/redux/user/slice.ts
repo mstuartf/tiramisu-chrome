@@ -63,17 +63,6 @@ export const userSlice = createSlice({
     listTeamFailure: (state) => {
       state.teamLoading = false;
     },
-    inviteUserPending: (state) => {
-      state.invitePending = true;
-    },
-    inviteUserSuccess: (state, { payload }: PayloadAction<User>) => {
-      state.invitePending = false;
-      state.team!.ids.push(payload.id);
-      state.team!.values[payload.id] = payload;
-    },
-    inviteUserFailure: (state) => {
-      state.invitePending = false;
-    },
   },
 });
 

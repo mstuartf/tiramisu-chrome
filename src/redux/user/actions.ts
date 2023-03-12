@@ -56,20 +56,3 @@ export const createListTeam = createRequestAction<ListUsersRes>(
     },
   })
 );
-
-export const createInviteUser = createRequestAction<User>(
-  `user/inviteUser`,
-  (payload: { email: string; admin: boolean }) => ({
-    url: `user/invite`,
-    authenticated: true,
-    method: "POST",
-    payload,
-    mockData: {
-      status: 200,
-      body: {
-        id: "asdjkfhasf",
-        ...payload,
-      },
-    },
-  })
-);

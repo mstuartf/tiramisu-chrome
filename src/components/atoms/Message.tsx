@@ -3,20 +3,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { useDispatch } from "react-redux";
 import { createRecordCopy } from "../../redux/prospect/actions";
 import { Message as Msg } from "../../redux/prospect/types";
-
-const Feedback = ({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
-  <div
-    className={`text-gray-400 italic transition ease-in duration-300 ${className}`}
-  >
-    {children}
-  </div>
-);
+import Feedback from "./Feedback";
 
 const Message = ({ text, id }: Msg) => {
   const dispatch = useDispatch();

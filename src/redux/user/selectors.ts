@@ -30,5 +30,3 @@ export const createSelectTeamMember = (id: string) =>
   createSelector(selectUserState, ({ team }) => team!.values[id]);
 
 export const selectTeamLoading = (state: RootState) => state.user.teamLoading;
-export const selectInvitePending = (state: RootState) =>
-  state.user.invitePending;
