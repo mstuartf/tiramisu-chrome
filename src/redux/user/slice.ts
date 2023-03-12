@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { State, User } from "./types";
+import { ListUsersRes, State, User } from "./types";
 
 const initialState: State = {
   loginPending: false,
   userLoading: false,
+  teamLoading: false,
+  invitePending: false,
 };
 
 export const userSlice = createSlice({
@@ -38,6 +40,39 @@ export const userSlice = createSlice({
     },
     fetchUserFailure: (state) => {
       state.userLoading = false;
+    },
+    listTeamPending: (state) => {
+      state.teamLoading = true;
+    },
+    listTeamSuccess: (
+      state,
+      { payload: { results } }: PayloadAction<ListUsersRes>
+    ) => {
+      state.teamLoading = false;
+      state.team = {
+        ids: results.map(({ id }) => id),
+        values: results.reduce(
+          (prev, next) => ({
+            ...prev,
+            [next.id]: next,
+          }),
+          {}
+        ),
+      };
+    },
+    listTeamFailure: (state) => {
+      state.teamLoading = false;
+    },
+    inviteUserPending: (state) => {
+      state.invitePending = true;
+    },
+    inviteUserSuccess: (state, { payload }: PayloadAction<User>) => {
+      state.invitePending = false;
+      state.team!.ids.push(payload.id);
+      state.team!.values[payload.id] = payload;
+    },
+    inviteUserFailure: (state) => {
+      state.invitePending = false;
     },
   },
 });

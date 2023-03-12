@@ -1,5 +1,5 @@
 import { createRequestAction } from "../middleware/_api";
-import { User } from "./types";
+import { ListUsersRes, User } from "./types";
 
 export const createLoginRequest = createRequestAction<{ token: string }>(
   `user/login`,
@@ -26,21 +26,50 @@ export const createFetchUser = createRequestAction<User>(
       body: {
         id: "asldkjhasldfks",
         admin: true,
+        email: "test@mike.com",
       },
     },
   })
 );
 
-export const createInviteUser = createRequestAction<null>(
+export const createListTeam = createRequestAction<ListUsersRes>(
+  `user/listTeam`,
+  () => ({
+    url: `user/list`,
+    authenticated: true,
+    mockData: {
+      status: 200,
+      body: {
+        results: [
+          {
+            id: "1",
+            email: "test@1.com",
+            admin: false,
+          },
+          {
+            id: "2",
+            email: "test@2.com",
+            admin: false,
+          },
+        ],
+      },
+    },
+  })
+);
+
+export const createInviteUser = createRequestAction<User>(
   `user/inviteUser`,
-  (payload: { email: string }) => ({
+  (payload: { email: string; admin: boolean }) => ({
     url: `user/invite`,
     authenticated: true,
     method: "POST",
     payload,
     mockData: {
-      status: 204,
-      body: null,
+      status: 200,
+      body: {
+        id: "asdjkfhasf",
+        ...payload,
+      },
     },
   })
 );

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/user/slice";
 import { selectUser } from "../../redux/user/selectors";
 import Loading from "../molecules/Loading";
+import TeamContainer from "../molecules/TeamContainer";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -20,9 +21,12 @@ const Account = () => {
   const { admin } = user;
 
   return (
-    <div>
-      <div>This user is {admin ? "admin" : "not admin"}</div>
-      <Btn onClick={onLogout}>Logout</Btn>
+    <div className="grid gap-4">
+      <div className="flex justify-between items-center">
+        <div>My account</div>
+        <Btn onClick={onLogout}>Logout</Btn>
+      </div>
+      {admin && <TeamContainer />}
     </div>
   );
 };
