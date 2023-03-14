@@ -1,29 +1,9 @@
 import { createRequestAction } from "../middleware/_api";
 import { LinkedInProfile, MessageSet } from "./types";
 
-export const createFetchProspectProfile = createRequestAction<LinkedInProfile>(
-  `prospect/fetchProspectProfile`,
-  (payload: { slug: string }) => ({
-    url: `prospects`,
-    authenticated: true,
-    method: "POST",
-    payload,
-    mockData: {
-      status: 200,
-      body: {
-        id: "abc123",
-        first_name: "Mike",
-        last_name: "Flood",
-        headline: "Software Engineer at News UK",
-        summary: "blah blah",
-      },
-    },
-  })
-);
-
 export const createGenerateMessages = createRequestAction<MessageSet>(
   `prospect/generateMessages`,
-  (payload: { prospect: string; prompt: string }) => ({
+  (payload: { profile: LinkedInProfile; prompt_id: string }) => ({
     url: `messages/sets`,
     payload,
     method: "POST",
@@ -32,7 +12,6 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
       status: 200,
       body: {
         id: "abc123",
-        ...payload,
         messages: [
           {
             id: "1",

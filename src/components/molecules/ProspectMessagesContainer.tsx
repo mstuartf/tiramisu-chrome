@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectProspectMessages,
@@ -11,26 +11,20 @@ import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
 import Loading from "./Loading";
 import { selectSelectedPrompt } from "../../redux/prompts/selectors";
+import SelectPrompt from "./SelectPrompt";
+import Btn from "../atoms/Btn";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
-  const { id } = useSelector(selectProspectProfile)!;
   const messagesIsLoading = useSelector(selectProspectMessagesIsLoading);
   const messages = useSelector(selectProspectMessages);
   const messagesError = useSelector(selectProspectMessagesError);
-  const selectedPromptId = useSelector(selectSelectedPrompt);
+  const prompt_id = useSelector(selectSelectedPrompt);
+  const profile = useSelector(selectProspectProfile);
 
   const generate = () => {
-    dispatch(
-      createGenerateMessages({ prospect: id, prompt: selectedPromptId })
-    );
+    dispatch(createGenerateMessages({ profile, prompt_id }));
   };
-
-  useEffect(() => {
-    if (!messages && !messagesIsLoading) {
-      generate();
-    }
-  }, []);
 
   if (messagesError) {
     return (
@@ -42,11 +36,21 @@ const ProspectMessagesContainer = () => {
     );
   }
 
-  if (!messages || messagesIsLoading) {
-    return <Loading />;
-  }
-
-  return <ProspectMessages {...messages} onRegenerate={generate} />;
+  return (
+    <div>
+      <div className="grid grid-cols-2 gap-2">
+        <SelectPrompt />
+        <Btn onClick={generate} disabled={messagesIsLoading}>
+          {!!messages ? "Regenerate" : "Generate"}
+        </Btn>
+      </div>
+      {messagesIsLoading ? (
+        <Loading />
+      ) : (
+        <>{!!messages ? <ProspectMessages {...messages} /> : null}</>
+      )}
+    </div>
+  );
 };
 
 export default ProspectMessagesContainer;

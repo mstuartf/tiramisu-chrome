@@ -1,5 +1,4 @@
 export interface State {
-  profileSlug?: string;
   isLoadingProfile: boolean;
   profile?: LinkedInProfile;
   profileError?: number;
@@ -9,11 +8,11 @@ export interface State {
 }
 
 export interface LinkedInProfile {
-  id: string;
-  first_name: string;
-  last_name: string;
+  full_name: string;
   headline: string;
   summary: string;
+  talks_about: string;
+  slug: string;
 }
 
 export interface Message {
@@ -23,7 +22,5 @@ export interface Message {
 
 export interface MessageSet {
   id: string;
-  prospect: string;
-  prompt: string;
   messages: Message[];
 }

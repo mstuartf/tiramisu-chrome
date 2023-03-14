@@ -10,31 +10,16 @@ export const prospectSlice = createSlice({
   name: "prospect",
   initialState,
   reducers: {
-    setProfileSlug: (state, { payload }: PayloadAction<string | undefined>) => {
-      state.profileSlug = payload;
-      state.profile = undefined;
+    setProfile: (
+      state,
+      { payload }: PayloadAction<LinkedInProfile | undefined>
+    ) => {
+      state.profile = payload;
       state.messages = undefined;
       state.profileError = undefined;
       state.messagesError = undefined;
       state.isLoadingProfile = false;
       state.isLoadingMessages = false;
-    },
-    fetchProspectProfilePending: (state, action) => {
-      state.isLoadingProfile = true;
-    },
-    fetchProspectProfileSuccess: (
-      state,
-      { payload }: PayloadAction<LinkedInProfile>
-    ) => {
-      state.isLoadingProfile = false;
-      state.profile = payload;
-    },
-    fetchProspectProfileFailure: (
-      state,
-      { payload: { status } }: PayloadAction<{ status: number }>
-    ) => {
-      state.isLoadingProfile = false;
-      state.profileError = status;
     },
     generateMessagesPending: (state, action) => {
       state.isLoadingMessages = true;
@@ -57,4 +42,4 @@ export const prospectSlice = createSlice({
   },
 });
 
-export const { setProfileSlug } = prospectSlice.actions;
+export const { setProfile } = prospectSlice.actions;

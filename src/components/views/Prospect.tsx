@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { setProfileSlug } from "../../redux/prospect/slice";
+import { setProfile } from "../../redux/prospect/slice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProspectSlug } from "../../redux/prospect/selectors";
-import ProspectProfileContainer from "../molecules/ProspectProfileContainer";
+import { selectProspectProfile } from "../../redux/prospect/selectors";
 import { selectPromptIds } from "../../redux/prompts/selectors";
 import Loading from "../molecules/Loading";
+import ProspectProfile from "../molecules/ProspectProfile";
+import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
 
 const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
@@ -17,39 +18,71 @@ const extractProfileSlug = (url: string): string => {
   return match[1];
 };
 
+export const scrapeProfile = () => {
+  const panel = document.querySelector(".pv-text-details__left-panel")!;
+  const full_name = panel.querySelector("h1")!.innerText;
+  const headline = panel.querySelectorAll("div")[1]!.innerText;
+  const talks_about = panel
+    .querySelectorAll("div")[2]!
+    .querySelector("span")!.innerText;
+  const summary = document
+    .querySelectorAll("main > section")[3]
+    .querySelectorAll("section > div")[2]
+    .querySelector("span")!.innerText;
+  return {
+    success: true,
+    profile: {
+      full_name,
+      headline,
+      talks_about,
+      summary,
+    },
+  };
+};
+
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
   const promptIds = useSelector(selectPromptIds);
 
-  const prospectSlug = useSelector(selectProspectSlug);
+  const profile = useSelector(selectProspectProfile);
   const dispatch = useDispatch();
 
-  const check = () => {
+  const check = async () => {
     setIsChecking(true);
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      if (tabs.length && tabs[0].url) {
-        try {
-          const profileSlug = extractProfileSlug(tabs[0].url);
-          if (profileSlug !== prospectSlug) {
-            dispatch(setProfileSlug(profileSlug));
-          }
-          setIsChecking(false);
-        } catch (e) {
-          dispatch(setProfileSlug(undefined));
-          setIsChecking(false);
-        }
-      } else {
-        dispatch(setProfileSlug(undefined));
-        setIsChecking(false);
-      }
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
     });
+    if (!tab || !tab.id) {
+      dispatch(setProfile(undefined));
+      setIsChecking(false);
+      return;
+    }
+    let slug;
+    try {
+      slug = extractProfileSlug(tab.url!);
+    } catch (e) {
+      dispatch(setProfile(undefined));
+      setIsChecking(false);
+      return;
+    }
+
+    const [
+      {
+        result: { success, profile },
+      },
+    ] = await chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      func: scrapeProfile,
+    });
+    console.log(profile);
+    dispatch(setProfile({ ...profile, slug }));
+    setIsChecking(false);
   };
 
   useEffect(() => {
     check();
   }, []);
-
-  console.log({ isChecking, promptIds });
 
   return (
     <div>
@@ -57,8 +90,11 @@ const Prospect = () => {
         <Loading />
       ) : (
         <>
-          {!!prospectSlug ? (
-            <ProspectProfileContainer />
+          {!!profile ? (
+            <div>
+              <ProspectProfile {...profile} />
+              <ProspectMessagesContainer />
+            </div>
           ) : (
             <>This is not a valid linkedin profile</>
           )}
