@@ -10,8 +10,8 @@ export interface State {
 export interface LinkedInProfile {
   full_name: string;
   headline: string;
-  summary: string;
-  talks_about: string;
+  summary?: string;
+  talks_about?: string;
   slug: string;
 }
 

@@ -6,39 +6,7 @@ import { selectPromptIds } from "../../redux/prompts/selectors";
 import Loading from "../molecules/Loading";
 import ProspectProfile from "../molecules/ProspectProfile";
 import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
-
-const extractProfileSlug = (url: string): string => {
-  const regex = new RegExp(
-    `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/in\\/([^\\/]*)`
-  );
-  const match = url.match(regex);
-  if (!match) {
-    throw new Error("invalid url");
-  }
-  return match[1];
-};
-
-export const scrapeProfile = () => {
-  const panel = document.querySelector(".pv-text-details__left-panel")!;
-  const full_name = panel.querySelector("h1")!.innerText;
-  const headline = panel.querySelectorAll("div")[1]!.innerText;
-  const talks_about = panel
-    .querySelectorAll("div")[2]!
-    .querySelector("span")!.innerText;
-  const summary = document
-    .querySelectorAll("main > section")[3]
-    .querySelectorAll("section > div")[2]
-    .querySelector("span")!.innerText;
-  return {
-    success: true,
-    profile: {
-      full_name,
-      headline,
-      talks_about,
-      summary,
-    },
-  };
-};
+import { extractProfileSlug, scrapeProfile } from "../../linkedin";
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
@@ -67,15 +35,19 @@ const Prospect = () => {
       return;
     }
 
-    const [
-      {
-        result: { success, profile },
-      },
-    ] = await chrome.scripting.executeScript({
+    const [{ result }] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: scrapeProfile,
     });
-    console.log(profile);
+
+    if (!result.success) {
+      dispatch(setProfile(undefined));
+      setIsChecking(false);
+      return;
+    }
+
+    const { profile } = result;
+
     dispatch(setProfile({ ...profile, slug }));
     setIsChecking(false);
   };

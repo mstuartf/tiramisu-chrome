@@ -17,8 +17,8 @@ const ProspectProfile = ({
           <p className="text-gray-400">{headline}</p>
         </div>
       </div>
-      <p className="text-gray-400">{talks_about}</p>
-      <About summary={summary} />
+      {talks_about && <p className="text-gray-400">{talks_about}</p>}
+      {summary && <About summary={summary} />}
     </div>
   </div>
 );

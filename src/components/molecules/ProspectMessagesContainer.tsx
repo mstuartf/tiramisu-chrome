@@ -9,10 +9,10 @@ import {
 import { createGenerateMessages } from "../../redux/prospect/actions";
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
-import Loading from "./Loading";
 import { selectSelectedPrompt } from "../../redux/prompts/selectors";
 import SelectPrompt from "./SelectPrompt";
 import Btn from "../atoms/Btn";
+import Spinner from "../atoms/Spinner";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
@@ -44,11 +44,15 @@ const ProspectMessagesContainer = () => {
           {!!messages ? "Regenerate" : "Generate"}
         </Btn>
       </div>
-      {messagesIsLoading ? (
-        <Loading />
-      ) : (
-        <>{!!messages ? <ProspectMessages {...messages} /> : null}</>
-      )}
+      <div className="py-4">
+        {messagesIsLoading ? (
+          <div className="flex items-center justify-center">
+            <Spinner />
+          </div>
+        ) : (
+          <>{!!messages ? <ProspectMessages {...messages} /> : null}</>
+        )}
+      </div>
     </div>
   );
 };
