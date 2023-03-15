@@ -14,7 +14,6 @@
     "default_title": "Open Tiramisu"
   },
   "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["https://www.linkedin.com/*"],
   "background": {
     "service_worker": "./static/js/background.js"
   },
