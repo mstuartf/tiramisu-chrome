@@ -14,7 +14,7 @@
     "default_title": "open popup"
   },
   "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["https://*/*"],
+  "host_permissions": ["https://www.linkedin.com/*"],
   "background": {
     "service_worker": "./static/js/background.js"
   },
