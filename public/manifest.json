@@ -1,12 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Tiramisu",
-  "version": "2.0",
-  "icons": {
-    "16": "16.png",
-    "48": "48.png",
-    "128": "128.png"
-  },
+  "version": "2.0.0",
+  "icons": ["16.png", "48.png", "128.png"],
+  "description": "Browse LinkedIn and generate networking ice breakers using AI.",
   "action": {
     "default_icon": "128.png",
     "default_popup": "index.html",
@@ -16,6 +13,5 @@
   "host_permissions": ["https://*/*"],
   "background": {
     "service_worker": "./static/js/background.js"
-  },
-  "key": "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCzNYO49vyIfqdx8Hu4uUJ7cULzjSBb0qZufd2S9cZu0h0rSQZbO0Qj6Qu6bL9Y5W3WpX/Og5PdGtO9uMaZKaC90AqAwGW2gKqPuZtzzb4jwGFk1B2hEpWgsL4GENJa2dl50v1zb9PD6C3cBseNQVLkZNgxrCLX+RCpigyMRJqc6KjJ4RbtWVxfZQIACu9huDPNAAxJufWe9eqYGhEdiVFt0mnNkRFzZyt2Fet3pjcbYxyYIeQZhLsrie8ZqkI/60btyJ6evdPQpUhzf2iHtkIxIsWO1Mes756/vjzaQIXBXx920lGXpWZYLuVSPkd0DwAbCeeRdHSU1YULDucv1LORAgMBAAECggEAAiv3JGVQLrkb30kRqMMMURRl7NoURFnvdNCUlYi3XpsFfzjU9BiqD7DYmL9jYL40CEPsbPS3f02+oefqC+EJztm6nNroCKUzG/IyVfM4917dbJ7s8Sl5Xnox1/85cLV/ObyYCsogw/j4Svhaj/sfYupCxp7+SPApNr1takA/wEBvdpj7w5J/g0TA0f6TH1rZ1mQNa9hCJB2eapneuigyZhb/B6sxIwKAgHH5mVNIeFKJ7U2o5P1QbPof+IU6XayLr7364jvYvn/83KlF8/auwGC4ztqn7JJAGEuUH3gtnE0p7upvqAVuuwo1PZ07/L1tWkZbI8N1eqEI0mTvnB5VeQKBgQD4Zcntpx8ArdoJ/Tsk3C8n1Yp5d2JiNAhPNw+z1I48Rdu//x+ZCtOZDUrG7qnjsPEHJNl7EqgV6zUHSFh44mjRkQW76XQ/dMrwYsSWO81vNbzurKWryg/swoPdQNuQwwnVT05vgBJ/xJzZudEEif/XTq270mB3qQ2v0tFIUekdqQKBgQC4saD9ciRbveuxpiXUdMF11DnhqlQI5SgSwnetaqKqKAmkcrwnPH4vzkTZhclzHkO/oE0PhIgWT1ga+0eW0T4PrkjsHwhXSSZkX5qsE858ERjExJ8cWaa1pBnAB1IMP5WdE2zCZXFFHBJZ31JGBmlvx+andQRbcaARQBvGM2yHqQKBgG3IZw+vDie5rqU9k3c+DWVYnqQCnKv0fTuthTYgmmCPK4lW03tLaqu5UTRM5S8p080pfylC3KEbXEuEsP10a4k7xEIB8wvcrZjCvkn70lb1dDQ0f+BGJPWqHqeZ87CuUtlA/NSQ0RxBJGWiF3wfFcDuGCDr4RDh2Ze84BxLf3FJAoGBAJKZE3L4jZlwR0uL2I0pW4GeQY84dllVIxi42OuCL7kl7HlmRKhUIMjrTcTmp37Db/0DTQdbJ/WlZwaLm0g/r6YcrW8WNrWpr1qOdCPP2N6rZ2CPvMdw9Z1JstK0PNDSC3xRNcubX2v+myZQ12oTns8F+bPDcwDuUKJAo4sPuD55AoGBANbKGyYXV+UwUdERcMo3UvFsHnV4IBiCr556R7EwliUP8Hq/SHhMD0u/LAubkuvg2W7bMxMCN2LzqQlYQbZrLL2bl9PZeYHB3LohzC/PDVjWCdmh3iTvKmeoylVV5tMnio5HrL53SyCWbzjgYsvQ4FFnfrr7aqdQEnA49KeDw1H/"
+  }
 }
