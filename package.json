@@ -48,7 +48,7 @@
     "tailwindcss": "^3.2.2"
   },
   "scripts": {
-    "dist:prepare": "node scripts/deleteKey.js",
+    "dist:prepare": "node deleteKey.js && rm build.zip && zip build.zip build",
     "build:prod": "craco build",
     "build:dev": "env-cmd -f .env.development craco build",
     "pretty-quick": "pretty-quick --staged",
