@@ -11,7 +11,7 @@
   "action": {
     "default_icon": "128.png",
     "default_popup": "index.html",
-    "default_title": "open popup"
+    "default_title": "Open Tiramisu"
   },
   "permissions": ["activeTab", "scripting"],
   "host_permissions": ["https://www.linkedin.com/*"],
