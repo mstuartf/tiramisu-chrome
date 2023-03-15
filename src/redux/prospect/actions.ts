@@ -42,7 +42,7 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
 export const createRecordCopy = createRequestAction<null>(
   `prospect/recordCopy`,
   (msgId: string) => ({
-    url: `message/choices/${msgId}`,
+    url: `messages/choices/${msgId}`,
     authenticated: true,
     method: "PATCH",
     payload: {
