@@ -5,6 +5,7 @@ import { logout } from "../../redux/user/slice";
 import { selectUser } from "../../redux/user/selectors";
 import Loading from "../molecules/Loading";
 import TeamContainer from "../molecules/TeamContainer";
+import packageJson from "../../../package.json";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Account = () => {
   return (
     <div className="grid gap-4">
       <div className="flex justify-between items-center">
-        <div>My account</div>
+        <div>You are currently running version {packageJson.version}.</div>
         <Btn onClick={onLogout}>Logout</Btn>
       </div>
       {admin && <TeamContainer />}
