@@ -1,0 +1,10 @@
+{
+  "description": "Tiramisu is a revolutionary Chrome Extension that makes networking easier than ever! \n\nTiramisu uses AI technology to read through the LinkedIn profile of someone you’re interested in networking with, and then suggests personalised ice breakers to help you start a conversation. \n\nAs a salesperson, you’ll be able to quickly create meaningful connections with potential clients and colleagues without having to waste time on awkward conversations. With Tiramisu, you can start networking quickly and effectively!",
+  "category": "Productivity",
+  "language": "English",
+  "single_purpose_description": "Tiramisu runs on LinkedIn and recommends personalised, ai-generated ice breakers for the profile that the user is viewing.",
+  "permissions": {
+    "activeTab": "The activeTab permission is required so that Tiramisu can check if the user is on a valid LinkedIn profile page and to collect the URL if so.",
+    "scripting": "The scripting permission is required so that (if the user is on a valid LinkedIn profile) Tiramisu can read the profile's public info (name, job title, etc.) and use this to generate personalised ice breakers."
+  }
+}
