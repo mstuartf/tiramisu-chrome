@@ -17,10 +17,7 @@ const Prospect = () => {
 
   const check = async () => {
     setIsChecking(true);
-    const [tab] = await chrome.tabs.query({
-      active: true,
-      currentWindow: true,
-    });
+    const [tab] = await chrome.tabs.query({ active: true });
     if (!tab || !tab.id) {
       dispatch(setProfile(undefined));
       setIsChecking(false);
