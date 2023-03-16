@@ -17,7 +17,7 @@ const About = ({ summary }: { summary: string }) => {
 
   return (
     <div>
-      <div className="text-xs text-gray-400">
+      <div className="text-xs text-gray-400 break-words whitespace-pre-line w-80">
         {!show ? <>{summary.slice(0, LIMIT - 20)}...</> : <>{summary}</>}&nbsp;
       </div>
       <div className="flex justify-end">
