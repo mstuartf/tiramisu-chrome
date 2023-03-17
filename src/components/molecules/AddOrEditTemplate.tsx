@@ -28,9 +28,10 @@ function randomUUID() {
 interface IAddTemplate {
   onAdd: () => void;
   onCancel: () => void;
+  id?: string;
 }
 
-const AddTemplate = ({ onAdd, onCancel }: IAddTemplate) => {
+const AddOrEditTemplate = ({ id, onAdd, onCancel }: IAddTemplate) => {
   const [sectionIds, setSectionIds] = useState<string[]>([]);
   const [sectionObjs, setSectionObjs] = useState<{
     [key: string]: { id: string; content: string; meta?: string };
@@ -84,7 +85,7 @@ const AddTemplate = ({ onAdd, onCancel }: IAddTemplate) => {
   return (
     <div className="grid gap-2">
       <div className="border-b uppercase font-semibold flex justify-between items-center">
-        New template
+        {!!id ? "Edit template" : "New template"}
       </div>
 
       <div className="grid grid-cols-3">
@@ -137,4 +138,4 @@ const AddTemplate = ({ onAdd, onCancel }: IAddTemplate) => {
   );
 };
 
-export default AddTemplate;
+export default AddOrEditTemplate;

@@ -1,7 +1,14 @@
+export interface TemplateSection {
+  id: string;
+  content: string;
+  meta?: string;
+}
+
 export interface Template {
   id: string;
   name: string;
-  text: string;
+  style: string;
+  sections: TemplateSection[];
   custom: boolean;
 }
 
