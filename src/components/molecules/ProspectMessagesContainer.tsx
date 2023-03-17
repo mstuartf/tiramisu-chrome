@@ -9,8 +9,8 @@ import {
 import { createGenerateMessages } from "../../redux/prospect/actions";
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
-import { selectSelectedPrompt } from "../../redux/prompts/selectors";
-import SelectPrompt from "./SelectPrompt";
+import { selectSelectedTemplate } from "../../redux/templates/selectors";
+import SelectTemplate from "./SelectTemplate";
 import Btn from "../atoms/Btn";
 import Spinner from "../atoms/Spinner";
 
@@ -19,11 +19,11 @@ const ProspectMessagesContainer = () => {
   const messagesIsLoading = useSelector(selectProspectMessagesIsLoading);
   const messages = useSelector(selectProspectMessages);
   const messagesError = useSelector(selectProspectMessagesError);
-  const prompt_id = useSelector(selectSelectedPrompt);
+  const template_id = useSelector(selectSelectedTemplate);
   const profile = useSelector(selectProspectProfile);
 
   const generate = () => {
-    dispatch(createGenerateMessages({ profile, prompt_id }));
+    dispatch(createGenerateMessages({ profile, template_id }));
   };
 
   if (messagesError) {
@@ -39,7 +39,7 @@ const ProspectMessagesContainer = () => {
   return (
     <div>
       <div className="grid grid-cols-2 gap-2">
-        <SelectPrompt />
+        <SelectTemplate />
         <Btn onClick={generate} disabled={messagesIsLoading}>
           {!!messages ? "Regenerate" : "Generate"}
         </Btn>

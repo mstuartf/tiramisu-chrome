@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createPatchPrompt,
-  createDeletePrompt,
-} from "../../redux/prompts/actions";
+  createPatchTemplate,
+  createDeleteTemplate,
+} from "../../redux/templates/actions";
 import {
-  createSelectPrompt,
-  selectPromptsIsSaving,
-} from "../../redux/prompts/selectors";
+  createSelectTemplate,
+  selectTemplatesIsSaving,
+} from "../../redux/templates/selectors";
 import Btn from "./Btn";
 import TxtAra from "./TxtAra";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Spinner from "./Spinner";
 
-const Prompt = ({ id }: { id: string }) => {
+const Template = ({ id }: { id: string }) => {
   const dispatch = useDispatch();
 
-  const { text, name, custom } = useSelector(createSelectPrompt(id));
-  const isSaving = useSelector(selectPromptsIsSaving);
+  const { text, name, custom } = useSelector(createSelectTemplate(id));
+  const isSaving = useSelector(selectTemplatesIsSaving);
   const [isEditing, setIsEditing] = useState(false);
   const [localText, setLocalText] = useState(text);
 
   const onSave = () => {
-    dispatch(createPatchPrompt(id, { text: localText }));
+    dispatch(createPatchTemplate(id, { text: localText }));
   };
 
   const onDelete = () => {
-    dispatch(createDeletePrompt(id));
+    dispatch(createDeleteTemplate(id));
   };
 
   const onCancel = () => {
@@ -84,4 +84,4 @@ const Prompt = ({ id }: { id: string }) => {
   );
 };
 
-export default Prompt;
+export default Template;

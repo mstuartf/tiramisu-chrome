@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setProfile } from "../../redux/prospect/slice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProspectProfile } from "../../redux/prospect/selectors";
-import { selectPromptIds } from "../../redux/prompts/selectors";
+import { selectTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import ProspectProfile from "../molecules/ProspectProfile";
 import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
@@ -10,7 +10,7 @@ import { extractProfileSlug, scrapeProfile } from "../../linkedin";
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
-  const promptIds = useSelector(selectPromptIds);
+  const templateIds = useSelector(selectTemplateIds);
 
   const profile = useSelector(selectProspectProfile);
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ const Prospect = () => {
 
   return (
     <div>
-      {isChecking || !promptIds ? (
+      {isChecking || !templateIds ? (
         <Loading />
       ) : (
         <>

@@ -3,7 +3,7 @@ import { LinkedInProfile, MessageSet } from "./types";
 
 export const createGenerateMessages = createRequestAction<MessageSet>(
   `prospect/generateMessages`,
-  (payload: { profile: LinkedInProfile; prompt_id: string }) => ({
+  (payload: { profile: LinkedInProfile; template_id: string }) => ({
     url: `messages/sets`,
     payload,
     method: "POST",

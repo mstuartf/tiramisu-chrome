@@ -1,10 +1,10 @@
 import { createRequestAction } from "../middleware/_api";
-import { ListPromptsRes, Prompt } from "./types";
+import { ListTemplatesRes, Template } from "./types";
 
-export const createListPrompts = createRequestAction<ListPromptsRes>(
-  `prompts/listPrompts`,
+export const createListTemplates = createRequestAction<ListTemplatesRes>(
+  `templates/listTemplates`,
   () => ({
-    url: `prompts`,
+    url: `templates`,
     authenticated: true,
     mockData: {
       status: 200,
@@ -32,10 +32,10 @@ export const createListPrompts = createRequestAction<ListPromptsRes>(
   })
 );
 
-export const createPatchPrompt = createRequestAction<Partial<Prompt>>(
-  `prompts/patchPrompt`,
-  (id: string, payload: Partial<Prompt>) => ({
-    url: `prompts/${id}`,
+export const createPatchTemplate = createRequestAction<Partial<Template>>(
+  `templates/patchTemplate`,
+  (id: string, payload: Partial<Template>) => ({
+    url: `templates/${id}`,
     authenticated: true,
     method: "PATCH",
     payload,
@@ -49,11 +49,11 @@ export const createPatchPrompt = createRequestAction<Partial<Prompt>>(
   })
 );
 
-export const createDeletePrompt = createRequestAction<null>(
-  `prompts/deletePrompt`,
+export const createDeleteTemplate = createRequestAction<null>(
+  `templates/deleteTemplate`,
   (id: string) => ({
     authenticated: true,
-    url: `prompts/${id}`,
+    url: `templates/${id}`,
     method: "DELETE",
     mockData: {
       status: 204,
@@ -62,10 +62,10 @@ export const createDeletePrompt = createRequestAction<null>(
   })
 );
 
-export const createCreatePrompt = createRequestAction<Prompt>(
-  `prompts/createPrompt`,
-  (payload: Omit<Prompt, "id" | "custom">) => ({
-    url: `prompts`,
+export const createCreateTemplate = createRequestAction<Template>(
+  `templates/createTemplate`,
+  (payload: Omit<Template, "id" | "custom">) => ({
+    url: `templates`,
     authenticated: true,
     method: "POST",
     payload,

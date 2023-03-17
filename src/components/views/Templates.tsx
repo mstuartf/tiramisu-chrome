@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import AddTemplate from "../molecules/AddTemplate";
 import { useSelector } from "react-redux";
-import { selectPromptIds } from "../../redux/prompts/selectors";
+import { selectTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import Btn from "../atoms/Btn";
 
 const Templates = () => {
   const [isAdding, setIsAdding] = useState(false);
-  const promptIds = useSelector(selectPromptIds);
+  const templateIds = useSelector(selectTemplateIds);
 
-  if (!promptIds) {
+  if (!templateIds) {
     return <Loading />;
   }
 

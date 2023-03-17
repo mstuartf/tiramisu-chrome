@@ -4,7 +4,7 @@ import Prospect from "../../components/views/Prospect";
 import Templates from "./Templates";
 import NavBar from "../../components/molecules/NavBar";
 import { useDispatch } from "react-redux";
-import { createListPrompts } from "../../redux/prompts/actions";
+import { createListTemplates } from "../../redux/templates/actions";
 import Account from "./Account";
 import { createFetchUser } from "../../redux/user/actions";
 
@@ -13,7 +13,7 @@ const Private = () => {
 
   useEffect(() => {
     // needed by both views, so dispatch here
-    dispatch(createListPrompts());
+    dispatch(createListTemplates());
     dispatch(createFetchUser());
   }, []);
 

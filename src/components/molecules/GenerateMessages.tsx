@@ -1,5 +1,5 @@
 import React from "react";
-import SelectPrompt from "./SelectPrompt";
+import SelectTemplate from "./SelectTemplate";
 import Btn from "../atoms/Btn";
 
 const GenerateMessages = ({
@@ -11,7 +11,7 @@ const GenerateMessages = ({
 }) => {
   return (
     <div className="grid grid-cols-2 gap-2">
-      <SelectPrompt />
+      <SelectTemplate />
       <Btn onClick={onGenerate}>{btnText}</Btn>
     </div>
   );

@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { promptSlice } from "./prompts/slice";
+import { templateSlice } from "./templates/slice";
 import { prospectSlice } from "./prospect/slice";
 import { userSlice } from "./user/slice";
 
 export const rootReducer = combineReducers({
-  prompts: promptSlice.reducer,
+  templates: templateSlice.reducer,
   prospect: prospectSlice.reducer,
   user: userSlice.reducer,
 });
