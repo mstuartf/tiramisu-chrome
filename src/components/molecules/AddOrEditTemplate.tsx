@@ -27,16 +27,19 @@ function randomUUID() {
 }
 
 interface IAddTemplate {
-  onAdd: () => void;
+  onSave: () => void;
   onCancel: () => void;
-  template: ITemplate;
+  template: Omit<ITemplate, "id"> & { id?: string };
 }
 
 const AddOrEditTemplate = ({
   template: { id, name, style, sections },
-  onAdd,
+  onSave,
   onCancel,
 }: IAddTemplate) => {
+  const [localName, setLocalName] = useState(name);
+  const [localStyle, setLocalStyle] = useState(style);
+
   const [sectionIds, setSectionIds] = useState<string[]>(
     sections.map(({ id }) => id)
   );
@@ -100,13 +103,14 @@ const AddOrEditTemplate = ({
   return (
     <div className="grid gap-2">
       <div className="border-b uppercase font-semibold flex justify-between items-center">
-        asdfasgsag
+        {!!id ? "Edit template" : "Add template"}
       </div>
 
       <div className="grid grid-cols-3">
         <div>Name</div>
         <Inpt
-          onChange={() => {}}
+          value={localName}
+          onChange={setLocalName}
           placeholder="e.g. message 1"
           className="col-span-2"
         />
@@ -114,8 +118,13 @@ const AddOrEditTemplate = ({
 
       <div className="grid grid-cols-3">
         <div>Style</div>
-        <Slct onChange={() => {}} className="col-span-2">
-          <option>Cheeky and informal</option>
+        <Slct
+          value={localStyle}
+          onChange={setLocalStyle}
+          className="col-span-2"
+        >
+          <option value="informal">Cheeky and informal</option>
+          <option value="professional">Polite and professional</option>
         </Slct>
       </div>
 

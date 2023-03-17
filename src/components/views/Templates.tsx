@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AddOrEditTemplate from "../molecules/AddOrEditTemplate";
 import { useSelector } from "react-redux";
 import { selectTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
@@ -13,6 +12,11 @@ const Templates = () => {
   const [editTemplateId, setEditTemplateId] = useState<string | undefined>();
   const templateIds = useSelector(selectTemplateIds);
 
+  const onSaveOrCancel = () => {
+    setEditTemplateId(undefined);
+    setIsAdding(false);
+  };
+
   if (!templateIds) {
     return <Loading />;
   }
@@ -21,18 +25,15 @@ const Templates = () => {
     return (
       <EditTemplateContainer
         id={editTemplateId}
-        onAdd={console.log}
-        onCancel={() => setEditTemplateId(undefined)}
+        onSave={onSaveOrCancel}
+        onCancel={onSaveOrCancel}
       />
     );
   }
 
   if (isAdding) {
     return (
-      <AddTemplateContainer
-        onAdd={console.log}
-        onCancel={() => setIsAdding(false)}
-      />
+      <AddTemplateContainer onSave={onSaveOrCancel} onCancel={onSaveOrCancel} />
     );
   }
 

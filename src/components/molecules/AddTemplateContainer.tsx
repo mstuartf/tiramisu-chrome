@@ -3,13 +3,12 @@ import AddOrEditTemplate from "./AddOrEditTemplate";
 import { ITemplate } from "../../redux/templates/types";
 
 interface IAddTemplateContainer {
-  onAdd: () => void;
+  onSave: () => void;
   onCancel: () => void;
 }
 
 const AddTemplateContainer = (props: IAddTemplateContainer) => {
-  const template: ITemplate = {
-    id: "",
+  const template: Omit<ITemplate, "id"> & { id?: string } = {
     name: "",
     style: "",
     sections: [],

@@ -5,7 +5,7 @@ import AddOrEditTemplate from "./AddOrEditTemplate";
 
 interface IEditTemplateContainer {
   id: string;
-  onAdd: () => void;
+  onSave: () => void;
   onCancel: () => void;
 }
 
