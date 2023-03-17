@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ListTemplatesRes, Template, State } from "./types";
+import { ListTemplatesRes, ITemplate, State } from "./types";
 
 const initialState: State = {
   templatesLoading: false,
@@ -41,7 +41,7 @@ export const templateSlice = createSlice({
     patchTemplatePending: (state) => {
       state.templateSaving = true;
     },
-    patchTemplateSuccess: (state, { payload }: PayloadAction<Template>) => {
+    patchTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
       state.templateSaving = false;
       state.templates!.values[payload.id] = {
         ...state.templates!.values[payload.id],
@@ -61,7 +61,7 @@ export const templateSlice = createSlice({
         meta: {
           originalRequest: { url },
         },
-      }: PayloadAction<Template> & {
+      }: PayloadAction<ITemplate> & {
         meta: { originalRequest: { url: string } };
       }
     ) => {
@@ -75,7 +75,7 @@ export const templateSlice = createSlice({
     createTemplatePending: (state) => {
       state.templateSaving = true;
     },
-    createTemplateSuccess: (state, { payload }: PayloadAction<Template>) => {
+    createTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
       state.templateSaving = false;
       state.templates!.ids.push(payload.id);
       state.templates!.values[payload.id] = payload;

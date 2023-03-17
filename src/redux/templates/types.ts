@@ -1,25 +1,25 @@
-export interface TemplateSection {
+export interface ITemplateSection {
   id: string;
   content: string;
   meta?: string;
 }
 
-export interface Template {
+export interface ITemplate {
   id: string;
   name: string;
   style: string;
-  sections: TemplateSection[];
+  sections: ITemplateSection[];
   custom: boolean;
 }
 
-export type ListTemplatesRes = Template[];
+export type ListTemplatesRes = ITemplate[];
 
 export interface State {
   templatesLoading: boolean;
   templates?: {
     ids: string[];
     values: {
-      [id: string]: Template;
+      [id: string]: ITemplate;
     };
   };
   templateSaving: boolean;

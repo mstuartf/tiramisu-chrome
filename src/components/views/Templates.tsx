@@ -5,9 +5,11 @@ import { selectTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import Btn from "../atoms/Btn";
 import TemplateCard from "../molecules/TemplateCard";
+import EditTemplateContainer from "../molecules/EditTemplateContainer";
+import AddTemplateContainer from "../molecules/AddTemplateContainer";
 
 const Templates = () => {
-  const [isAddingOrEditing, setIsAddingOrEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [editTemplateId, setEditTemplateId] = useState<string | undefined>();
   const templateIds = useSelector(selectTemplateIds);
 
@@ -15,15 +17,21 @@ const Templates = () => {
     return <Loading />;
   }
 
-  if (isAddingOrEditing) {
+  if (editTemplateId) {
     return (
-      <AddOrEditTemplate
+      <EditTemplateContainer
         id={editTemplateId}
-        onCancel={() => {
-          setIsAddingOrEditing(false);
-          setEditTemplateId(undefined);
-        }}
         onAdd={console.log}
+        onCancel={() => setEditTemplateId(undefined)}
+      />
+    );
+  }
+
+  if (isAdding) {
+    return (
+      <AddTemplateContainer
+        onAdd={console.log}
+        onCancel={() => setIsAdding(false)}
       />
     );
   }
@@ -31,16 +39,9 @@ const Templates = () => {
   return (
     <div className="grid gap-2">
       {templateIds.map((id) => (
-        <TemplateCard
-          id={id}
-          key={id}
-          onEdit={() => {
-            setIsAddingOrEditing(true);
-            setEditTemplateId(id);
-          }}
-        />
+        <TemplateCard id={id} key={id} onEdit={() => setEditTemplateId(id)} />
       ))}
-      <Btn onClick={() => setIsAddingOrEditing(true)}>Add</Btn>
+      <Btn onClick={() => setIsAdding(true)}>Add</Btn>
     </div>
   );
 };

@@ -4,6 +4,7 @@ import Slct from "../atoms/Slct";
 import TemplateSection from "./TemplateSection";
 import Btn from "../atoms/Btn";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import { ITemplate, ITemplateSection } from "../../redux/templates/types";
 
 function randomUUID() {
   const S4 = function () {
@@ -28,14 +29,28 @@ function randomUUID() {
 interface IAddTemplate {
   onAdd: () => void;
   onCancel: () => void;
-  id?: string;
+  template: ITemplate;
 }
 
-const AddOrEditTemplate = ({ id, onAdd, onCancel }: IAddTemplate) => {
-  const [sectionIds, setSectionIds] = useState<string[]>([]);
+const AddOrEditTemplate = ({
+  template: { id, name, style, sections },
+  onAdd,
+  onCancel,
+}: IAddTemplate) => {
+  const [sectionIds, setSectionIds] = useState<string[]>(
+    sections.map(({ id }) => id)
+  );
   const [sectionObjs, setSectionObjs] = useState<{
-    [key: string]: { id: string; content: string; meta?: string };
-  }>({});
+    [key: string]: ITemplateSection;
+  }>(
+    sections.reduce(
+      (prev, next) => ({
+        ...prev,
+        [next.id]: next,
+      }),
+      {}
+    )
+  );
 
   const onUpdate = ({
     id,
@@ -85,7 +100,7 @@ const AddOrEditTemplate = ({ id, onAdd, onCancel }: IAddTemplate) => {
   return (
     <div className="grid gap-2">
       <div className="border-b uppercase font-semibold flex justify-between items-center">
-        {!!id ? "Edit template" : "New template"}
+        asdfasgsag
       </div>
 
       <div className="grid grid-cols-3">
