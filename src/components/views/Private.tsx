@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import Prospect from "../../components/views/Prospect";
-import Styles from "../../components/views/Styles";
+import Templates from "./Templates";
 import NavBar from "../../components/molecules/NavBar";
 import { useDispatch } from "react-redux";
 import { createListPrompts } from "../../redux/prompts/actions";
@@ -25,8 +25,8 @@ const Private = () => {
           <Route path="/prospect">
             <Prospect />
           </Route>
-          <Route path="/styles">
-            <Styles />
+          <Route path="/templates">
+            <Templates />
           </Route>
           <Route path="/account">
             <Account />

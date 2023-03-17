@@ -25,7 +25,7 @@ const NavBar = () => {
           <NavBarItem to="/prospect" text="Prospects" />
         </li>
         <li>
-          <NavBarItem to="/styles" text="Styles" />
+          <NavBarItem to="/templates" text="Templates" />
         </li>
         <li>
           <NavBarItem to="/account" text="Account" />
