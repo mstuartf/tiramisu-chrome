@@ -12,7 +12,7 @@ const Templates = () => {
   const [editTemplateId, setEditTemplateId] = useState<string | undefined>();
   const templateIds = useSelector(selectTemplateIds);
 
-  const onSaveOrCancel = () => {
+  const onClose = () => {
     setEditTemplateId(undefined);
     setIsAdding(false);
   };
@@ -22,19 +22,11 @@ const Templates = () => {
   }
 
   if (editTemplateId) {
-    return (
-      <EditTemplateContainer
-        id={editTemplateId}
-        onSave={onSaveOrCancel}
-        onCancel={onSaveOrCancel}
-      />
-    );
+    return <EditTemplateContainer id={editTemplateId} onClose={onClose} />;
   }
 
   if (isAdding) {
-    return (
-      <AddTemplateContainer onSave={onSaveOrCancel} onCancel={onSaveOrCancel} />
-    );
+    return <AddTemplateContainer onClose={onClose} />;
   }
 
   return (

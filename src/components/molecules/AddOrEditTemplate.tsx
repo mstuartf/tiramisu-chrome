@@ -5,6 +5,7 @@ import TemplateSection from "./TemplateSection";
 import Btn from "../atoms/Btn";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { ITemplate, ITemplateSection } from "../../redux/templates/types";
+import { templateStyles } from "../../constants";
 
 function randomUUID() {
   const S4 = function () {
@@ -27,18 +28,17 @@ function randomUUID() {
 }
 
 interface IAddTemplate {
-  onSave: () => void;
-  onCancel: () => void;
+  onClose: () => void;
   template: Omit<ITemplate, "id"> & { id?: string };
 }
 
 const AddOrEditTemplate = ({
   template: { id, name, style, sections },
-  onSave,
-  onCancel,
+  onClose,
 }: IAddTemplate) => {
   const [localName, setLocalName] = useState(name);
   const [localStyle, setLocalStyle] = useState(style);
+  const [customStyleMeta, setCustomStyleMeta] = useState<string | undefined>();
 
   const [sectionIds, setSectionIds] = useState<string[]>(
     sections.map(({ id }) => id)
@@ -107,7 +107,7 @@ const AddOrEditTemplate = ({
       </div>
 
       <div className="grid grid-cols-3">
-        <div>Name</div>
+        <div className="flex items-center">Name</div>
         <Inpt
           value={localName}
           onChange={setLocalName}
@@ -117,16 +117,31 @@ const AddOrEditTemplate = ({
       </div>
 
       <div className="grid grid-cols-3">
-        <div>Style</div>
+        <div className="flex items-center">Style</div>
         <Slct
           value={localStyle}
           onChange={setLocalStyle}
           className="col-span-2"
         >
-          <option value="informal">Cheeky and informal</option>
-          <option value="professional">Polite and professional</option>
+          {templateStyles.map(({ name, description }) => (
+            <option value={name} key={name}>
+              {description}
+            </option>
+          ))}
         </Slct>
       </div>
+
+      {localStyle === "custom" && (
+        <div className="grid grid-cols-3">
+          <div className="flex items-center">Custom style</div>
+          <Inpt
+            value={customStyleMeta}
+            onChange={setCustomStyleMeta}
+            placeholder="e.g. wacky and goofy"
+            className="col-span-2"
+          />
+        </div>
+      )}
 
       <div className="py-2 grid gap-2">
         <div className="border-b uppercase font-semibold flex justify-between items-center">
@@ -148,12 +163,13 @@ const AddOrEditTemplate = ({
               index={index}
               onDelete={onDeleteSection}
               onMove={onMoveSection}
+              nbSections={sectionIds.length}
             />
           ))}
       </div>
 
       <div className="flex justify-between">
-        <Btn kind="outline" onClick={onCancel}>
+        <Btn kind="outline" onClick={onClose}>
           Cancel
         </Btn>
         <Btn>Save</Btn>

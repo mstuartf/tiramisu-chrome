@@ -3,8 +3,7 @@ import AddOrEditTemplate from "./AddOrEditTemplate";
 import { ITemplate } from "../../redux/templates/types";
 
 interface IAddTemplateContainer {
-  onSave: () => void;
-  onCancel: () => void;
+  onClose: () => void;
 }
 
 const AddTemplateContainer = (props: IAddTemplateContainer) => {
