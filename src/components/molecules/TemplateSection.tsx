@@ -15,6 +15,7 @@ interface IAddTemplateSection {
   onDelete: (id: string) => void;
   onMove: (id: string, d: 1 | -1) => void;
   nbSections: number;
+  isSaving: boolean;
 }
 
 const TemplateSection = ({
@@ -23,6 +24,7 @@ const TemplateSection = ({
   onMove,
   onDelete,
   nbSections,
+  isSaving,
 }: IAddTemplateSection) => {
   return (
     <div className="border rounded shadow p-2 grid gap-2">
@@ -32,22 +34,25 @@ const TemplateSection = ({
           <button
             onClick={() => onMove(id, 1)}
             className={order >= nbSections - 1 ? "invisible" : ""}
+            disabled={isSaving}
           >
             <ChevronDownIcon className="h-4 w-4 text-gray-400" />
           </button>
           <button
             onClick={() => onMove(id, -1)}
             className={order <= 0 ? "invisible" : ""}
+            disabled={isSaving}
           >
             <ChevronUpIcon className="h-4 w-4 text-gray-400" />
           </button>
-          <button onClick={() => onDelete(id)}>
+          <button onClick={() => onDelete(id)} disabled={isSaving}>
             <XMarkIcon className="h-4 w-4 text-gray-400" />
           </button>
         </div>
       </div>
       <div>
         <Slct
+          disabled={isSaving}
           onChange={(value) =>
             onUpdate({ id, content: value, meta, order, ...rest })
           }
@@ -62,6 +67,7 @@ const TemplateSection = ({
 
       <div>
         <Inpt
+          disabled={isSaving}
           onChange={(value) =>
             onUpdate({ id, content, meta: value, order, ...rest })
           }

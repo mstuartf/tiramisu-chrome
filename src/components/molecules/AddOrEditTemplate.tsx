@@ -120,6 +120,7 @@ const AddOrEditTemplate = ({
       <div className="grid grid-cols-3">
         <div className="flex items-center">Name</div>
         <Inpt
+          disabled={isSaving}
           value={localName}
           onChange={setLocalName}
           placeholder="e.g. message 1"
@@ -130,6 +131,7 @@ const AddOrEditTemplate = ({
       <div className="grid grid-cols-3">
         <div className="flex items-center">Style</div>
         <Slct
+          disabled={isSaving}
           value={localStyle}
           onChange={setLocalStyle}
           className="col-span-2"
@@ -146,6 +148,7 @@ const AddOrEditTemplate = ({
         <div className="grid grid-cols-3">
           <div className="flex items-center">Custom style</div>
           <Inpt
+            disabled={isSaving}
             value={customStyleMeta}
             onChange={setCustomStyleMeta}
             placeholder="e.g. wacky and goofy"
@@ -158,7 +161,7 @@ const AddOrEditTemplate = ({
         <div className="border-b uppercase font-semibold flex justify-between items-center">
           <span>Sections ({sectionIds.length})</span>
           <div>
-            <button onClick={onAddSection}>
+            <button onClick={onAddSection} disabled={isSaving}>
               <PlusIcon className="h-4 w-4 text-gray-400" />
             </button>
           </div>
@@ -173,16 +176,19 @@ const AddOrEditTemplate = ({
               onDelete={onDeleteSection}
               onMove={onMoveSection}
               nbSections={sectionIds.length}
+              isSaving={isSaving}
             />
           ))}
       </div>
 
       <div className="flex justify-between">
-        <Btn kind="outline" onClick={onCancel}>
+        <Btn kind="outline" onClick={onCancel} disabled={isSaving}>
           Cancel
         </Btn>
         <div>{isSaving && <Spinner />}</div>
-        <Btn onClick={onSave}>Save</Btn>
+        <Btn onClick={onSave} disabled={isSaving}>
+          Save
+        </Btn>
       </div>
     </div>
   );
