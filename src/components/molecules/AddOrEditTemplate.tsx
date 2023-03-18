@@ -188,7 +188,7 @@ const AddOrEditTemplate = ({
         <div className="border-b uppercase font-semibold flex justify-between items-center">
           <span>Sections ({sectionIds.length})</span>
           <div>
-            <button onClick={onAddSection} disabled={isSaving}>
+            <button onClick={onAddSection} disabled={isSaving} type="button">
               <PlusIcon className="h-4 w-4 text-gray-400" />
             </button>
           </div>
@@ -209,7 +209,12 @@ const AddOrEditTemplate = ({
       </div>
 
       <div className="flex justify-between">
-        <Btn kind="outline" onClick={onCancel} disabled={isSaving}>
+        <Btn
+          kind="outline"
+          onClick={onCancel}
+          disabled={isSaving}
+          type="button"
+        >
           Cancel
         </Btn>
         <div>{isSaving && <Spinner />}</div>

@@ -32,6 +32,7 @@ const TemplateSection = ({
         <span>Section {order + 1}</span>
         <div className="flex gap-2">
           <button
+            type="button"
             onClick={() => onMove(id, 1)}
             className={order >= nbSections - 1 ? "invisible" : ""}
             disabled={isSaving}
@@ -39,13 +40,18 @@ const TemplateSection = ({
             <ChevronDownIcon className="h-4 w-4 text-gray-400" />
           </button>
           <button
+            type="button"
             onClick={() => onMove(id, -1)}
             className={order <= 0 ? "invisible" : ""}
             disabled={isSaving}
           >
             <ChevronUpIcon className="h-4 w-4 text-gray-400" />
           </button>
-          <button onClick={() => onDelete(id)} disabled={isSaving}>
+          <button
+            onClick={() => onDelete(id)}
+            disabled={isSaving}
+            type="button"
+          >
             <XMarkIcon className="h-4 w-4 text-gray-400" />
           </button>
         </div>
