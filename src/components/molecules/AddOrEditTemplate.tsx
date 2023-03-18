@@ -55,14 +55,7 @@ const AddOrEditTemplate = ({
     )
   );
 
-  const onUpdate = ({
-    id,
-    ...rest
-  }: {
-    id: string;
-    content: string;
-    meta?: string;
-  }) => {
+  const onUpdate = ({ id, ...rest }: ITemplateSection) => {
     setSectionObjs({
       ...sectionObjs,
       [id]: {
@@ -80,6 +73,7 @@ const AddOrEditTemplate = ({
       [id]: {
         id,
         content: "observation",
+        order: sectionIds.length,
       },
     });
   };
@@ -98,6 +92,18 @@ const AddOrEditTemplate = ({
     arr.splice(fromIndex, 1);
     arr.splice(toIndex, 0, id);
     setSectionIds(arr);
+    setSectionObjs(
+      arr.reduce(
+        (prev, next, i) => ({
+          ...prev,
+          [next]: {
+            ...sectionObjs[next],
+            order: i,
+          },
+        }),
+        {}
+      )
+    );
   };
 
   return (
@@ -154,13 +160,11 @@ const AddOrEditTemplate = ({
         </div>
         {sectionIds
           .map((id) => sectionObjs[id])
-          .map(({ id, content, meta }, index) => (
+          .map((section) => (
             <TemplateSection
-              id={id}
-              content={content}
+              section={section}
               onUpdate={onUpdate}
-              key={id}
-              index={index}
+              key={section.id}
               onDelete={onDeleteSection}
               onMove={onMoveSection}
               nbSections={sectionIds.length}

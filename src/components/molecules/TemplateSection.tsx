@@ -2,28 +2,23 @@ import React from "react";
 import Inpt from "../atoms/Inpt";
 import Slct from "../atoms/Slct";
 import {
-  XMarkIcon,
-  ChevronUpIcon,
   ChevronDownIcon,
+  ChevronUpIcon,
+  XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { sectionTypes } from "../../constants";
+import { ITemplateSection } from "../../redux/templates/types";
 
 interface IAddTemplateSection {
-  id: string;
-  index: number;
-  content: string;
-  meta?: string;
-  onUpdate: (updated: { id: string; content: string; meta?: string }) => void;
+  section: ITemplateSection;
+  onUpdate: (updated: ITemplateSection) => void;
   onDelete: (id: string) => void;
   onMove: (id: string, d: 1 | -1) => void;
   nbSections: number;
 }
 
 const TemplateSection = ({
-  id,
-  index,
-  content,
-  meta,
+  section: { id, content, meta, order, ...rest },
   onUpdate,
   onMove,
   onDelete,
@@ -32,25 +27,31 @@ const TemplateSection = ({
   return (
     <div className="border rounded shadow p-2 grid gap-2">
       <div className="flex justify-between">
-        <span>Section {index + 1}</span>
+        <span>Section {order + 1}</span>
         <div className="flex gap-2">
-          {index < nbSections - 1 && (
-            <button onClick={() => onMove(id, 1)}>
-              <ChevronDownIcon className="h-4 w-4 text-gray-400" />
-            </button>
-          )}
-          {index > 0 && (
-            <button onClick={() => onMove(id, -1)}>
-              <ChevronUpIcon className="h-4 w-4 text-gray-400" />
-            </button>
-          )}
+          <button
+            onClick={() => onMove(id, 1)}
+            className={order >= nbSections - 1 ? "invisible" : ""}
+          >
+            <ChevronDownIcon className="h-4 w-4 text-gray-400" />
+          </button>
+          <button
+            onClick={() => onMove(id, -1)}
+            className={order <= 0 ? "invisible" : ""}
+          >
+            <ChevronUpIcon className="h-4 w-4 text-gray-400" />
+          </button>
           <button onClick={() => onDelete(id)}>
             <XMarkIcon className="h-4 w-4 text-gray-400" />
           </button>
         </div>
       </div>
       <div>
-        <Slct onChange={(value) => onUpdate({ id, content: value, meta })}>
+        <Slct
+          onChange={(value) =>
+            onUpdate({ id, content: value, meta, order, ...rest })
+          }
+        >
           {sectionTypes.map(({ name, description }) => (
             <option value={name} key={name}>
               {description}
@@ -61,7 +62,9 @@ const TemplateSection = ({
 
       <div>
         <Inpt
-          onChange={(value) => onUpdate({ id, content, meta: value })}
+          onChange={(value) =>
+            onUpdate({ id, content, meta: value, order, ...rest })
+          }
           placeholder="add any additional info here"
         />
       </div>

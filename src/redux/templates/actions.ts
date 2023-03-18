@@ -17,6 +17,7 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
           sections: [
             {
               id: "s21",
+              order: 0,
               content: "blah",
             },
           ],
