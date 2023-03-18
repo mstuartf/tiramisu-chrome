@@ -6,7 +6,7 @@ import {
   ChevronUpIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { sectionTypes } from "../../constants";
+import { sectionTypes, templateStyles } from "../../constants";
 import { ITemplateSection } from "../../redux/templates/types";
 
 interface IAddTemplateSection {
@@ -52,7 +52,9 @@ const TemplateSection = ({
       </div>
       <div>
         <Slct
+          required
           disabled={isSaving}
+          value={content}
           onChange={(value) =>
             onUpdate({ id, content: value, meta, order, ...rest })
           }
@@ -68,10 +70,17 @@ const TemplateSection = ({
       <div>
         <Inpt
           disabled={isSaving}
+          value={meta}
           onChange={(value) =>
             onUpdate({ id, content, meta: value, order, ...rest })
           }
-          placeholder="add any additional info here"
+          placeholder={
+            sectionTypes.find(({ name }) => name === content)!
+              .metaPlaceholder || "Additional guidance (optional)"
+          }
+          required={
+            sectionTypes.find(({ name }) => name === content)!.metaRequired
+          }
         />
       </div>
     </div>

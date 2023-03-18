@@ -26,13 +26,14 @@ const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
           <>
             <div className="text-gray-400">Sections</div>
             <div className="col-span-2">
-              {sections.map(({ content, meta }, index) => (
+              {sections.map(({ content, meta: sectionMeta }, index) => (
                 <div key={content}>
                   {index + 1}.{" "}
                   {
                     sectionTypes.find(({ name }) => name === content)!
                       .description
                   }
+                  {!!sectionMeta && <>&nbsp;({sectionMeta})</>}
                 </div>
               ))}
             </div>

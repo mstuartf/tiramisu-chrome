@@ -9,8 +9,9 @@ import {
   ITemplateSection,
   TemplateSaveErrors,
 } from "../../redux/templates/types";
-import { templateStyles } from "../../constants";
+import { sectionTypes, templateStyles } from "../../constants";
 import Spinner from "../atoms/Spinner";
+import { useForm } from "react-hook-form";
 
 function randomUUID() {
   const S4 = function () {
@@ -46,6 +47,8 @@ const AddOrEditTemplate = ({
   onCancel,
   isSaving,
 }: IAddTemplate) => {
+  const { handleSubmit } = useForm();
+
   const [localName, setLocalName] = useState(name);
   const [localStyle, setLocalStyle] = useState(style);
   const [customStyleMeta, setCustomStyleMeta] = useState(meta);
@@ -92,7 +95,7 @@ const AddOrEditTemplate = ({
       ...sectionObjs,
       [id]: {
         id,
-        content: "observation",
+        content: sectionTypes[0].name,
         order: sectionIds.length,
       },
     });
@@ -127,7 +130,7 @@ const AddOrEditTemplate = ({
   };
 
   return (
-    <div className="grid gap-2">
+    <form className="grid gap-2" onSubmit={handleSubmit(onSave)}>
       <div className="border-b uppercase font-semibold flex justify-between items-center">
         {id !== "__placeholder__" ? "Edit template" : "Add template"}
       </div>
@@ -137,6 +140,7 @@ const AddOrEditTemplate = ({
         <Inpt
           disabled={isSaving}
           value={localName}
+          required
           onChange={setLocalName}
           placeholder="e.g. message 1"
           className="col-span-2"
@@ -148,6 +152,7 @@ const AddOrEditTemplate = ({
         <Slct
           disabled={isSaving}
           value={localStyle}
+          required
           onChange={setLocalStyle}
           className="col-span-2"
         >
@@ -166,8 +171,15 @@ const AddOrEditTemplate = ({
             disabled={isSaving}
             value={customStyleMeta}
             onChange={setCustomStyleMeta}
-            placeholder="e.g. wacky and goofy"
+            placeholder={
+              templateStyles.find(({ name }) => name === localStyle)!
+                .metaPlaceholder
+            }
             className="col-span-2"
+            required={
+              templateStyles.find(({ name }) => name === localStyle)!
+                .metaRequired
+            }
           />
         </div>
       )}
@@ -201,11 +213,11 @@ const AddOrEditTemplate = ({
           Cancel
         </Btn>
         <div>{isSaving && <Spinner />}</div>
-        <Btn onClick={onSave} disabled={isSaving}>
+        <Btn disabled={isSaving} type="submit">
           Save
         </Btn>
       </div>
-    </div>
+    </form>
   );
 };
 
