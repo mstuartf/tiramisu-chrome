@@ -1,23 +1,34 @@
 import React, { useState } from "react";
 import AddOrEditTemplate from "./AddOrEditTemplate";
-import { ITemplate } from "../../redux/templates/types";
+import { INewTemplate, ITemplate } from "../../redux/templates/types";
+import { templateStyles } from "../../constants";
 
 interface IAddTemplateContainer {
   onClose: () => void;
 }
 
 const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
-  const template: Omit<ITemplate, "id"> & { id?: string } = {
+  const template: ITemplate = {
+    id: "__placeholder__",
     name: "",
-    style: "",
+    style: templateStyles[0].name,
     sections: [],
-    custom: true,
   };
 
   const [isSaving, setIsSaving] = useState(false);
 
-  const onSave = () => {
+  const onSave = ({ name, sections, style }: ITemplate) => {
     setIsSaving(true);
+    const updated: INewTemplate = {
+      name,
+      style,
+      sections: sections.map(({ content, meta, order }) => ({
+        content,
+        meta,
+        order,
+      })),
+    };
+    console.log(updated);
     // todo: request
     // todo: onClose
   };

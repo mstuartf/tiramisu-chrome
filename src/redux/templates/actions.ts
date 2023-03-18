@@ -11,27 +11,24 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
       body: [
         {
           id: "abc123",
-          custom: false,
           name: "Funny",
           style: "informal",
           sections: [
             {
               id: "s21",
               order: 0,
-              content: "blah",
+              content: "profile_observation",
             },
           ],
         },
         {
           id: "abc6",
-          custom: true,
           name: "Risky",
           style: "professional",
           sections: [],
         },
         {
           id: "abc456",
-          custom: false,
           name: "Serious",
           style: "professional",
           sections: [],
@@ -81,7 +78,6 @@ export const createCreateTemplate = createRequestAction<ITemplate>(
       status: 204,
       body: {
         id: "new123",
-        custom: true,
         ...payload,
         sections: payload.sections.map((section, index) => ({
           id: `${index}`,

@@ -12,7 +12,6 @@ export interface ITemplate {
   name: string;
   style: string;
   sections: ITemplateSection[];
-  custom: boolean;
 }
 
 export type INewTemplate = Omit<ITemplate, "id" | "sections" | "custom"> & {

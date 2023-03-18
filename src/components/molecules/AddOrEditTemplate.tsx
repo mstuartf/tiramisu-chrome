@@ -29,15 +29,15 @@ function randomUUID() {
 }
 
 interface IAddTemplate {
-  onSave: () => void;
+  onSave: (template: ITemplate) => void;
   onCancel: () => void;
-  template: Omit<ITemplate, "id"> & { id?: string };
+  template: ITemplate;
   isSaving: boolean;
 }
 
 const AddOrEditTemplate = ({
   template: { id, name, style, sections },
-  onSave,
+  onSave: onSaveProp,
   onCancel,
   isSaving,
 }: IAddTemplate) => {
@@ -59,6 +59,15 @@ const AddOrEditTemplate = ({
       {}
     )
   );
+
+  const onSave = () => {
+    onSaveProp({
+      id,
+      name: localName,
+      style: localStyle,
+      sections: sectionIds.map((sectionId) => sectionObjs[sectionId]),
+    });
+  };
 
   const onUpdate = ({ id, ...rest }: ITemplateSection) => {
     setSectionObjs({
@@ -114,7 +123,7 @@ const AddOrEditTemplate = ({
   return (
     <div className="grid gap-2">
       <div className="border-b uppercase font-semibold flex justify-between items-center">
-        {!!id ? "Edit template" : "Add template"}
+        {id !== "__placeholder__" ? "Edit template" : "Add template"}
       </div>
 
       <div className="grid grid-cols-3">
