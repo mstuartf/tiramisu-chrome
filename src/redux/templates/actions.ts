@@ -1,5 +1,5 @@
 import { createRequestAction } from "../middleware/_api";
-import { ListTemplatesRes, ITemplate } from "./types";
+import { ListTemplatesRes, ITemplate, INewTemplate } from "./types";
 
 export const createListTemplates = createRequestAction<ListTemplatesRes>(
   `templates/listTemplates`,
@@ -40,17 +40,16 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
   })
 );
 
-export const createPatchTemplate = createRequestAction<Partial<ITemplate>>(
-  `templates/patchTemplate`,
-  (id: string, payload: Partial<ITemplate>) => ({
+export const createPutTemplate = createRequestAction<Partial<ITemplate>>(
+  `templates/putTemplate`,
+  (id: string, payload: ITemplate) => ({
     url: `templates/${id}`,
     authenticated: true,
-    method: "PATCH",
+    method: "PUT",
     payload,
     mockData: {
       status: 200,
       body: {
-        id,
         ...payload,
       },
     },
@@ -72,7 +71,7 @@ export const createDeleteTemplate = createRequestAction<null>(
 
 export const createCreateTemplate = createRequestAction<ITemplate>(
   `templates/createTemplate`,
-  (payload: Omit<ITemplate, "id" | "custom">) => ({
+  (payload: INewTemplate) => ({
     url: `templates`,
     authenticated: true,
     method: "POST",
@@ -83,6 +82,10 @@ export const createCreateTemplate = createRequestAction<ITemplate>(
         id: "new123",
         custom: true,
         ...payload,
+        sections: payload.sections.map((section, index) => ({
+          id: `${index}`,
+          ...section,
+        })),
       },
     },
   })

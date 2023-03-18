@@ -4,6 +4,8 @@ export interface ITemplateSection {
   meta?: string;
 }
 
+export type INewTemplateSection = Omit<ITemplateSection, "id">;
+
 export interface ITemplate {
   id: string;
   name: string;
@@ -11,6 +13,10 @@ export interface ITemplate {
   sections: ITemplateSection[];
   custom: boolean;
 }
+
+export type INewTemplate = Omit<ITemplate, "id" | "sections" | "custom"> & {
+  sections: INewTemplateSection[];
+};
 
 export type ListTemplatesRes = ITemplate[];
 
