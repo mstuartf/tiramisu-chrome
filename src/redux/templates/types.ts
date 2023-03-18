@@ -12,6 +12,7 @@ export interface ITemplate {
   name: string;
   style: string;
   sections: ITemplateSection[];
+  meta?: string;
 }
 
 export type INewTemplate = Omit<ITemplate, "id" | "sections" | "custom"> & {
@@ -29,6 +30,10 @@ export interface State {
     };
   };
   templateSaving: boolean;
-  templateSavingErrors: string[];
+  templateSavingErrors: TemplateSaveErrors[];
   selectedTemplate?: string;
+}
+
+export interface TemplateSaveErrors {
+  description: string;
 }

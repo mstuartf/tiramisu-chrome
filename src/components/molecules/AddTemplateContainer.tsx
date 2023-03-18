@@ -55,6 +55,7 @@ const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
       onCancel={onClose}
       onSave={onSave}
       isSaving={localIsSaving}
+      errors={errors}
     />
   );
 };

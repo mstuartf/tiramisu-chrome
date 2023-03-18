@@ -4,7 +4,11 @@ import Slct from "../atoms/Slct";
 import TemplateSection from "./TemplateSection";
 import Btn from "../atoms/Btn";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import { ITemplate, ITemplateSection } from "../../redux/templates/types";
+import {
+  ITemplate,
+  ITemplateSection,
+  TemplateSaveErrors,
+} from "../../redux/templates/types";
 import { templateStyles } from "../../constants";
 import Spinner from "../atoms/Spinner";
 
@@ -33,17 +37,18 @@ interface IAddTemplate {
   onCancel: () => void;
   template: ITemplate;
   isSaving: boolean;
+  errors: TemplateSaveErrors[];
 }
 
 const AddOrEditTemplate = ({
-  template: { id, name, style, sections },
+  template: { id, name, style, sections, meta },
   onSave: onSaveProp,
   onCancel,
   isSaving,
 }: IAddTemplate) => {
   const [localName, setLocalName] = useState(name);
   const [localStyle, setLocalStyle] = useState(style);
-  const [customStyleMeta, setCustomStyleMeta] = useState<string | undefined>();
+  const [customStyleMeta, setCustomStyleMeta] = useState(meta);
 
   const [sectionIds, setSectionIds] = useState<string[]>(
     sections.map(({ id }) => id)
@@ -65,6 +70,7 @@ const AddOrEditTemplate = ({
       id,
       name: localName,
       style: localStyle,
+      meta: customStyleMeta,
       sections: sectionIds.map((sectionId) => sectionObjs[sectionId]),
     });
   };

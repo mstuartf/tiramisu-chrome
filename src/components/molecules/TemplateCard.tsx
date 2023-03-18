@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { createSelectTemplate } from "../../redux/templates/selectors";
 import HoverCard from "../atoms/HoverCard";
+import { sectionTypes, templateStyles } from "../../constants";
 
 interface ITemplateCard {
   id: string;
@@ -9,14 +10,34 @@ interface ITemplateCard {
 }
 
 const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
-  const { name, sections, style } = useSelector(createSelectTemplate(id));
+  const { name, sections, meta, style } = useSelector(createSelectTemplate(id));
   return (
-    <HoverCard onClick={onEdit}>
-      <div className="text-left">
-        <div>
-          {name} ({sections.length} sections)
+    <HoverCard onClick={onEdit} className="py-4">
+      <div className="text-left grid grid-cols-3 gap-2 text-gray-700">
+        <div className="text-gray-400">Name</div>
+        <div className="col-span-2">{name}</div>
+        <div className="text-gray-400">Style</div>
+        <div className="col-span-2">
+          {style === "custom"
+            ? meta
+            : templateStyles.find(({ name }) => name === style)!.description}
         </div>
-        <div>{style}</div>
+        {!!sections.length && (
+          <>
+            <div className="text-gray-400">Sections</div>
+            <div className="col-span-2">
+              {sections.map(({ content, meta }, index) => (
+                <div key={content}>
+                  {index + 1}.{" "}
+                  {
+                    sectionTypes.find(({ name }) => name === content)!
+                      .description
+                  }
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </HoverCard>
   );

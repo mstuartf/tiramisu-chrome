@@ -42,6 +42,7 @@ const EditTemplateContainer = ({ id, onClose }: IEditTemplateContainer) => {
       onCancel={onClose}
       onSave={onSave}
       isSaving={localIsSaving}
+      errors={errors}
     />
   );
 };

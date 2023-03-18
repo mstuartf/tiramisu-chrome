@@ -24,8 +24,15 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
         {
           id: "abc6",
           name: "Risky",
-          style: "professional",
-          sections: [],
+          style: "custom",
+          meta: "sarcastic",
+          sections: [
+            {
+              id: "s21",
+              order: 0,
+              content: "profile_observation",
+            },
+          ],
         },
         {
           id: "abc456",
