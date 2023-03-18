@@ -29,5 +29,6 @@ export interface State {
     };
   };
   templateSaving: boolean;
+  templateSavingErrors: string[];
   selectedTemplate?: string;
 }

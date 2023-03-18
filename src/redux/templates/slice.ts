@@ -4,6 +4,7 @@ import { ListTemplatesRes, ITemplate, State } from "./types";
 const initialState: State = {
   templatesLoading: false,
   templateSaving: false,
+  templateSavingErrors: [],
 };
 
 // @ts-ignore
@@ -38,17 +39,17 @@ export const templateSlice = createSlice({
     listTemplatesFailure: (state) => {
       state.templatesLoading = false;
     },
-    patchTemplatePending: (state) => {
+    putTemplatePending: (state) => {
       state.templateSaving = true;
     },
-    patchTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
+    putTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
       state.templateSaving = false;
       state.templates!.values[payload.id] = {
         ...state.templates!.values[payload.id],
         ...payload,
       };
     },
-    patchTemplateFailure: (state) => {
+    putTemplateFailure: (state) => {
       state.templateSaving = false;
     },
     deleteTemplatePending: (state) => {

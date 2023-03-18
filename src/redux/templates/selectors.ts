@@ -26,5 +26,8 @@ export const createSelectTemplate = (id: string) =>
 export const selectTemplatesIsSaving = (state: RootState) =>
   state.templates.templateSaving;
 
+export const selectTemplatesSavingErrors = (state: RootState) =>
+  state.templates.templateSavingErrors;
+
 export const selectSelectedTemplate = (state: RootState) =>
   state.templates.selectedTemplate;
