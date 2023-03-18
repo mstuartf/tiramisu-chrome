@@ -6,6 +6,7 @@ import Btn from "../atoms/Btn";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { ITemplate, ITemplateSection } from "../../redux/templates/types";
 import { templateStyles } from "../../constants";
+import Spinner from "../atoms/Spinner";
 
 function randomUUID() {
   const S4 = function () {
@@ -28,13 +29,17 @@ function randomUUID() {
 }
 
 interface IAddTemplate {
-  onClose: () => void;
+  onSave: () => void;
+  onCancel: () => void;
   template: Omit<ITemplate, "id"> & { id?: string };
+  isSaving: boolean;
 }
 
 const AddOrEditTemplate = ({
   template: { id, name, style, sections },
-  onClose,
+  onSave,
+  onCancel,
+  isSaving,
 }: IAddTemplate) => {
   const [localName, setLocalName] = useState(name);
   const [localStyle, setLocalStyle] = useState(style);
@@ -173,10 +178,11 @@ const AddOrEditTemplate = ({
       </div>
 
       <div className="flex justify-between">
-        <Btn kind="outline" onClick={onClose}>
+        <Btn kind="outline" onClick={onCancel}>
           Cancel
         </Btn>
-        <Btn>Save</Btn>
+        <div>{isSaving && <Spinner />}</div>
+        <Btn onClick={onSave}>Save</Btn>
       </div>
     </div>
   );
