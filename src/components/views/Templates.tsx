@@ -30,11 +30,13 @@ const Templates = () => {
   }
 
   return (
-    <div className="grid gap-2">
-      {templateIds.map((id) => (
-        <TemplateCard id={id} key={id} onEdit={() => setEditTemplateId(id)} />
-      ))}
-      <Btn onClick={() => setIsAdding(true)}>Add</Btn>
+    <div className="grid gap-4">
+      <div className="grid gap-2">
+        {templateIds.map((id) => (
+          <TemplateCard id={id} key={id} onEdit={() => setEditTemplateId(id)} />
+        ))}
+      </div>
+      <Btn onClick={() => setIsAdding(true)}>Create new template</Btn>
     </div>
   );
 };

@@ -41,7 +41,7 @@ const ProspectMessagesContainer = () => {
       <div className="grid grid-cols-2 gap-2">
         <SelectTemplate />
         <Btn onClick={generate} disabled={messagesIsLoading}>
-          {!!messages ? "Regenerate" : "Generate"}
+          {!!messages ? "Re-draft" : "Draft messages"}
         </Btn>
       </div>
       <div className="py-4">

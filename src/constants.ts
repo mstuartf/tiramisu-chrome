@@ -6,23 +6,35 @@ export const sectionTypes: {
 }[] = [
   {
     name: "profile_observation",
-    description: "Make an observation about the recipient's profile",
+    description: "Comment the recipient's profile",
   },
   {
     name: "profile_question",
     description: "Ask a question about the recipient's profile",
   },
   {
-    name: "product_intro",
-    description: "Introduce a company or product",
+    name: "company_intro",
+    description: "Introduce a company",
     metaRequired: true,
-    metaPlaceholder: "Describe the company or product (required)",
+    metaPlaceholder: "Describe the company (required)",
+  },
+  {
+    name: "product_intro",
+    description: "Introduce a product/service",
+    metaRequired: true,
+    metaPlaceholder: "Describe the product/service (required)",
   },
   {
     name: "call_to_action",
     description: "Call to action",
     metaRequired: true,
     metaPlaceholder: "Describe the call to action (required)",
+  },
+  {
+    name: "custom",
+    description: "Custom",
+    metaRequired: true,
+    metaPlaceholder: "Describe the section (required)",
   },
 ];
 
