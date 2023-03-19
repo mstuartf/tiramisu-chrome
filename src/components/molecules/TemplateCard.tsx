@@ -29,12 +29,14 @@ const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
           <>
             <div className="text-gray-400">Sections</div>
             <div className="col-span-3">
-              {sections.map(({ type, meta: sectionMeta }, index) => (
-                <div key={type}>
-                  {index + 1}. {sectionTypes[type].description}
-                  {!!sectionMeta && <>&nbsp;({sectionMeta})</>}
-                </div>
-              ))}
+              {sections
+                .sort((a, b) => (a.order < b.order ? -1 : 1))
+                .map(({ type, meta: sectionMeta }, index) => (
+                  <div key={type}>
+                    {index + 1}. {sectionTypes[type].description}
+                    {!!sectionMeta && <>&nbsp;({sectionMeta})</>}
+                  </div>
+                ))}
             </div>
           </>
         )}
