@@ -11,7 +11,7 @@ export const apiMiddleware = buildApiMiddleware(
     };
   },
   {
-    useMocksWhen: () => true,
+    // useMocksWhen: () => true,
     appendSlash: true,
   }
 );

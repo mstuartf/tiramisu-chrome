@@ -1,18 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
-  ListTemplatesRes,
   ITemplate,
-  State,
-  ITemplateStyle,
   ITemplateSectionType,
+  ITemplateStyle,
+  ListTemplatesRes,
+  State,
 } from "./types";
+import { ErrorRes } from "../types";
 
 const initialState: State = {
   templatesLoading: false,
   templateStylesLoading: false,
   templateSectionTypesLoading: false,
   templateSaving: false,
-  templateSavingErrors: [],
 };
 
 export const templateSlice = createSlice({
@@ -91,6 +91,7 @@ export const templateSlice = createSlice({
     },
     putTemplatePending: (state) => {
       state.templateSaving = true;
+      state.templateSavingErrors = undefined;
     },
     putTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
       state.templateSaving = false;
@@ -99,8 +100,9 @@ export const templateSlice = createSlice({
         ...payload,
       };
     },
-    putTemplateFailure: (state) => {
+    putTemplateFailure: (state, { payload }: PayloadAction<ErrorRes>) => {
       state.templateSaving = false;
+      state.templateSavingErrors = payload;
     },
     deleteTemplatePending: (state) => {
       state.templateSaving = true;
@@ -125,14 +127,16 @@ export const templateSlice = createSlice({
     },
     createTemplatePending: (state) => {
       state.templateSaving = true;
+      state.templateSavingErrors = undefined;
     },
     createTemplateSuccess: (state, { payload }: PayloadAction<ITemplate>) => {
       state.templateSaving = false;
       state.templates!.ids.push(payload.id);
       state.templates!.values[payload.id] = payload;
     },
-    createTemplateFailure: (state) => {
+    createTemplateFailure: (state, { payload }: PayloadAction<ErrorRes>) => {
       state.templateSaving = false;
+      state.templateSavingErrors = payload;
     },
   },
 });

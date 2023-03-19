@@ -54,7 +54,7 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
 export const createListTemplateStyles = createRequestAction<ITemplateStyle[]>(
   `templates/listTemplateStyles`,
   () => ({
-    url: `templates`,
+    url: `templates/styles`,
     authenticated: true,
     mockData: {
       status: 200,
@@ -81,7 +81,7 @@ export const createListTemplateStyles = createRequestAction<ITemplateStyle[]>(
 export const createListTemplateSectionTypes = createRequestAction<
   ITemplateSectionType[]
 >(`templates/listTemplateSectionTypes`, () => ({
-  url: `templates`,
+  url: `templates/sections/types`,
   authenticated: true,
   mockData: {
     status: 200,

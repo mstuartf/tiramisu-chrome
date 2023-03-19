@@ -4,11 +4,7 @@ import Slct from "../atoms/Slct";
 import TemplateSection from "./TemplateSection";
 import Btn from "../atoms/Btn";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import {
-  ITemplate,
-  ITemplateSection,
-  TemplateSaveErrors,
-} from "../../redux/templates/types";
+import { ITemplate, ITemplateSection } from "../../redux/templates/types";
 import Spinner from "../atoms/Spinner";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -16,6 +12,7 @@ import {
   selectTemplateSectionTypes,
   selectTemplateStyles,
 } from "../../redux/templates/selectors";
+import { ErrorRes } from "../../redux/types";
 
 function randomUUID() {
   const S4 = function () {
@@ -42,7 +39,7 @@ interface IAddTemplate {
   onCancel: () => void;
   template: ITemplate;
   isSaving: boolean;
-  errors: TemplateSaveErrors[];
+  errors?: ErrorRes;
 }
 
 const AddOrEditTemplate = ({

@@ -43,7 +43,7 @@ const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
   useEffect(() => {
     if (localIsSaving && !isSaving) {
       setLocalIsSaving(false);
-      if (!errors.length) {
+      if (!errors) {
         onClose();
       }
     }

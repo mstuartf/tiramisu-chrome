@@ -1,3 +1,5 @@
+import { ErrorRes } from "../types";
+
 export interface ITemplateSection {
   id: string;
   type: string;
@@ -44,12 +46,8 @@ export interface State {
     };
   };
   templateSaving: boolean;
-  templateSavingErrors: TemplateSaveErrors[];
+  templateSavingErrors?: ErrorRes;
   selectedTemplate?: string;
-}
-
-export interface TemplateSaveErrors {
-  description: string;
 }
 
 export interface ITemplateStyle {
