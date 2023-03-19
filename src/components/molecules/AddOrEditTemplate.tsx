@@ -101,7 +101,7 @@ const AddOrEditTemplate = ({
       ...sectionObjs,
       [id]: {
         id,
-        content: Object.values(sectionTypes)[0].id,
+        type: Object.values(sectionTypes)[0].id,
         order: sectionIds.length,
       },
     });

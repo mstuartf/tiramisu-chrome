@@ -23,7 +23,7 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
             {
               id: "s21",
               order: 0,
-              content: "profile_observation",
+              type: "profile_observation",
             },
           ],
         },
@@ -36,7 +36,7 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
             {
               id: "s21",
               order: 0,
-              content: "profile_observation",
+              type: "profile_observation",
             },
           ],
         },

@@ -29,9 +29,9 @@ const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
           <>
             <div className="text-gray-400">Sections</div>
             <div className="col-span-3">
-              {sections.map(({ content, meta: sectionMeta }, index) => (
-                <div key={content}>
-                  {index + 1}. {sectionTypes[content].description}
+              {sections.map(({ type, meta: sectionMeta }, index) => (
+                <div key={type}>
+                  {index + 1}. {sectionTypes[type].description}
                   {!!sectionMeta && <>&nbsp;({sectionMeta})</>}
                 </div>
               ))}

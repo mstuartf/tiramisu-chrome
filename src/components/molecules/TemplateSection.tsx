@@ -23,7 +23,7 @@ interface IAddTemplateSection {
 }
 
 const TemplateSection = ({
-  section: { id, content, meta, order, ...rest },
+  section: { id, type, meta, order, ...rest },
   onUpdate,
   onMove,
   onDelete,
@@ -65,9 +65,9 @@ const TemplateSection = ({
         <Slct
           required
           disabled={isSaving}
-          value={content}
+          value={type}
           onChange={(value) =>
-            onUpdate({ id, content: value, meta, order, ...rest })
+            onUpdate({ id, type: value, meta, order, ...rest })
           }
         >
           {Object.values(sectionTypes).map(({ id, description }) => (
@@ -83,13 +83,13 @@ const TemplateSection = ({
           disabled={isSaving}
           value={meta}
           onChange={(value) =>
-            onUpdate({ id, content, meta: value, order, ...rest })
+            onUpdate({ id, type, meta: value, order, ...rest })
           }
           placeholder={
-            sectionTypes[content].metaPlaceholder ||
+            sectionTypes[type].metaPlaceholder ||
             "Additional guidance (optional)"
           }
-          required={sectionTypes[content].metaRequired}
+          required={sectionTypes[type].metaRequired}
         />
       </div>
     </div>

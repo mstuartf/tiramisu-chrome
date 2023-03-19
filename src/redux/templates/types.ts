@@ -1,6 +1,6 @@
 export interface ITemplateSection {
   id: string;
-  content: string;
+  type: string;
   order: number;
   meta?: string;
 }
