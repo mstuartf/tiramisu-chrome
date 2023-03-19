@@ -9,9 +9,13 @@ import {
   ITemplateSection,
   TemplateSaveErrors,
 } from "../../redux/templates/types";
-import { sectionTypes, templateStyles } from "../../constants";
 import Spinner from "../atoms/Spinner";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import {
+  selectTemplateSectionTypes,
+  selectTemplateStyles,
+} from "../../redux/templates/selectors";
 
 function randomUUID() {
   const S4 = function () {
@@ -52,6 +56,8 @@ const AddOrEditTemplate = ({
   const [localName, setLocalName] = useState(name);
   const [localStyle, setLocalStyle] = useState(style);
   const [customStyleMeta, setCustomStyleMeta] = useState(meta);
+  const templateStyles = useSelector(selectTemplateStyles)!;
+  const sectionTypes = useSelector(selectTemplateSectionTypes)!;
 
   const [sectionIds, setSectionIds] = useState<string[]>(
     sections.map(({ id }) => id)
@@ -95,7 +101,7 @@ const AddOrEditTemplate = ({
       ...sectionObjs,
       [id]: {
         id,
-        content: sectionTypes[0].name,
+        content: Object.values(sectionTypes)[0].name,
         order: sectionIds.length,
       },
     });
@@ -156,7 +162,7 @@ const AddOrEditTemplate = ({
           onChange={setLocalStyle}
           className="col-span-2"
         >
-          {templateStyles.map(({ name, description }) => (
+          {Object.values(templateStyles).map(({ name, description }) => (
             <option value={name} key={name}>
               {description}
             </option>
@@ -171,15 +177,9 @@ const AddOrEditTemplate = ({
             disabled={isSaving}
             value={customStyleMeta}
             onChange={setCustomStyleMeta}
-            placeholder={
-              templateStyles.find(({ name }) => name === localStyle)!
-                .metaPlaceholder
-            }
+            placeholder={templateStyles[localStyle].metaPlaceholder}
             className="col-span-2"
-            required={
-              templateStyles.find(({ name }) => name === localStyle)!
-                .metaRequired
-            }
+            required={templateStyles[localStyle].metaRequired}
           />
         </div>
       )}

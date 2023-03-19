@@ -29,6 +29,20 @@ export interface State {
       [id: string]: ITemplate;
     };
   };
+  templateStylesLoading: boolean;
+  templateStyles?: {
+    ids: string[];
+    values: {
+      [id: string]: ITemplateStyle;
+    };
+  };
+  templateSectionTypesLoading: boolean;
+  templateSectionTypes?: {
+    ids: string[];
+    values: {
+      [id: string]: ITemplateSectionType;
+    };
+  };
   templateSaving: boolean;
   templateSavingErrors: TemplateSaveErrors[];
   selectedTemplate?: string;
@@ -36,4 +50,18 @@ export interface State {
 
 export interface TemplateSaveErrors {
   description: string;
+}
+
+export interface ITemplateStyle {
+  name: string;
+  description: string;
+  metaRequired?: boolean;
+  metaPlaceholder?: string;
+}
+
+export interface ITemplateSectionType {
+  name: string;
+  description: string;
+  metaRequired?: boolean;
+  metaPlaceholder?: string;
 }

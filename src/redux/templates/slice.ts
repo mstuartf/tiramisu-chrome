@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ListTemplatesRes, ITemplate, State } from "./types";
+import {
+  ListTemplatesRes,
+  ITemplate,
+  State,
+  ITemplateStyle,
+  ITemplateSectionType,
+} from "./types";
 
 const initialState: State = {
   templatesLoading: false,
+  templateStylesLoading: false,
+  templateSectionTypesLoading: false,
   templateSaving: false,
   templateSavingErrors: [],
 };
 
-// @ts-ignore
-// @ts-ignore
 export const templateSlice = createSlice({
   name: "templates",
   initialState,
@@ -38,6 +44,50 @@ export const templateSlice = createSlice({
     },
     listTemplatesFailure: (state) => {
       state.templatesLoading = false;
+    },
+    listTemplateStylesPending: (state) => {
+      state.templateStylesLoading = true;
+    },
+    listTemplateStylesSuccess: (
+      state,
+      { payload }: PayloadAction<ITemplateStyle[]>
+    ) => {
+      state.templateStylesLoading = false;
+      state.templateStyles = {
+        ids: payload.map(({ name: id }) => id),
+        values: payload.reduce(
+          (prev, next) => ({
+            ...prev,
+            [next.name]: next,
+          }),
+          {}
+        ),
+      };
+    },
+    listTemplateStylesFailure: (state) => {
+      state.templateStylesLoading = false;
+    },
+    listTemplateSectionTypesPending: (state) => {
+      state.templateSectionTypesLoading = true;
+    },
+    listTemplateSectionTypesSuccess: (
+      state,
+      { payload }: PayloadAction<ITemplateSectionType[]>
+    ) => {
+      state.templateSectionTypesLoading = false;
+      state.templateSectionTypes = {
+        ids: payload.map(({ name: id }) => id),
+        values: payload.reduce(
+          (prev, next) => ({
+            ...prev,
+            [next.name]: next,
+          }),
+          {}
+        ),
+      };
+    },
+    listTemplateSectionTypesFailure: (state) => {
+      state.templateSectionTypesLoading = false;
     },
     putTemplatePending: (state) => {
       state.templateSaving = true;

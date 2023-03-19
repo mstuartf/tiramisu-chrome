@@ -20,6 +20,18 @@ export const selectTemplateIds = (state: RootState): string[] | undefined => {
 export const selectTemplatesIsLoading = (state: RootState) =>
   state.templates.templatesLoading;
 
+export const selectTemplateStyleIds = (state: RootState) =>
+  state.templates.templateStyles?.ids;
+
+export const selectTemplateStyles = (state: RootState) =>
+  state.templates.templateStyles?.values;
+
+export const selectTemplateSectionTypeIds = (state: RootState) =>
+  state.templates.templateSectionTypes?.ids;
+
+export const selectTemplateSectionTypes = (state: RootState) =>
+  state.templates.templateSectionTypes?.values;
+
 export const createSelectTemplate = (id: string) =>
   createSelector(selectTemplateState, ({ templates }) => templates!.values[id]);
 

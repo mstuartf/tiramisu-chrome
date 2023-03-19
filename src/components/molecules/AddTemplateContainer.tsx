@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AddOrEditTemplate from "./AddOrEditTemplate";
 import { INewTemplate, ITemplate } from "../../redux/templates/types";
-import { templateStyles } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { createCreateTemplate } from "../../redux/templates/actions";
 import {
+  selectTemplateSectionTypes,
   selectTemplatesIsSaving,
   selectTemplatesSavingErrors,
+  selectTemplateStyles,
 } from "../../redux/templates/selectors";
 
 interface IAddTemplateContainer {
@@ -15,10 +16,12 @@ interface IAddTemplateContainer {
 
 const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
   const dispatch = useDispatch();
+  const templateStyles = useSelector(selectTemplateStyles)!;
+
   const template: ITemplate = {
     id: "__placeholder__",
     name: "",
-    style: templateStyles[0].name,
+    style: Object.values(templateStyles)[0].name,
     sections: [],
   };
 

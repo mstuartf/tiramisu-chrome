@@ -1,5 +1,11 @@
 import { createRequestAction } from "../middleware/_api";
-import { ListTemplatesRes, ITemplate, INewTemplate } from "./types";
+import {
+  ListTemplatesRes,
+  ITemplate,
+  INewTemplate,
+  ITemplateStyle,
+  ITemplateSectionType,
+} from "./types";
 
 export const createListTemplates = createRequestAction<ListTemplatesRes>(
   `templates/listTemplates`,
@@ -44,6 +50,77 @@ export const createListTemplates = createRequestAction<ListTemplatesRes>(
     },
   })
 );
+
+export const createListTemplateStyles = createRequestAction<ITemplateStyle[]>(
+  `templates/listTemplateStyles`,
+  () => ({
+    url: `templates`,
+    authenticated: true,
+    mockData: {
+      status: 200,
+      body: [
+        {
+          name: "informal",
+          description: "Cheeky and informal",
+        },
+        {
+          name: "professional",
+          description: "Polite and professional",
+        },
+        {
+          name: "custom",
+          description: "Custom style",
+          metaRequired: true,
+          metaPlaceholder: "Describe the message style (required)",
+        },
+      ],
+    },
+  })
+);
+
+export const createListTemplateSectionTypes = createRequestAction<
+  ITemplateSectionType[]
+>(`templates/listTemplateSectionTypes`, () => ({
+  url: `templates`,
+  authenticated: true,
+  mockData: {
+    status: 200,
+    body: [
+      {
+        name: "profile_observation",
+        description: "Comment the recipient's profile",
+      },
+      {
+        name: "profile_question",
+        description: "Ask a question about the recipient's profile",
+      },
+      {
+        name: "company_intro",
+        description: "Introduce a company",
+        metaRequired: true,
+        metaPlaceholder: "Describe the company (required)",
+      },
+      {
+        name: "product_intro",
+        description: "Introduce a product/service",
+        metaRequired: true,
+        metaPlaceholder: "Describe the product/service (required)",
+      },
+      {
+        name: "call_to_action",
+        description: "Call to action",
+        metaRequired: true,
+        metaPlaceholder: "Describe the call to action (required)",
+      },
+      {
+        name: "custom",
+        description: "Custom",
+        metaRequired: true,
+        metaPlaceholder: "Describe the section (required)",
+      },
+    ],
+  },
+}));
 
 export const createPutTemplate = createRequestAction<Partial<ITemplate>>(
   `templates/putTemplate`,

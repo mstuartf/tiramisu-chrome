@@ -6,8 +6,12 @@ import {
   ChevronUpIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { sectionTypes, templateStyles } from "../../constants";
 import { ITemplateSection } from "../../redux/templates/types";
+import { useSelector } from "react-redux";
+import {
+  selectTemplateSectionTypes,
+  selectTemplateStyles,
+} from "../../redux/templates/selectors";
 
 interface IAddTemplateSection {
   section: ITemplateSection;
@@ -26,6 +30,7 @@ const TemplateSection = ({
   nbSections,
   isSaving,
 }: IAddTemplateSection) => {
+  const sectionTypes = useSelector(selectTemplateSectionTypes)!;
   return (
     <div className="border rounded shadow p-2 grid gap-2">
       <div className="flex justify-between">
@@ -65,7 +70,7 @@ const TemplateSection = ({
             onUpdate({ id, content: value, meta, order, ...rest })
           }
         >
-          {sectionTypes.map(({ name, description }) => (
+          {Object.values(sectionTypes).map(({ name, description }) => (
             <option value={name} key={name}>
               {description}
             </option>
@@ -81,12 +86,10 @@ const TemplateSection = ({
             onUpdate({ id, content, meta: value, order, ...rest })
           }
           placeholder={
-            sectionTypes.find(({ name }) => name === content)!
-              .metaPlaceholder || "Additional guidance (optional)"
+            sectionTypes[content].metaPlaceholder ||
+            "Additional guidance (optional)"
           }
-          required={
-            sectionTypes.find(({ name }) => name === content)!.metaRequired
-          }
+          required={sectionTypes[content].metaRequired}
         />
       </div>
     </div>
