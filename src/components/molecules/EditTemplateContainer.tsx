@@ -7,7 +7,10 @@ import {
 } from "../../redux/templates/selectors";
 import AddOrEditTemplate from "./AddOrEditTemplate";
 import { ITemplate } from "../../redux/templates/types";
-import { createPutTemplate } from "../../redux/templates/actions";
+import {
+  createDeleteTemplate,
+  createPutTemplate,
+} from "../../redux/templates/actions";
 
 interface IEditTemplateContainer {
   id: string;
@@ -27,6 +30,11 @@ const EditTemplateContainer = ({ id, onClose }: IEditTemplateContainer) => {
     dispatch(createPutTemplate(id, updated));
   };
 
+  const onDelete = () => {
+    setLocalIsSaving(true);
+    dispatch(createDeleteTemplate(id));
+  };
+
   useEffect(() => {
     if (localIsSaving && !isSaving) {
       setLocalIsSaving(false);
@@ -36,12 +44,18 @@ const EditTemplateContainer = ({ id, onClose }: IEditTemplateContainer) => {
     }
   }, [isSaving]);
 
+  // hack to prevent race condition when deleting template
+  if (!template) {
+    return null;
+  }
+
   return (
     <AddOrEditTemplate
       template={template}
       onCancel={onClose}
       onSave={onSave}
       isSaving={localIsSaving}
+      onDelete={onDelete}
       errors={errors}
     />
   );

@@ -3,16 +3,17 @@ import Inpt from "../atoms/Inpt";
 import Slct from "../atoms/Slct";
 import TemplateSection from "./TemplateSection";
 import Btn from "../atoms/Btn";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { ITemplate, ITemplateSection } from "../../redux/templates/types";
 import Spinner from "../atoms/Spinner";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectTemplateSectionTypes,
   selectTemplateStyles,
 } from "../../redux/templates/selectors";
 import { ErrorRes } from "../../redux/types";
+import { createDeleteTemplate } from "../../redux/templates/actions";
 
 function randomUUID() {
   const S4 = function () {
@@ -37,6 +38,7 @@ function randomUUID() {
 interface IAddTemplate {
   onSave: (template: ITemplate) => void;
   onCancel: () => void;
+  onDelete?: () => void;
   template: ITemplate;
   isSaving: boolean;
   errors?: ErrorRes;
@@ -47,6 +49,7 @@ const AddOrEditTemplate = ({
   onSave: onSaveProp,
   onCancel,
   isSaving,
+  onDelete,
 }: IAddTemplate) => {
   const { handleSubmit } = useForm();
 
@@ -135,7 +138,12 @@ const AddOrEditTemplate = ({
   return (
     <form className="grid gap-2" onSubmit={handleSubmit(onSave)}>
       <div className="border-b uppercase font-semibold flex justify-between items-center">
-        {id !== "__placeholder__" ? "Edit template" : "Add template"}
+        <div>{id !== "__placeholder__" ? "Edit template" : "Add template"}</div>
+        {id !== "__placeholder__" && (
+          <button type="button" onClick={onDelete} disabled={isSaving}>
+            <TrashIcon className="h-4 w-4 text-gray-400" />
+          </button>
+        )}
       </div>
 
       <div className="grid grid-cols-3">
