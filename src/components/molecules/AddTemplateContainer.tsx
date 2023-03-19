@@ -29,16 +29,13 @@ const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
   const isSaving = useSelector(selectTemplatesIsSaving);
   const errors = useSelector(selectTemplatesSavingErrors);
 
-  const onSave = ({ name, sections, style }: ITemplate) => {
+  const onSave = ({ id, sections, ...rest }: ITemplate) => {
     setLocalIsSaving(true);
     const updated: INewTemplate = {
-      name,
-      style,
-      sections: sections.map(({ content, meta, order }) => ({
-        content,
-        meta,
-        order,
+      sections: sections.map(({ id, ...rest }) => ({
+        ...rest,
       })),
+      ...rest,
     };
     dispatch(createCreateTemplate(updated));
   };
