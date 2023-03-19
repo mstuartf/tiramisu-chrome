@@ -175,16 +175,16 @@ const AddOrEditTemplate = ({
         </Slct>
       </div>
 
-      {localStyle === "custom" && (
+      {templateStyles[localStyle].meta_required && (
         <div className="grid grid-cols-3">
           <div className="flex items-center">Custom style</div>
           <Inpt
             disabled={isSaving}
             value={customStyleMeta}
             onChange={setCustomStyleMeta}
-            placeholder={templateStyles[localStyle].metaPlaceholder}
+            placeholder={templateStyles[localStyle].meta_placeholder}
             className="col-span-2"
-            required={templateStyles[localStyle].metaRequired}
+            required={templateStyles[localStyle].meta_required}
           />
         </div>
       )}

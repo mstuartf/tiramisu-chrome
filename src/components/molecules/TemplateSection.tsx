@@ -79,6 +79,11 @@ const TemplateSection = ({
       </div>
 
       <div>
+        More info ({sectionTypes[type].meta_required ? "required" : "optional"}
+        ):
+      </div>
+
+      <div>
         <Inpt
           disabled={isSaving}
           value={meta}
@@ -86,10 +91,10 @@ const TemplateSection = ({
             onUpdate({ id, type, meta: value, order, ...rest })
           }
           placeholder={
-            sectionTypes[type].metaPlaceholder ||
+            sectionTypes[type].meta_placeholder ||
             "Additional guidance (optional)"
           }
-          required={sectionTypes[type].metaRequired}
+          required={sectionTypes[type].meta_required}
         />
       </div>
     </div>

@@ -53,13 +53,13 @@ export interface State {
 export interface ITemplateStyle {
   id: string;
   description: string;
-  metaRequired?: boolean;
-  metaPlaceholder?: string;
+  meta_required?: boolean;
+  meta_placeholder?: string;
 }
 
 export interface ITemplateSectionType {
   id: string;
   description: string;
-  metaRequired?: boolean;
-  metaPlaceholder?: string;
+  meta_required?: boolean;
+  meta_placeholder?: string;
 }
