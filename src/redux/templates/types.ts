@@ -53,14 +53,14 @@ export interface TemplateSaveErrors {
 }
 
 export interface ITemplateStyle {
-  name: string;
+  id: string;
   description: string;
   metaRequired?: boolean;
   metaPlaceholder?: string;
 }
 
 export interface ITemplateSectionType {
-  name: string;
+  id: string;
   description: string;
   metaRequired?: boolean;
   metaPlaceholder?: string;

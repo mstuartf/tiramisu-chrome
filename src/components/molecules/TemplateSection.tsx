@@ -70,8 +70,8 @@ const TemplateSection = ({
             onUpdate({ id, content: value, meta, order, ...rest })
           }
         >
-          {Object.values(sectionTypes).map(({ name, description }) => (
-            <option value={name} key={name}>
+          {Object.values(sectionTypes).map(({ id, description }) => (
+            <option value={id} key={id}>
               {description}
             </option>
           ))}

@@ -101,7 +101,7 @@ const AddOrEditTemplate = ({
       ...sectionObjs,
       [id]: {
         id,
-        content: Object.values(sectionTypes)[0].name,
+        content: Object.values(sectionTypes)[0].id,
         order: sectionIds.length,
       },
     });
@@ -162,8 +162,8 @@ const AddOrEditTemplate = ({
           onChange={setLocalStyle}
           className="col-span-2"
         >
-          {Object.values(templateStyles).map(({ name, description }) => (
-            <option value={name} key={name}>
+          {Object.values(templateStyles).map(({ id, description }) => (
+            <option value={id} key={id}>
               {description}
             </option>
           ))}

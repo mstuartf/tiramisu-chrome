@@ -21,7 +21,7 @@ const AddTemplateContainer = ({ onClose }: IAddTemplateContainer) => {
   const template: ITemplate = {
     id: "__placeholder__",
     name: "",
-    style: Object.values(templateStyles)[0].name,
+    style: Object.values(templateStyles)[0].id,
     sections: [],
   };
 

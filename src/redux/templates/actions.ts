@@ -60,15 +60,15 @@ export const createListTemplateStyles = createRequestAction<ITemplateStyle[]>(
       status: 200,
       body: [
         {
-          name: "informal",
+          id: "informal",
           description: "Cheeky and informal",
         },
         {
-          name: "professional",
+          id: "professional",
           description: "Polite and professional",
         },
         {
-          name: "custom",
+          id: "custom",
           description: "Custom style",
           metaRequired: true,
           metaPlaceholder: "Describe the message style (required)",
@@ -87,33 +87,33 @@ export const createListTemplateSectionTypes = createRequestAction<
     status: 200,
     body: [
       {
-        name: "profile_observation",
+        id: "profile_observation",
         description: "Comment the recipient's profile",
       },
       {
-        name: "profile_question",
+        id: "profile_question",
         description: "Ask a question about the recipient's profile",
       },
       {
-        name: "company_intro",
+        id: "company_intro",
         description: "Introduce a company",
         metaRequired: true,
         metaPlaceholder: "Describe the company (required)",
       },
       {
-        name: "product_intro",
+        id: "product_intro",
         description: "Introduce a product/service",
         metaRequired: true,
         metaPlaceholder: "Describe the product/service (required)",
       },
       {
-        name: "call_to_action",
+        id: "call_to_action",
         description: "Call to action",
         metaRequired: true,
         metaPlaceholder: "Describe the call to action (required)",
       },
       {
-        name: "custom",
+        id: "custom",
         description: "Custom",
         metaRequired: true,
         metaPlaceholder: "Describe the section (required)",

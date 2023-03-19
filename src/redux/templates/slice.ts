@@ -54,11 +54,11 @@ export const templateSlice = createSlice({
     ) => {
       state.templateStylesLoading = false;
       state.templateStyles = {
-        ids: payload.map(({ name: id }) => id),
+        ids: payload.map(({ id }) => id),
         values: payload.reduce(
           (prev, next) => ({
             ...prev,
-            [next.name]: next,
+            [next.id]: next,
           }),
           {}
         ),
@@ -76,11 +76,11 @@ export const templateSlice = createSlice({
     ) => {
       state.templateSectionTypesLoading = false;
       state.templateSectionTypes = {
-        ids: payload.map(({ name: id }) => id),
+        ids: payload.map(({ id }) => id),
         values: payload.reduce(
           (prev, next) => ({
             ...prev,
-            [next.name]: next,
+            [next.id]: next,
           }),
           {}
         ),
