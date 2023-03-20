@@ -18,6 +18,7 @@ import { selectSelectedTemplate } from "../../redux/templates/selectors";
 import SelectTemplate from "./SelectTemplate";
 import Btn from "../atoms/Btn";
 import Spinner from "../atoms/Spinner";
+import LoadingPercent from "./LoadingPercent";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
@@ -68,8 +69,8 @@ const ProspectMessagesContainer = () => {
       </div>
       <div className="py-4">
         {isLoading ? (
-          <div className="flex items-center justify-center">
-            <Spinner />
+          <div className="flex items-center justify-center py-8">
+            <LoadingPercent seconds={30} />
           </div>
         ) : (
           <>{!!messages ? <ProspectMessages {...messages} /> : null}</>
