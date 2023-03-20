@@ -22,5 +22,6 @@ export interface Message {
 
 export interface MessageSet {
   id: string;
+  processed: boolean;
   messages: Message[];
 }

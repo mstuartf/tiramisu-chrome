@@ -39,6 +39,20 @@ export const prospectSlice = createSlice({
       state.isLoadingMessages = false;
       state.messagesError = status;
     },
+    fetchMessageSetPending: (state) => {
+      state.isLoadingMessages = true;
+    },
+    fetchMessageSetSuccess: (state, { payload }: PayloadAction<MessageSet>) => {
+      state.isLoadingMessages = false;
+      state.messages = payload;
+    },
+    fetchMessageSetFailure: (
+      state,
+      { payload: { status } }: PayloadAction<{ status: number }>
+    ) => {
+      state.isLoadingMessages = false;
+      state.messagesError = status;
+    },
   },
 });
 

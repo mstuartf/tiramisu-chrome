@@ -4,7 +4,7 @@ import { LinkedInProfile, MessageSet } from "./types";
 export const createGenerateMessages = createRequestAction<MessageSet>(
   `prospect/generateMessages`,
   (payload: { profile: LinkedInProfile; template_id: string }) => ({
-    url: `messages/sets`,
+    url: `v2/messages/sets`,
     payload,
     method: "POST",
     authenticated: true,
@@ -12,6 +12,24 @@ export const createGenerateMessages = createRequestAction<MessageSet>(
       status: 200,
       body: {
         id: "abc123",
+        processed: false,
+        messages: [],
+      },
+    },
+  })
+);
+
+export const createFetchMessageSet = createRequestAction<MessageSet>(
+  `prospect/fetchMessageSet`,
+  (id: string) => ({
+    url: `v2/messages/sets/${id}`,
+    method: "GET",
+    authenticated: true,
+    mockData: {
+      status: 200,
+      body: {
+        id: "abc123",
+        processed: true,
         messages: [
           {
             id: "1",

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectProspectMessages,
   selectProspectMessagesError,
+  selectProspectMessageSetId,
   selectProspectMessagesIsLoading,
+  selectProspectMessagesProcessed,
   selectProspectProfile,
 } from "../../redux/prospect/selectors";
-import { createGenerateMessages } from "../../redux/prospect/actions";
+import {
+  createFetchMessageSet,
+  createGenerateMessages,
+} from "../../redux/prospect/actions";
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
 import { selectSelectedTemplate } from "../../redux/templates/selectors";
@@ -18,13 +23,30 @@ const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
   const messagesIsLoading = useSelector(selectProspectMessagesIsLoading);
   const messages = useSelector(selectProspectMessages);
+  const messageSetId = useSelector(selectProspectMessageSetId);
   const messagesError = useSelector(selectProspectMessagesError);
+  const messagesProcessed = useSelector(selectProspectMessagesProcessed);
   const template_id = useSelector(selectSelectedTemplate);
   const profile = useSelector(selectProspectProfile);
+
+  const isLoading = messagesIsLoading || (!!messageSetId && !messagesProcessed);
 
   const generate = () => {
     dispatch(createGenerateMessages({ profile, template_id }));
   };
+
+  useEffect(() => {
+    if (
+      !!messageSetId &&
+      !messagesProcessed &&
+      !messagesIsLoading &&
+      !messagesError
+    ) {
+      setTimeout(() => {
+        dispatch(createFetchMessageSet(messageSetId));
+      }, 3000);
+    }
+  }, [messagesProcessed, messagesIsLoading, messagesError, messageSetId]);
 
   if (messagesError) {
     return (
@@ -40,12 +62,12 @@ const ProspectMessagesContainer = () => {
     <div>
       <div className="grid grid-cols-2 gap-2">
         <SelectTemplate />
-        <Btn onClick={generate} disabled={messagesIsLoading}>
+        <Btn onClick={generate} disabled={isLoading}>
           {!!messages ? "Re-draft" : "Draft messages"}
         </Btn>
       </div>
       <div className="py-4">
-        {messagesIsLoading ? (
+        {isLoading ? (
           <div className="flex items-center justify-center">
             <Spinner />
           </div>
