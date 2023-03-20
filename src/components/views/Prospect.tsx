@@ -10,6 +10,7 @@ import { extractProfileSlug, scrapeProfile } from "../../linkedin";
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
+  const [checkingErr, setCheckingErr] = useState<string | undefined>();
   const templateIds = useSelector(selectTemplateIds);
 
   const profile = useSelector(selectProspectProfile);
@@ -20,6 +21,7 @@ const Prospect = () => {
     const [tab] = await chrome.tabs.query({ active: true });
     if (!tab || !tab.id) {
       dispatch(setProfile(undefined));
+      setCheckingErr(`Could not find an active tab.`);
       setIsChecking(false);
       return;
     }
@@ -27,6 +29,7 @@ const Prospect = () => {
     try {
       slug = extractProfileSlug(tab.url!);
     } catch (e) {
+      setCheckingErr(`Could not extract slug from url ${tab.url}`);
       dispatch(setProfile(undefined));
       setIsChecking(false);
       return;
@@ -38,6 +41,7 @@ const Prospect = () => {
     });
 
     if (!result.success) {
+      setCheckingErr(`Could not scrape profile`);
       dispatch(setProfile(undefined));
       setIsChecking(false);
       return;
@@ -65,7 +69,7 @@ const Prospect = () => {
               <ProspectMessagesContainer />
             </div>
           ) : (
-            <>This is not a valid linkedin profile</>
+            <>{checkingErr}</>
           )}
         </>
       )}
