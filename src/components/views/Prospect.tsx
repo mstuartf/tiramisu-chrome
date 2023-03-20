@@ -7,6 +7,7 @@ import Loading from "../molecules/Loading";
 import ProspectProfile from "../molecules/ProspectProfile";
 import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
 import { extractProfileSlug, scrapeProfile } from "../../linkedin";
+import Btn from "../atoms/Btn";
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
@@ -69,7 +70,10 @@ const Prospect = () => {
               <ProspectMessagesContainer />
             </div>
           ) : (
-            <>{checkingErr}</>
+            <div>
+              <div>{checkingErr}</div>
+              <Btn onClick={check}>Retry</Btn>
+            </div>
           )}
         </>
       )}
