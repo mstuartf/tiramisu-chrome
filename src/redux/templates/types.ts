@@ -15,7 +15,7 @@ export interface ITemplate {
   style: string;
   sections: ITemplateSection[];
   meta?: string;
-  shared?: boolean;
+  user?: string;
 }
 
 export type INewTemplate = Omit<ITemplate, "id" | "sections" | "custom"> & {

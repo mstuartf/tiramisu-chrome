@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectTemplateIds,
+  createSelectTemplateIds,
   selectTemplateSectionTypeIds,
   selectTemplateStyleIds,
 } from "../../redux/templates/selectors";
@@ -14,12 +14,14 @@ import {
   createListTemplateSectionTypes,
   createListTemplateStyles,
 } from "../../redux/templates/actions";
+import { selectUser } from "../../redux/user/selectors";
 
 const Templates = () => {
   const dispatch = useDispatch();
   const [isAdding, setIsAdding] = useState(false);
   const [editTemplateId, setEditTemplateId] = useState<string | undefined>();
-  const templateIds = useSelector(selectTemplateIds);
+  const { id: userId } = useSelector(selectUser)!;
+  const templateIds = useSelector(createSelectTemplateIds(userId));
   const templateStyleIds = useSelector(selectTemplateStyleIds);
   const templateSectionTypeIds = useSelector(selectTemplateSectionTypeIds);
 

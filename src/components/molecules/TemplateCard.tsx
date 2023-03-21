@@ -6,6 +6,7 @@ import {
   selectTemplateStyles,
 } from "../../redux/templates/selectors";
 import HoverCard from "../atoms/HoverCard";
+import { selectUser } from "../../redux/user/selectors";
 
 interface ITemplateCard {
   id: string;
@@ -13,18 +14,23 @@ interface ITemplateCard {
 }
 
 const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
-  const { name, sections, meta, style, shared } = useSelector(
-    createSelectTemplate(id)
-  );
+  const {
+    name,
+    sections,
+    meta,
+    style,
+    user: ownerId,
+  } = useSelector(createSelectTemplate(id));
+  const { id: userId } = useSelector(selectUser)!;
   const templateStyles = useSelector(selectTemplateStyles)!;
   const sectionTypes = useSelector(selectTemplateSectionTypes)!;
   return (
-    <HoverCard onClick={onEdit} className="py-4" disabled={shared}>
+    <HoverCard onClick={onEdit} className="py-4" disabled={ownerId !== userId}>
       <div className="text-left grid grid-cols-4 gap-2 text-gray-700">
         <div className="text-gray-400">Name</div>
         <div className="col-span-3">
           {name}
-          {shared && " (SHARED)"}
+          {ownerId !== userId && " (SHARED)"}
         </div>
         <div className="text-gray-400">Style</div>
         <div className="col-span-3">

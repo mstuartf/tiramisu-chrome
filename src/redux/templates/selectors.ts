@@ -4,19 +4,21 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const selectTemplateState = (state: RootState): State => state.templates;
 
-export const selectTemplateIds = (state: RootState): string[] | undefined => {
-  if (!state.templates.templates) {
-    return undefined;
-  }
-  return Object.values(state.templates.templates.values)
-    .sort((a, b) => {
-      if (a.shared === b.shared) {
-        return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
-      }
-      return !!b.shared > !!a.shared ? 1 : -1;
-    })
-    .map(({ id }) => id);
-};
+export const createSelectTemplateIds = (userId: string) =>
+  createSelector(selectTemplateState, ({ templates }) => {
+    if (!templates) {
+      return undefined;
+    }
+    return Object.values(templates.values)
+      .sort((a, b) => {
+        if (a.user === b.user) {
+          return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
+        }
+        return b.user === userId ? 1 : -1;
+      })
+      .map(({ id }) => id);
+  });
+
 export const selectTemplatesIsLoading = (state: RootState) =>
   state.templates.templatesLoading;
 
