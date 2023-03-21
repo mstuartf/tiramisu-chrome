@@ -10,10 +10,10 @@ export const selectTemplateIds = (state: RootState): string[] | undefined => {
   }
   return Object.values(state.templates.templates.values)
     .sort((a, b) => {
-      // if (a.custom === b.custom) {
-      return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
-      // }
-      // return b.custom > a.custom ? -1 : 1;
+      if (a.shared === b.shared) {
+        return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
+      }
+      return !!b.shared > !!a.shared ? 1 : -1;
     })
     .map(({ id }) => id);
 };
