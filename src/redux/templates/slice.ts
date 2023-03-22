@@ -7,6 +7,7 @@ import {
   State,
 } from "./types";
 import { ErrorRes } from "../types";
+import { RootState } from "../store";
 
 const initialState: State = {
   templatesLoading: false,
@@ -137,6 +138,18 @@ export const templateSlice = createSlice({
     createTemplateFailure: (state, { payload }: PayloadAction<ErrorRes>) => {
       state.templateSaving = false;
       state.templateSavingErrors = payload;
+    },
+  },
+  extraReducers: {
+    "user/loadCache": (
+      state,
+      { payload: { cache } }: PayloadAction<{ key: string; cache?: RootState }>
+    ) => {
+      if (cache) {
+        Object.entries(cache.templates).forEach(([k, v]) => {
+          (state as any)[k] = v;
+        });
+      }
     },
   },
 });

@@ -11,6 +11,7 @@ export interface State {
     };
   };
   invitePending: boolean;
+  cacheKey?: string;
 }
 
 export interface User {

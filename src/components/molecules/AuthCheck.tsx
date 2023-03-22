@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../redux/user/selectors";
+import { selectToken } from "../../redux/user/selectors";
 
 const AuthCheck = ({
   children,
@@ -10,7 +10,7 @@ const AuthCheck = ({
   children: React.ReactNode;
   authRequired: boolean;
 }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = useSelector(selectToken);
 
   if (!isLoggedIn && authRequired) {
     return <Redirect to="/login" />;

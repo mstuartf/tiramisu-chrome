@@ -19,8 +19,8 @@ export const createSelectTemplateIds = (userId: string) =>
       .map(({ id }) => id);
   });
 
-export const selectTemplatesIsLoading = (state: RootState) =>
-  state.templates.templatesLoading;
+export const selectTemplatesLoaded = (state: RootState) =>
+  !!state.templates.templates;
 
 export const selectTemplateStyleIds = (state: RootState) =>
   state.templates.templateStyles?.ids;

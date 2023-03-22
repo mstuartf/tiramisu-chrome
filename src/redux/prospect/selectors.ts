@@ -1,5 +1,7 @@
 import { RootState } from "../store";
 
+export const selectProspectState = (state: RootState) => state.prospect;
+
 export const selectProspectProfile = (state: RootState) =>
   state.prospect.profile;
 export const selectProspectMessagesIsLoading = (state: RootState) =>

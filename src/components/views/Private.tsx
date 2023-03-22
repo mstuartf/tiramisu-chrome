@@ -9,15 +9,21 @@ import Account from "./Account";
 import { createFetchUser } from "../../redux/user/actions";
 import Loading from "../molecules/Loading";
 import { selectUser } from "../../redux/user/selectors";
+import { selectTemplatesLoaded } from "../../redux/templates/selectors";
 
 const Private = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser)!;
+  const templatesLoaded = useSelector(selectTemplatesLoaded)!;
 
   useEffect(() => {
     // needed by both views, so dispatch here
-    dispatch(createListTemplates());
-    dispatch(createFetchUser());
+    if (!templatesLoaded) {
+      dispatch(createListTemplates());
+    }
+    if (!user) {
+      dispatch(createFetchUser());
+    }
   }, []);
 
   if (!user) {

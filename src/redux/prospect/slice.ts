@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LinkedInProfile, MessageSet, State } from "./types";
+import { RootState } from "../store";
 
 const initialState: State = {
   isLoadingProfile: false,
@@ -52,6 +53,18 @@ export const prospectSlice = createSlice({
     ) => {
       state.isLoadingMessages = false;
       state.messagesError = status;
+    },
+  },
+  extraReducers: {
+    "user/loadCache": (
+      state,
+      { payload: { cache } }: PayloadAction<{ key: string; cache?: RootState }>
+    ) => {
+      if (cache) {
+        Object.entries(cache.prospect).forEach(([k, v]) => {
+          (state as any)[k] = v;
+        });
+      }
     },
   },
 });

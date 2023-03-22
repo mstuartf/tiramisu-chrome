@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ListUsersRes, State, User } from "./types";
+import { RootState } from "../store";
 
 const initialState: State = {
   loginPending: false,
@@ -12,8 +13,18 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setToken: (state, { payload }: PayloadAction<string | null>) => {
-      state.token = payload;
+    loadCache: (
+      state,
+      {
+        payload: { key, cache },
+      }: PayloadAction<{ key: string; cache?: RootState }>
+    ) => {
+      if (cache) {
+        Object.entries(cache.user).forEach(([k, v]) => {
+          (state as any)[k] = v;
+        });
+      }
+      state.cacheKey = key;
     },
     loginPending: (state) => {
       state.loginPending = true;
@@ -63,4 +74,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setToken, logout } = userSlice.actions;
+export const { loadCache, logout } = userSlice.actions;

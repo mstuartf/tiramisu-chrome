@@ -26,8 +26,12 @@ const Templates = () => {
   const templateSectionTypeIds = useSelector(selectTemplateSectionTypeIds);
 
   useEffect(() => {
-    dispatch(createListTemplateStyles());
-    dispatch(createListTemplateSectionTypes());
+    if (!templateStyleIds) {
+      dispatch(createListTemplateStyles());
+    }
+    if (!templateSectionTypeIds) {
+      dispatch(createListTemplateSectionTypes());
+    }
   }, []);
 
   const onClose = () => {
