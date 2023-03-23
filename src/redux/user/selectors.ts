@@ -10,6 +10,8 @@ export const selectLoginPending = (state: RootState) => state.user.loginPending;
 
 export const selectCacheKey = (state: RootState) => state.user.cacheKey;
 
+export const selectPath = (state: RootState) => state.user.path;
+
 export const selectUser = (state: RootState) => state.user.user;
 
 export const selectTeamIds = (state: RootState): string[] | undefined => {

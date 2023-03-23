@@ -26,6 +26,9 @@ export const userSlice = createSlice({
       }
       state.cacheKey = key;
     },
+    savePath: (state, { payload }: PayloadAction<string>) => {
+      state.path = payload;
+    },
     loginPending: (state) => {
       state.loginPending = true;
     },
@@ -74,4 +77,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { loadCache, logout } = userSlice.actions;
+export const { loadCache, logout, savePath } = userSlice.actions;

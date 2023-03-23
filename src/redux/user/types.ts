@@ -12,6 +12,7 @@ export interface State {
   };
   invitePending: boolean;
   cacheKey?: string;
+  path?: string;
 }
 
 export interface User {

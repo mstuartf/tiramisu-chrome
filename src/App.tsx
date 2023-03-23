@@ -11,8 +11,8 @@ const history = createMemoryHistory();
 
 function App() {
   return (
-    <CacheManager>
-      <Router history={history}>
+    <Router history={history}>
+      <CacheManager>
         <Switch>
           <Route path="/login">
             <AuthCheck authRequired={false}>
@@ -25,8 +25,8 @@ function App() {
             </AuthCheck>
           </Route>
         </Switch>
-      </Router>
-    </CacheManager>
+      </CacheManager>
+    </Router>
   );
 }
 
