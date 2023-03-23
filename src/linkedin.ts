@@ -28,6 +28,20 @@ export const scrapeProfile = ():
     };
   }
 
+  let profile_pic_url;
+  try {
+    let img = document.querySelector(
+      ".pv-top-card-profile-picture__image"
+    ) as HTMLImageElement;
+    if (!img) {
+      // different class on own profile
+      img = document.querySelector(
+        ".profile-photo-edit__preview"
+      ) as HTMLImageElement;
+    }
+    profile_pic_url = img?.src;
+  } catch {}
+
   let talks_about;
   try {
     talks_about = panel
@@ -50,6 +64,7 @@ export const scrapeProfile = ():
       headline,
       talks_about,
       summary,
+      profile_pic_url,
     },
   };
 };

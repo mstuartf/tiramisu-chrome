@@ -14,6 +14,7 @@ export interface LinkedInProfile {
   summary?: string;
   talks_about?: string;
   slug: string;
+  profile_pic_url?: string;
 }
 
 export interface Message {
