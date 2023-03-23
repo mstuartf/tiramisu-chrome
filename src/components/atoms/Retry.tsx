@@ -7,7 +7,7 @@ interface RetryProps {
   noRetryMessage: string;
 }
 
-const retryErrorCodes = [502, 503, 504];
+const retryErrorCodes = [400, 502, 503, 504];
 
 const Retry = ({ status, onRetry, noRetryMessage }: RetryProps) => (
   <>

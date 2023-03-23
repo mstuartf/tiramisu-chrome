@@ -25,6 +25,7 @@ export const prospectSlice = createSlice({
     generateMessagesPending: (state, action) => {
       state.isLoadingMessages = true;
       state.messages = undefined;
+      state.messagesError = undefined;
       state.messagesLoadingPercent = 0;
     },
     generateMessagesSuccess: (
