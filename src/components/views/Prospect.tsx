@@ -19,8 +19,9 @@ const Prospect = () => {
   const profile = useSelector(selectProspectProfile);
   const dispatch = useDispatch();
 
-  const check = async () => {
+  const scanPage = async () => {
     setIsChecking(true);
+    setCheckingErr(undefined);
     const [tab] = await chrome.tabs.query({
       active: true,
       currentWindow: true,
@@ -59,10 +60,6 @@ const Prospect = () => {
     setIsChecking(false);
   };
 
-  useEffect(() => {
-    check();
-  }, []);
-
   return (
     <div>
       {isChecking || !templateIds ? (
@@ -71,13 +68,15 @@ const Prospect = () => {
         <>
           {!!profile ? (
             <div>
-              <ProspectProfile {...profile} />
+              <ProspectProfile {...profile} onUpdate={scanPage} />
               <ProspectMessagesContainer />
             </div>
           ) : (
-            <div>
-              <div>{checkingErr}</div>
-              <Btn onClick={check}>Retry</Btn>
+            <div className="grid gap-4">
+              <div className="text-gray-700 break-words">
+                {checkingErr || "Scan this page?"}
+              </div>
+              <Btn onClick={scanPage}>Scan</Btn>
             </div>
           )}
         </>
