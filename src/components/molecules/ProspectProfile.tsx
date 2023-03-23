@@ -2,6 +2,7 @@ import React from "react";
 import { LinkedInProfile } from "../../redux/prospect/types";
 import About from "../atoms/About";
 import { ArrowPathIcon } from "@heroicons/react/24/solid";
+import RefreshBtn from "../atoms/RefreshBtn";
 
 const ProspectProfile = ({
   full_name,
@@ -21,13 +22,7 @@ const ProspectProfile = ({
           </div>
         </div>
         <div className="flex items-center shrink-0 pl-2">
-          <button
-            type="button"
-            onClick={onUpdate}
-            className="p-2 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition duration-300 ease-in-out"
-          >
-            <ArrowPathIcon className="h-4 w-4" />
-          </button>
+          <RefreshBtn onClick={onUpdate} />
         </div>
       </div>
       {talks_about && <p className="text-gray-400">{talks_about}</p>}
