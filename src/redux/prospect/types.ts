@@ -5,6 +5,7 @@ export interface State {
   isLoadingMessages: boolean;
   messages?: MessageSet;
   messagesError?: number;
+  messagesLoadingPercent?: number;
 }
 
 export interface LinkedInProfile {

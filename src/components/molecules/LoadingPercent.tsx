@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Spinner from "../atoms/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { selectProspectMessagesLoadingPercent } from "../../redux/prospect/selectors";
+import { updateMessagesLoadingPercent } from "../../redux/prospect/slice";
 
 interface ILoadingPercent {
   seconds: number;
 }
 
 const LoadingPercent = ({ seconds }: ILoadingPercent) => {
-  const [percent, setPercent] = useState(0);
+  const dispatch = useDispatch();
+  const percent = useSelector(selectProspectMessagesLoadingPercent) || 0;
 
   useEffect(() => {
     if (percent < 100) {
       setTimeout(() => {
-        setPercent(percent + 1);
+        dispatch(updateMessagesLoadingPercent(percent + 1));
       }, (seconds * 1000) / 100);
     }
   }, [percent]);

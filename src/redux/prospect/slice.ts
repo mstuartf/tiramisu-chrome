@@ -25,6 +25,7 @@ export const prospectSlice = createSlice({
     generateMessagesPending: (state, action) => {
       state.isLoadingMessages = true;
       state.messages = undefined;
+      state.messagesLoadingPercent = 0;
     },
     generateMessagesSuccess: (
       state,
@@ -54,6 +55,12 @@ export const prospectSlice = createSlice({
       state.isLoadingMessages = false;
       state.messagesError = status;
     },
+    updateMessagesLoadingPercent: (
+      state,
+      { payload }: PayloadAction<number>
+    ) => {
+      state.messagesLoadingPercent = payload;
+    },
   },
   extraReducers: {
     "user/loadCache": (
@@ -69,4 +76,5 @@ export const prospectSlice = createSlice({
   },
 });
 
-export const { setProfile } = prospectSlice.actions;
+export const { setProfile, updateMessagesLoadingPercent } =
+  prospectSlice.actions;
