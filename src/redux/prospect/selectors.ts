@@ -14,3 +14,6 @@ export const selectProspectMessagesProcessed = (state: RootState) =>
   state.prospect.messages?.processed;
 export const selectProspectMessagesError = (state: RootState) =>
   state.prospect.messagesError;
+export const selectMessagesLoadingState = ({
+  prospect: { isLoadingMessages, messages },
+}: RootState) => isLoadingMessages || (!!messages?.id && !messages?.processed);

@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { setProfile } from "../../redux/prospect/slice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProspectProfile } from "../../redux/prospect/selectors";
+import {
+  selectMessagesLoadingState,
+  selectProspectProfile,
+} from "../../redux/prospect/selectors";
 import { createSelectTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import ProspectProfile from "../molecules/ProspectProfile";
@@ -15,6 +18,7 @@ const Prospect = () => {
   const [checkingErr, setCheckingErr] = useState<string | undefined>();
   const { id: userId } = useSelector(selectUser)!;
   const templateIds = useSelector(createSelectTemplateIds(userId));
+  const messagesIsLoading = useSelector(selectMessagesLoadingState);
 
   const profile = useSelector(selectProspectProfile);
   const dispatch = useDispatch();
@@ -68,7 +72,11 @@ const Prospect = () => {
         <>
           {!!profile ? (
             <div>
-              <ProspectProfile {...profile} onUpdate={scanPage} />
+              <ProspectProfile
+                {...profile}
+                onUpdate={scanPage}
+                disabled={messagesIsLoading}
+              />
               <ProspectMessagesContainer />
             </div>
           ) : (

@@ -1,7 +1,6 @@
 import React from "react";
 import { LinkedInProfile } from "../../redux/prospect/types";
 import About from "../atoms/About";
-import { ArrowPathIcon } from "@heroicons/react/24/solid";
 import RefreshBtn from "../atoms/RefreshBtn";
 
 const ProspectProfile = ({
@@ -10,7 +9,8 @@ const ProspectProfile = ({
   summary,
   talks_about,
   onUpdate,
-}: LinkedInProfile & { onUpdate: () => void }) => (
+  disabled,
+}: LinkedInProfile & { onUpdate: () => void; disabled?: boolean }) => (
   <div>
     <div className="mb-4 grid gap-2">
       <div className="flex gap-2 justify-between">
@@ -22,7 +22,7 @@ const ProspectProfile = ({
           </div>
         </div>
         <div className="flex items-center shrink-0 pl-2">
-          <RefreshBtn onClick={onUpdate} />
+          <RefreshBtn onClick={onUpdate} disabled={disabled} />
         </div>
       </div>
       {talks_about && <p className="text-gray-400">{talks_about}</p>}

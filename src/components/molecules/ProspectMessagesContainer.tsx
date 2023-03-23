@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  selectMessagesLoadingState,
   selectProspectMessages,
   selectProspectMessagesError,
   selectProspectMessageSetId,
@@ -17,7 +18,6 @@ import Retry from "../atoms/Retry";
 import { selectSelectedTemplate } from "../../redux/templates/selectors";
 import SelectTemplate from "./SelectTemplate";
 import Btn from "../atoms/Btn";
-import Spinner from "../atoms/Spinner";
 import LoadingPercent from "./LoadingPercent";
 
 const ProspectMessagesContainer = () => {
@@ -29,8 +29,7 @@ const ProspectMessagesContainer = () => {
   const messagesProcessed = useSelector(selectProspectMessagesProcessed);
   const template_id = useSelector(selectSelectedTemplate);
   const profile = useSelector(selectProspectProfile);
-
-  const isLoading = messagesIsLoading || (!!messageSetId && !messagesProcessed);
+  const isLoading = useSelector(selectMessagesLoadingState);
 
   const generate = () => {
     dispatch(createGenerateMessages({ profile, template_id }));
