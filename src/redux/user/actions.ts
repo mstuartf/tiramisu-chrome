@@ -1,6 +1,22 @@
 import { createRequestAction } from "../middleware/_api";
 import { ListUsersRes, User } from "./types";
 
+export const createRefreshRequest = createRequestAction<{
+  access: string;
+  refresh: string;
+}>(`user/refresh`, (payload: { refresh: string }) => ({
+  url: `auth/token/refresh`,
+  method: "POST",
+  payload,
+  mockData: {
+    status: 200,
+    body: {
+      access: "asldkjhasldfks",
+      refresh: "asldkjhasldfks",
+    },
+  },
+}));
+
 export const createLoginRequest = createRequestAction<{
   access: string;
   refresh: string;

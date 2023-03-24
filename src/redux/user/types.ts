@@ -3,6 +3,7 @@ export interface State {
   auth?: {
     access: string;
     refresh: string;
+    exp: number;
   };
   loginPending: boolean;
   userLoading: boolean;

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ListUsersRes, State, User } from "./types";
 import { RootState } from "../store";
+import jwt_decode from "jwt-decode";
 
 const initialState: State = {
   loginPending: false,
@@ -39,7 +40,18 @@ export const userSlice = createSlice({
       }: PayloadAction<{ access: string; refresh: string }>
     ) => {
       state.loginPending = false;
-      state.auth = { access, refresh };
+      const { exp } = jwt_decode<{ exp: number }>(access);
+      state.auth = { access, refresh, exp };
+    },
+    refreshSuccess: (
+      state,
+      {
+        payload: { access, refresh },
+      }: PayloadAction<{ access: string; refresh: string }>
+    ) => {
+      state.loginPending = false;
+      const { exp } = jwt_decode<{ exp: number }>(access);
+      state.auth = { access, refresh, exp };
     },
     loginFailure: (state) => {
       state.loginPending = false;
