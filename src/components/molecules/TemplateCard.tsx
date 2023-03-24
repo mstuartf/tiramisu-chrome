@@ -32,7 +32,7 @@ const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
           {name}
           {ownerId !== userId && " (SHARED)"}
         </div>
-        <div className="text-gray-400">Style</div>
+        <div className="text-gray-400">Message tone</div>
         <div className="col-span-3">
           {style === "custom" ? meta : templateStyles[style].description}
         </div>

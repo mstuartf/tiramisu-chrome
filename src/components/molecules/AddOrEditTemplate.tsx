@@ -159,7 +159,7 @@ const AddOrEditTemplate = ({
       </div>
 
       <div className="grid grid-cols-3">
-        <div className="flex items-center">Style</div>
+        <div className="flex items-center">Message tone</div>
         <Slct
           disabled={isSaving}
           value={localStyle}
