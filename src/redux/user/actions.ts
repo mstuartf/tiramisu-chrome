@@ -1,20 +1,21 @@
 import { createRequestAction } from "../middleware/_api";
 import { ListUsersRes, User } from "./types";
 
-export const createLoginRequest = createRequestAction<{ access: string }>(
-  `user/login`,
-  (payload: { email: string; password: string }) => ({
-    url: `auth/token`,
-    method: "POST",
-    payload,
-    mockData: {
-      status: 200,
-      body: {
-        access: "asldkjhasldfks",
-      },
+export const createLoginRequest = createRequestAction<{
+  access: string;
+  refresh: string;
+}>(`user/login`, (payload: { email: string; password: string }) => ({
+  url: `auth/token`,
+  method: "POST",
+  payload,
+  mockData: {
+    status: 200,
+    body: {
+      access: "asldkjhasldfks",
+      refresh: "asldkjhasldfks",
     },
-  })
-);
+  },
+}));
 
 export const createFetchUser = createRequestAction<User>(
   `user/fetchUser`,

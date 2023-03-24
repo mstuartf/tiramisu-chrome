@@ -1,6 +1,9 @@
 export interface State {
   user?: User;
-  token?: string | null;
+  auth?: {
+    access: string;
+    refresh: string;
+  };
   loginPending: boolean;
   userLoading: boolean;
   teamLoading: boolean;

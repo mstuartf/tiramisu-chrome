@@ -4,7 +4,7 @@ import { State } from "./types";
 
 export const selectUserState = (state: RootState): State => state.user;
 
-export const selectToken = (state: RootState) => state.user.token;
+export const selectAuth = (state: RootState) => state.user.auth;
 
 export const selectLoginPending = (state: RootState) => state.user.loginPending;
 

@@ -7,7 +7,7 @@ export const apiMiddleware = buildApiMiddleware(
   (store) => {
     const state = store.getState() as RootState;
     return {
-      Authorization: `Bearer ${state.user.token}`,
+      Authorization: `Bearer ${state.user.auth?.access}`,
     };
   },
   {

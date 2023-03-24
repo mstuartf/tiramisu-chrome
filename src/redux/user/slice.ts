@@ -34,16 +34,18 @@ export const userSlice = createSlice({
     },
     loginSuccess: (
       state,
-      { payload: { access } }: PayloadAction<{ access: string }>
+      {
+        payload: { access, refresh },
+      }: PayloadAction<{ access: string; refresh: string }>
     ) => {
       state.loginPending = false;
-      state.token = access;
+      state.auth = { access, refresh };
     },
     loginFailure: (state) => {
       state.loginPending = false;
     },
     logout: (state) => {
-      state.token = null;
+      state.auth = undefined;
     },
     fetchUserPending: (state) => {
       state.userLoading = true;
