@@ -34,7 +34,9 @@ const CacheManager = ({ children }: ICacheManagerProps) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    dispatch(savePath(pathname));
+    if (pathname !== "/") {
+      dispatch(savePath(pathname));
+    }
   }, [pathname]);
 
   useEffect(() => {
