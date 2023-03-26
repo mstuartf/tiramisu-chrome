@@ -5,6 +5,7 @@ import { createRefreshRequest } from "../user/actions";
 export const refreshMiddleware: redux.Middleware = (store) => (next) => {
   const queuedRequests: AnyAction[] = [];
   return (action) => {
+    // todo: handle case where there is no access token (i.e. first request after cache loaded)
     if (
       action.meta?.request &&
       action.meta.request.authenticated &&

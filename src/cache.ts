@@ -11,5 +11,6 @@ export const loadState = (): RootState | undefined => {
   return JSON.parse(json) as RootState;
 };
 
+// todo: don't cache access token
 export const saveState = (state: RootState) =>
   localStorage.setItem(STATE_KEY, JSON.stringify(state));
