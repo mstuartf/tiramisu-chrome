@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createSelectTemplateIds,
+  createSelectMyTemplateIds,
   selectSelectedTemplate,
 } from "../../redux/templates/selectors";
 import TemplateOption from "../atoms/TemplateOption";
@@ -13,7 +13,7 @@ import { selectMessagesLoadingState } from "../../redux/prospect/selectors";
 const SelectTemplate = () => {
   const dispatch = useDispatch();
   const { id: userId } = useSelector(selectUser)!;
-  const templateIds = useSelector(createSelectTemplateIds(userId));
+  const templateIds = useSelector(createSelectMyTemplateIds(userId));
   const messagesIsLoading = useSelector(selectMessagesLoadingState);
   const selectedTemplateId = useSelector(selectSelectedTemplate);
   const onChange = (id: string) => {

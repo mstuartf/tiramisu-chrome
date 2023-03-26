@@ -4,18 +4,25 @@ import { createSelector } from "@reduxjs/toolkit";
 
 export const selectTemplateState = (state: RootState): State => state.templates;
 
-export const createSelectTemplateIds = (userId: string) =>
+export const createSelectMyTemplateIds = (userId: string) =>
   createSelector(selectTemplateState, ({ templates }) => {
     if (!templates) {
       return undefined;
     }
     return Object.values(templates.values)
-      .sort((a, b) => {
-        if (a.user === b.user) {
-          return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
-        }
-        return b.user === userId ? 1 : -1;
-      })
+      .filter(({ user }) => user === userId)
+      .sort((a, b) => (b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1))
+      .map(({ id }) => id);
+  });
+
+export const createSelectSharedTemplateIds = (userId: string) =>
+  createSelector(selectTemplateState, ({ templates }) => {
+    if (!templates) {
+      return undefined;
+    }
+    return Object.values(templates.values)
+      .filter(({ user }) => user !== userId)
+      .sort((a, b) => (b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1))
       .map(({ id }) => id);
   });
 

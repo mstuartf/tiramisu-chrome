@@ -28,10 +28,7 @@ const TemplateCard = ({ id, onEdit }: ITemplateCard) => {
     <HoverCard onClick={onEdit} className="py-4" disabled={ownerId !== userId}>
       <div className="text-left grid grid-cols-4 gap-2 text-gray-700">
         <div className="text-gray-400">Name</div>
-        <div className="col-span-3">
-          {name}
-          {ownerId !== userId && " (SHARED)"}
-        </div>
+        <div className="col-span-3">{name}</div>
         <div className="text-gray-400">Message tone</div>
         <div className="col-span-3">
           {style === "custom" ? meta : templateStyles[style].description}

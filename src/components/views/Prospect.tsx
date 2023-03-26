@@ -5,7 +5,7 @@ import {
   selectMessagesLoadingState,
   selectProspectProfile,
 } from "../../redux/prospect/selectors";
-import { createSelectTemplateIds } from "../../redux/templates/selectors";
+import { createSelectMyTemplateIds } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import ProspectProfile from "../molecules/ProspectProfile";
 import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
@@ -17,7 +17,7 @@ const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [checkingErr, setCheckingErr] = useState<string | undefined>();
   const { id: userId } = useSelector(selectUser)!;
-  const templateIds = useSelector(createSelectTemplateIds(userId));
+  const templateIds = useSelector(createSelectMyTemplateIds(userId));
   const messagesIsLoading = useSelector(selectMessagesLoadingState);
 
   const profile = useSelector(selectProspectProfile);

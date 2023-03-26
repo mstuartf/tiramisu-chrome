@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createSelectTemplateIds,
+  createSelectMyTemplateIds,
+  createSelectSharedTemplateIds,
   selectTemplateSectionTypeIds,
   selectTemplatesLoading,
   selectTemplateStyleIds,
 } from "../../redux/templates/selectors";
 import Loading from "../molecules/Loading";
 import Btn from "../atoms/Btn";
-import TemplateCard from "../molecules/TemplateCard";
 import EditTemplateContainer from "../molecules/EditTemplateContainer";
 import AddTemplateContainer from "../molecules/AddTemplateContainer";
 import {
@@ -18,16 +18,23 @@ import {
 } from "../../redux/templates/actions";
 import { selectUser } from "../../redux/user/selectors";
 import RefreshBtn from "../atoms/RefreshBtn";
+import TemplateList from "../molecules/TemplateList";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { NavBarItem } from "../molecules/NavBar";
 
 const Templates = () => {
   const dispatch = useDispatch();
   const [isAdding, setIsAdding] = useState(false);
   const [editTemplateId, setEditTemplateId] = useState<string | undefined>();
   const { id: userId } = useSelector(selectUser)!;
-  const templateIds = useSelector(createSelectTemplateIds(userId));
+  const myTemplateIds = useSelector(createSelectMyTemplateIds(userId));
+  const sharedTemplateIds = useSelector(createSelectSharedTemplateIds(userId));
   const templatesLoading = useSelector(selectTemplatesLoading);
   const templateStyleIds = useSelector(selectTemplateStyleIds);
   const templateSectionTypeIds = useSelector(selectTemplateSectionTypeIds);
+
+  const location = useLocation();
+  console.log(location);
 
   useEffect(() => {
     if (!templateStyleIds) {
@@ -48,7 +55,8 @@ const Templates = () => {
   };
 
   if (
-    !templateIds ||
+    !myTemplateIds ||
+    !sharedTemplateIds ||
     !templateStyleIds ||
     !templateSectionTypeIds ||
     templatesLoading
@@ -66,16 +74,31 @@ const Templates = () => {
 
   return (
     <div className="grid gap-4">
-      <div className="border-b pb-2 uppercase flex items-center justify-between">
-        <div>My templates</div>
+      <div className="border-b flex items-center justify-between">
+        <ul className="flex h-full">
+          <NavBarItem to="/templates/my" text="My templates" />
+          <NavBarItem to="/templates/shared" text="Shared with me" />
+        </ul>
         <RefreshBtn onClick={refresh} />
       </div>
-      <div className="grid gap-2">
-        {templateIds.map((id) => (
-          <TemplateCard id={id} key={id} onEdit={() => setEditTemplateId(id)} />
-        ))}
-      </div>
-      <Btn onClick={() => setIsAdding(true)}>Create new template</Btn>
+      <Switch>
+        <Route path="/templates/my">
+          <TemplateList
+            templateIds={myTemplateIds}
+            onEdit={setEditTemplateId}
+          />
+          <Btn onClick={() => setIsAdding(true)}>Create new template</Btn>
+        </Route>
+        <Route path="/templates/shared">
+          <TemplateList
+            templateIds={sharedTemplateIds}
+            onEdit={setEditTemplateId}
+          />
+        </Route>
+        <Route path="*">
+          <Redirect to="/templates/my" />
+        </Route>
+      </Switch>
     </div>
   );
 };
