@@ -1,8 +1,10 @@
-import { Toast } from "../toast/toast";
+import { createToastManager } from "../toast/toast";
 
 console.log("tiramisu loaded");
 
 export const addListeners = () => {
+  const showToast = createToastManager();
+
   document.addEventListener("submit", (event) => {
     if (!event.target) {
       return;
@@ -41,13 +43,27 @@ export const addListeners = () => {
       return;
     }
     const recipientName = recipient.innerText;
-
-    new Toast({
+    showToast({
+      type: "default",
       message: `Record this message to ${recipientName} in Salesforce?`,
-      customButtons: [
+      buttons: [
         {
           text: "Yes",
-          onClick: () => console.log("save"),
+          onClick: () =>
+            new Promise((resolve) => {
+              setTimeout(() => {
+                resolve(null);
+              }, 2000);
+            }),
+        },
+        {
+          text: "No",
+          onClick: () =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                reject("some error");
+              }, 2000);
+            }),
         },
       ],
     });
