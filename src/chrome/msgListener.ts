@@ -43,7 +43,7 @@ export const addListeners = () => {
     const recipientName = recipient.innerText;
 
     new Toast({
-      message: `Record this message to ${recipientName} Salesforce?`,
+      message: `Record this message to ${recipientName} in Salesforce?`,
       customButtons: [
         {
           text: "Yes",
