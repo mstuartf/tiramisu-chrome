@@ -5,6 +5,7 @@ const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 logger("tiramisu loaded");
 
 interface Msg {
+  type: "msg_sent";
   recipient_name: string;
   content: string;
 }
@@ -64,7 +65,11 @@ export const addListeners = () => {
           onClick: () =>
             new Promise((resolve, reject) => {
               chrome.runtime
-                .sendMessage<Msg, SendMsgRes>({ recipient_name, content })
+                .sendMessage<Msg, SendMsgRes>({
+                  type: "msg_sent",
+                  recipient_name,
+                  content,
+                })
                 .then(({ success, detail }) => {
                   if (success) {
                     resolve(null);

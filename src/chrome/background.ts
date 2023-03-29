@@ -18,12 +18,14 @@ const httpCall = () =>
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log(request);
-  httpCall()
-    .then(() => {
-      sendResponse({ success: true });
-    })
-    .catch(() => {
-      sendResponse({ success: false });
-    });
-  return true; // return true to indicate you want to send a response asynchronously
+  if (request.type === "msg_sent") {
+    httpCall()
+      .then(() => {
+        sendResponse({ success: true });
+      })
+      .catch(() => {
+        sendResponse({ success: false });
+      });
+    return true; // return true to indicate you want to send a response asynchronously
+  }
 });
