@@ -97,7 +97,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "check_auth") {
     loadState()
       .then((state) => {
-        sendResponse({ success: true, detail: !!state?.user?.auth });
+        sendResponse({
+          success: true,
+          detail: {
+            auth: state?.user?.auth,
+            msg_tracking_activated: state?.user.user?.msg_tracking_activated,
+            msg_tracking_enabled: state?.user.user?.msg_tracking_enabled,
+          },
+        });
       })
       .catch(() => {
         sendResponse({ success: false });

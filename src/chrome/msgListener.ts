@@ -89,17 +89,34 @@ export const addListeners = () => {
   const showToast = createToastManager();
 
   document.addEventListener("submit", async (event) => {
-    const { success, detail: isLoggedIn } = await chrome.runtime.sendMessage<
+    const {
+      success,
+      detail: { auth, msg_tracking_activated, msg_tracking_enabled },
+    } = await chrome.runtime.sendMessage<
       Msg,
-      SendMsgRes<boolean>
+      SendMsgRes<{
+        auth: { access: string; refresh: string };
+        msg_tracking_activated: boolean;
+        msg_tracking_enabled: boolean;
+      }>
     >({ type: "check_auth" });
     if (!success) {
       logger("error checking auth status");
       return;
     }
 
-    if (!isLoggedIn) {
+    if (!auth) {
       logger("user is not logged in");
+      return;
+    }
+
+    if (!msg_tracking_enabled) {
+      logger("user does not have msg_tracking_enabled");
+      return;
+    }
+
+    if (!msg_tracking_activated) {
+      logger("user does not have msg_tracking_activated");
       return;
     }
 
