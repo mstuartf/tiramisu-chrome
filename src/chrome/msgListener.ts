@@ -1,4 +1,5 @@
 import { createToastManager } from "../toast/toast";
+import { Omit } from "react-redux";
 
 const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 
@@ -10,6 +11,7 @@ interface Msg {
 
 interface LinkedInMsg extends Msg {
   recipient_name: string;
+  profile_url: string;
   content: string;
 }
 
@@ -17,6 +19,45 @@ interface SendMsgRes<T = string> {
   success: boolean;
   detail: T;
 }
+
+const getProfileUrlAfterRedirect = async (href: string): Promise<string> => {
+  logger(`getting redirect url for ${href}`);
+  const iframe = document.createElement("iframe");
+  iframe.id = "myframe";
+  iframe.setAttribute("src", href);
+  document.body.appendChild(iframe);
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const queryFrame =
+        document.querySelector<HTMLIFrameElement>("iframe#myframe");
+      if (!queryFrame || !queryFrame.contentWindow) {
+        logger("iframe not found");
+        reject();
+        return;
+      }
+      const redirectUrl = queryFrame.contentWindow.location.href;
+      queryFrame.remove();
+      resolve(redirectUrl);
+    }, 2000);
+  });
+};
+
+const saveMsg = (payload: Omit<LinkedInMsg, "type">): Promise<null> =>
+  new Promise((resolve, reject) => {
+    chrome.runtime
+      .sendMessage<LinkedInMsg, SendMsgRes>({
+        type: "msg_sent",
+        ...payload,
+      })
+      .then(({ success, detail }) => {
+        if (success) {
+          resolve(null);
+        } else {
+          reject(detail);
+        }
+      })
+      .catch((err) => reject(err));
+  });
 
 export const addListeners = () => {
   const showToast = createToastManager();
@@ -67,12 +108,32 @@ export const addListeners = () => {
       logger("no wrapper with matching class");
       return;
     }
-    const recipient = wrapper.querySelector("h2");
-    if (!recipient) {
+    const recipientHeader = wrapper.querySelector("h2");
+    if (!recipientHeader) {
       logger("no h2 inside wrapper");
       return;
     }
-    const recipient_name = recipient.innerText;
+    const recipient_name = recipientHeader.innerText;
+
+    let profileLink: HTMLAnchorElement | null;
+    if (window.location.href.includes("/messaging/")) {
+      profileLink = document.querySelector(
+        `a[title="Open ${recipient_name}’s profile"]`
+      );
+    } else {
+      profileLink = recipientHeader.querySelector("a");
+    }
+
+    if (!profileLink) {
+      console.log("no profile link found");
+      return;
+    }
+
+    let href = profileLink.href;
+    if (!href.includes("https")) {
+      href = `${window.location.origin}${href}`;
+    }
+
     showToast({
       type: "default",
       message: `Record this message to ${recipient_name} in Salesforce?`,
@@ -80,22 +141,13 @@ export const addListeners = () => {
         {
           text: "Yes",
           onClick: () =>
-            new Promise((resolve, reject) => {
-              chrome.runtime
-                .sendMessage<LinkedInMsg, SendMsgRes>({
-                  type: "msg_sent",
-                  recipient_name,
-                  content,
-                })
-                .then(({ success, detail }) => {
-                  if (success) {
-                    resolve(null);
-                  } else {
-                    reject(detail);
-                  }
-                })
-                .catch((err) => reject(err));
-            }),
+            getProfileUrlAfterRedirect(href).then((profile_url) =>
+              saveMsg({
+                profile_url,
+                content,
+                recipient_name,
+              })
+            ),
         },
         {
           text: "No",

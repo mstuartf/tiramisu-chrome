@@ -17,8 +17,12 @@ const httpCall = () =>
     }, 2000);
   });
 
+// todo get access token
+// send token with api call
+// handle need to refresh
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  // console.log(request);
+  console.log(request);
   if (request.type === "msg_sent") {
     httpCall()
       .then(() => {
