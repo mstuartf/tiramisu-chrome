@@ -1,6 +1,8 @@
 import { createToastManager } from "../toast/toast";
 
-console.log("tiramisu loaded");
+const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
+
+logger("tiramisu loaded");
 
 export const addListeners = () => {
   const showToast = createToastManager();
@@ -11,13 +13,13 @@ export const addListeners = () => {
     }
     const form = event.target as HTMLFormElement;
     if (!form.className.includes("msg-form")) {
-      console.log("submit event did not come from a message form");
-      console.log(form.className);
+      logger("submit event did not come from a message form");
+      logger(form.className);
       return;
     }
     const input = form.querySelector(".msg-form__contenteditable");
     if (!input) {
-      console.log("no div input found inside message form");
+      logger("no div input found inside message form");
       return;
     }
     // const msg = (input as HTMLDivElement).innerText;
@@ -34,12 +36,12 @@ export const addListeners = () => {
       }
     }
     if (!wrapper) {
-      console.log("no wrapper with matching class");
+      logger("no wrapper with matching class");
       return;
     }
     const recipient = wrapper.querySelector("h2");
     if (!recipient) {
-      console.log("no h2 inside wrapper");
+      logger("no h2 inside wrapper");
       return;
     }
     const recipientName = recipient.innerText;
