@@ -1,6 +1,6 @@
 import { wrapStore } from "webext-redux";
-import { store } from "../redux/store";
-import { loadState } from "../cache";
+import { RootState, store } from "../redux/store";
+import { loadState, saveState } from "../cache";
 import { LinkedInMsg } from "./msgListener";
 
 wrapStore(store);
@@ -45,17 +45,36 @@ const refreshTokenRequest = (payload: { refresh: string }) =>
     body: JSON.stringify(payload),
   });
 
-const getAuth = (): Promise<{ access: string; refresh: string }> =>
+const getAuth = (): Promise<{ access: string; refresh: string; exp: number }> =>
   loadState().then((state) => state?.user?.auth!);
+
+const updateAuth = (auth: {
+  access: string;
+  refresh: string;
+  exp: number;
+}): Promise<void> =>
+  loadState().then((state) => {
+    const updated: RootState = {
+      ...state!,
+      user: {
+        ...state!.user,
+        auth,
+      },
+    };
+    return saveState(updated);
+  });
 
 const saveMsg = (payload: Omit<LinkedInMsg, "type">) =>
   getAuth().then(({ access, refresh }) =>
     saveMessageRequest(payload, access).then((res1) => {
       if (res1.status === 401) {
-        return (
-          refreshTokenRequest({ refresh })
-            // todo: save token here
-            .then((res2) => saveMessageRequest(payload, res2.body.access))
+        return refreshTokenRequest({ refresh }).then(
+          ({ body: { access: updatedAccess, refresh, exp } }) =>
+            updateAuth({
+              access: updatedAccess,
+              refresh,
+              exp,
+            }).then(() => saveMessageRequest(payload, updatedAccess))
         );
       }
       return res1;
