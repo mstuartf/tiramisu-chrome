@@ -13,7 +13,7 @@
     "default_popup": "index.html",
     "default_title": "Open Tiramisu"
   },
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
   "background": {
     "service_worker": "./static/js/background.js"
   },

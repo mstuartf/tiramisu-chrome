@@ -5,20 +5,37 @@ const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 logger("tiramisu loaded");
 
 interface Msg {
-  type: "msg_sent";
+  type: string;
+}
+
+interface LinkedInMsg extends Msg {
   recipient_name: string;
   content: string;
 }
 
-interface SendMsgRes {
+interface SendMsgRes<T = string> {
   success: boolean;
-  detail: string;
+  detail: T;
 }
 
 export const addListeners = () => {
   const showToast = createToastManager();
 
-  document.addEventListener("submit", (event) => {
+  document.addEventListener("submit", async (event) => {
+    const { success, detail: isLoggedIn } = await chrome.runtime.sendMessage<
+      Msg,
+      SendMsgRes<boolean>
+    >({ type: "check_auth" });
+    if (!success) {
+      console.log("error checking auth status");
+      return;
+    }
+
+    if (!isLoggedIn) {
+      console.log("user is not logged in");
+      return;
+    }
+
     if (!event.target) {
       return;
     }
@@ -65,7 +82,7 @@ export const addListeners = () => {
           onClick: () =>
             new Promise((resolve, reject) => {
               chrome.runtime
-                .sendMessage<Msg, SendMsgRes>({
+                .sendMessage<LinkedInMsg, SendMsgRes>({
                   type: "msg_sent",
                   recipient_name,
                   content,

@@ -46,12 +46,14 @@ const CacheManager = ({ children }: ICacheManagerProps) => {
   }, [hash]);
 
   useEffect(() => {
-    dispatch(
-      loadCache({
-        key: localCacheKey,
-        cache: loadState(),
-      })
-    );
+    loadState().then((cache) => {
+      dispatch(
+        loadCache({
+          key: localCacheKey,
+          cache,
+        })
+      );
+    });
   }, []);
 
   if (!cacheLoaded) {
