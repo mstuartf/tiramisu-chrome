@@ -23,18 +23,12 @@ export const createToastManager = () => {
     toastEl.appendChild(message);
 
     const loading = document.createElement("span");
-    loading.innerText = "Loading...";
-    loading.style.visibility = "hidden";
 
-    const setLoadingState = (isLoading: boolean) => {
+    const setLoadingState = (isLoading: boolean, content: string) => {
       toastEl
         .querySelectorAll("button")
         .forEach((btn) => (btn.disabled = isLoading));
-      if (isLoading) {
-        loading.style.visibility = "visible";
-      } else {
-        loading.style.visibility = "hidden";
-      }
+      loading.innerText = content;
     };
 
     options.buttons.forEach(({ text, onClick }) => {
@@ -43,14 +37,14 @@ export const createToastManager = () => {
       button.classList.add("toastjs-btn--custom");
       button.innerText = text;
       button.onclick = () => {
-        setLoadingState(true);
+        setLoadingState(true, "Loading...");
         onClick()
           .then(() => {
-            setLoadingState(false);
+            setLoadingState(false, "");
             close(slideContainer);
           })
-          .catch(() => {
-            setLoadingState(false);
+          .catch((err) => {
+            setLoadingState(false, err);
           });
       };
       toastEl.appendChild(button);
