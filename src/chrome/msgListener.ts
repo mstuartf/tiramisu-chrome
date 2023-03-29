@@ -4,6 +4,16 @@ const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 
 logger("tiramisu loaded");
 
+interface Msg {
+  recipient_name: string;
+  content: string;
+}
+
+interface SendMsgRes {
+  success: boolean;
+  detail: string;
+}
+
 export const addListeners = () => {
   const showToast = createToastManager();
 
@@ -22,7 +32,7 @@ export const addListeners = () => {
       logger("no div input found inside message form");
       return;
     }
-    // const msg = (input as HTMLDivElement).innerText;
+    const content = (input as HTMLDivElement).innerText;
 
     let wrapper;
     let parent: HTMLElement = form;
@@ -44,18 +54,25 @@ export const addListeners = () => {
       logger("no h2 inside wrapper");
       return;
     }
-    const recipientName = recipient.innerText;
+    const recipient_name = recipient.innerText;
     showToast({
       type: "default",
-      message: `Record this message to ${recipientName} in Salesforce?`,
+      message: `Record this message to ${recipient_name} in Salesforce?`,
       buttons: [
         {
           text: "Yes",
           onClick: () =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve(null);
-              }, 2000);
+            new Promise((resolve, reject) => {
+              chrome.runtime
+                .sendMessage<Msg, SendMsgRes>({ recipient_name, content })
+                .then(({ success, detail }) => {
+                  if (success) {
+                    resolve(null);
+                  } else {
+                    reject(detail);
+                  }
+                })
+                .catch((err) => reject(err));
             }),
         },
         {
