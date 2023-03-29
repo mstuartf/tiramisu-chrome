@@ -2,20 +2,28 @@ import React, { useState } from "react";
 import Btn from "../atoms/Btn";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/user/slice";
-import { selectUser } from "../../redux/user/selectors";
+import { selectUser, selectUserIsLoading } from "../../redux/user/selectors";
 import Loading from "../molecules/Loading";
 import TeamContainer from "../molecules/TeamContainer";
 import packageJson from "../../../package.json";
+import MsgTracking from "../molecules/MsgTracking";
+import RefreshBtn from "../atoms/RefreshBtn";
+import { createFetchUser } from "../../redux/user/actions";
 
 const Account = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const isLoading = useSelector(selectUserIsLoading);
 
   const [update, setUpdate] = useState("No updates found.");
   const [isChecking, setIsChecking] = useState(false);
 
   const onLogout = () => {
     dispatch(logout());
+  };
+
+  const refresh = () => {
+    dispatch(createFetchUser());
   };
 
   const checkForUpdates = () => {
@@ -32,14 +40,18 @@ const Account = () => {
     });
   };
 
-  if (!user) {
+  if (!user || isLoading) {
     return <Loading />;
   }
 
-  const { admin } = user;
+  const { admin, email } = user;
 
   return (
     <div className="grid gap-4">
+      <div className="flex justify-between items-center">
+        <div>{email}</div>
+        <RefreshBtn onClick={refresh} />
+      </div>
       <div className="flex justify-between items-center">
         <div>You are currently running version {packageJson.version}.</div>
         <Btn onClick={onLogout}>Logout</Btn>
@@ -50,6 +62,7 @@ const Account = () => {
           Check for updates
         </Btn>
       </div>
+      <MsgTracking />
       {admin && <TeamContainer />}
     </div>
   );

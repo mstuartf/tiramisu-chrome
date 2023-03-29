@@ -14,6 +14,8 @@ export const selectPath = (state: RootState) => state.user.path;
 
 export const selectUser = (state: RootState) => state.user.user;
 
+export const selectUserIsLoading = (state: RootState) => state.user.userLoading;
+
 export const selectTeamIds = (state: RootState): string[] | undefined => {
   if (!state.user.team) {
     return undefined;

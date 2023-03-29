@@ -69,6 +69,16 @@ export const userSlice = createSlice({
     fetchUserFailure: (state) => {
       state.userLoading = false;
     },
+    patchUserPending: (state) => {
+      state.userLoading = true;
+    },
+    patchUserSuccess: (state, { payload }: PayloadAction<User>) => {
+      state.userLoading = false;
+      state.user = payload;
+    },
+    patchUserFailure: (state) => {
+      state.userLoading = false;
+    },
     listTeamPending: (state) => {
       state.teamLoading = true;
     },

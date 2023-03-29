@@ -24,6 +24,12 @@ export interface User {
   admin: boolean;
   email: string;
   company: string;
+
+  // feature flags
+  msg_tracking_enabled?: boolean;
+
+  // account config
+  msg_tracking_activated?: boolean;
 }
 
 export type ListUsersRes = User[];

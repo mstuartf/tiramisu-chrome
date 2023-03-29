@@ -45,6 +45,27 @@ export const createFetchUser = createRequestAction<User>(
         admin: true,
         email: "test@mike.com",
         company: "asdf",
+        msg_tracking: true,
+      },
+    },
+  })
+);
+
+export const createPatchUser = createRequestAction<User>(
+  `user/patchUser`,
+  (payload: Partial<User>) => ({
+    url: `accounts/users/me`,
+    method: "PATCH",
+    authenticated: true,
+    payload,
+    mockData: {
+      status: 200,
+      body: {
+        id: "asldkjhasldfks",
+        admin: true,
+        email: "test@mike.com",
+        company: "asdf",
+        msg_tracking: true,
       },
     },
   })
