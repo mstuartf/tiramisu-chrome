@@ -1,5 +1,6 @@
 import { createToastManager } from "../toast/toast";
 import { Omit } from "react-redux";
+import { extractProfileSlug } from "../linkedin";
 
 const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 
@@ -9,9 +10,9 @@ interface Msg {
   type: string;
 }
 
-interface LinkedInMsg extends Msg {
-  recipient_name: string;
-  profile_url: string;
+export interface LinkedInMsg extends Msg {
+  profile_name: string;
+  profile_slug: string;
   content: string;
 }
 
@@ -52,7 +53,7 @@ const withRetry = (
       return withRetry(href, resolve, reject, count);
     }
     queryFrame.remove();
-    resolve(redirectUrl);
+    resolve(extractProfileSlug(redirectUrl));
   }, 100);
 };
 
@@ -138,12 +139,12 @@ export const addListeners = () => {
       logger("no h2 inside wrapper");
       return;
     }
-    const recipient_name = recipientHeader.innerText;
+    const profile_name = recipientHeader.innerText;
 
     let profileLink: HTMLAnchorElement | null;
     if (window.location.href.includes("/messaging/")) {
       profileLink = document.querySelector(
-        `a[title="Open ${recipient_name}’s profile"]`
+        `a[title="Open ${profile_name}’s profile"]`
       );
     } else {
       profileLink = recipientHeader.querySelector("a");
@@ -161,16 +162,16 @@ export const addListeners = () => {
 
     showToast({
       type: "default",
-      message: `Record this message to ${recipient_name} in Salesforce?`,
+      message: `Record this message to ${profile_name} in Salesforce?`,
       buttons: [
         {
           text: "Yes",
           onClick: () =>
-            getProfileUrlAfterRedirect(href).then((profile_url) =>
+            getProfileUrlAfterRedirect(href).then((profile_slug) =>
               saveMsg({
-                profile_url,
+                profile_slug,
                 content,
-                recipient_name,
+                profile_name,
               })
             ),
         },
