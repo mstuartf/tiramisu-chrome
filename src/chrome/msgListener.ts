@@ -20,6 +20,42 @@ interface SendMsgRes<T = string> {
   detail: T;
 }
 
+function removeTrailingSlash(url: string) {
+  return url[url.length - 1] === "/" ? url.substring(0, url.length - 1) : url;
+}
+
+const withRetry = (
+  href: string,
+  resolve: (v: string) => void,
+  reject: () => void,
+  count = 0
+) => {
+  count = count + 1;
+  if (count > 20) {
+    reject();
+    return;
+  }
+  // logger(`checking url attempt ${count}`)
+  setTimeout(() => {
+    const queryFrame =
+      document.querySelector<HTMLIFrameElement>("iframe#myframe");
+    if (!queryFrame || !queryFrame.contentWindow) {
+      logger("iframe not found");
+      reject();
+      return;
+    }
+    const redirectUrl = queryFrame.contentWindow.location.href;
+    if (
+      removeTrailingSlash(redirectUrl) === removeTrailingSlash(href) ||
+      redirectUrl === "about:blank"
+    ) {
+      return withRetry(href, resolve, reject, count);
+    }
+    queryFrame.remove();
+    resolve(redirectUrl);
+  }, 100);
+};
+
 const getProfileUrlAfterRedirect = async (href: string): Promise<string> => {
   logger(`getting redirect url for ${href}`);
   const iframe = document.createElement("iframe");
@@ -27,18 +63,7 @@ const getProfileUrlAfterRedirect = async (href: string): Promise<string> => {
   iframe.setAttribute("src", href);
   document.body.appendChild(iframe);
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const queryFrame =
-        document.querySelector<HTMLIFrameElement>("iframe#myframe");
-      if (!queryFrame || !queryFrame.contentWindow) {
-        logger("iframe not found");
-        reject();
-        return;
-      }
-      const redirectUrl = queryFrame.contentWindow.location.href;
-      queryFrame.remove();
-      resolve(redirectUrl);
-    }, 2000);
+    withRetry(href, resolve, reject);
   });
 };
 
