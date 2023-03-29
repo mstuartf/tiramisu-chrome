@@ -27,12 +27,12 @@ export const addListeners = () => {
       SendMsgRes<boolean>
     >({ type: "check_auth" });
     if (!success) {
-      console.log("error checking auth status");
+      logger("error checking auth status");
       return;
     }
 
     if (!isLoggedIn) {
-      console.log("user is not logged in");
+      logger("user is not logged in");
       return;
     }
 
