@@ -26,6 +26,9 @@ export const createSelectSharedTemplateIds = (userId: string) =>
       .map(({ id }) => id);
   });
 
+export const selectTemplateIds = (state: RootState) =>
+  state.templates.templates?.ids;
+
 export const selectTemplatesLoaded = (state: RootState) =>
   !!state.templates.templates;
 
