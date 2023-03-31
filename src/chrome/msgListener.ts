@@ -194,12 +194,7 @@ export const addListeners = () => {
         },
         {
           text: "No",
-          onClick: () =>
-            new Promise((resolve, reject) => {
-              setTimeout(() => {
-                reject("some error");
-              }, 2000);
-            }),
+          onClick: () => new Promise((resolve) => resolve(null)),
         },
       ],
     });
