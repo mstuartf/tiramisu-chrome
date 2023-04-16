@@ -122,6 +122,9 @@ export const templateSlice = createSlice({
       state.templateSaving = false;
       const id = url.split("templates/")[1].replace("/", "");
       delete state.templates!.values[id];
+      state.templates!.ids = state.templates!.ids.filter(
+        (templateId) => templateId !== id
+      );
     },
     deleteTemplateFailure: (state) => {
       state.templateSaving = false;
