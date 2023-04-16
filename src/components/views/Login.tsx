@@ -14,12 +14,14 @@ const Login = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectLoginPending);
 
-  const login = () => {
-    dispatch(createLoginRequest({ email, password }));
-  };
-
   return (
-    <div className="px-8 py-6">
+    <form
+      className="px-8 py-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        dispatch(createLoginRequest({ email, password }));
+      }}
+    >
       <Header />
       <div className="mb-4">
         <Inpt
@@ -40,7 +42,7 @@ const Login = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
-          <Btn disabled={isLoading || !email || !password} onClick={login}>
+          <Btn disabled={isLoading || !email || !password} type="submit">
             Login
           </Btn>
           {isLoading && (
@@ -58,7 +60,7 @@ const Login = () => {
           </ExternalLink>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
