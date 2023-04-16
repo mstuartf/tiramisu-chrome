@@ -19,6 +19,8 @@ export interface State {
   path?: string;
 }
 
+export type Model = "gpt-3.5-turbo" | "gpt-4";
+
 export interface User {
   id: string;
   admin: boolean;
@@ -30,6 +32,7 @@ export interface User {
 
   // account config
   msg_tracking_activated?: boolean;
+  openai_model: Model;
 }
 
 export type ListUsersRes = User[];

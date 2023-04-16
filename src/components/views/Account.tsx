@@ -9,6 +9,7 @@ import packageJson from "../../../package.json";
 import MsgTracking from "../molecules/MsgTracking";
 import RefreshBtn from "../atoms/RefreshBtn";
 import { createFetchUser } from "../../redux/user/actions";
+import SelectModel from "../molecules/SelectModel";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const Account = () => {
           Check for updates
         </Btn>
       </div>
+      <SelectModel />
       <MsgTracking />
       {admin && <TeamContainer />}
     </div>

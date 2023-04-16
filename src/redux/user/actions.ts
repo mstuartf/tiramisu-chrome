@@ -46,6 +46,7 @@ export const createFetchUser = createRequestAction<User>(
         email: "test@mike.com",
         company: "asdf",
         msg_tracking: true,
+        openai_model: "gpt-3.5-turbo",
       },
     },
   })
@@ -66,6 +67,7 @@ export const createPatchUser = createRequestAction<User>(
         email: "test@mike.com",
         company: "asdf",
         msg_tracking: true,
+        openai_model: "gpt-3.5-turbo",
       },
     },
   })
@@ -84,12 +86,14 @@ export const createListTeam = createRequestAction<ListUsersRes>(
           email: "test@1.com",
           admin: false,
           company: "asdf",
+          openai_model: "gpt-3.5-turbo",
         },
         {
           id: "2",
           email: "test@2.com",
           admin: false,
           company: "asdf",
+          openai_model: "gpt-3.5-turbo",
         },
       ],
     },
