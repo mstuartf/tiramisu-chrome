@@ -125,6 +125,9 @@ export const templateSlice = createSlice({
       state.templates!.ids = state.templates!.ids.filter(
         (templateId) => templateId !== id
       );
+      if (state.selectedTemplate === id) {
+        delete state.selectedTemplate;
+      }
     },
     deleteTemplateFailure: (state) => {
       state.templateSaving = false;
