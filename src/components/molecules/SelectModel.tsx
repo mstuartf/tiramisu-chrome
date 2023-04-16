@@ -20,9 +20,9 @@ const SelectModel = () => {
   };
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      <div>Which OpenAI model should be used?</div>
-      <Slct value={localModel} required onChange={patch} className="col-span-2">
+    <div className="grid grid-cols-2 gap-2">
+      <div className="flex items-center">OpenAI model</div>
+      <Slct value={localModel} required onChange={patch}>
         <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
         <option value="gpt-4">gpt-4</option>
       </Slct>
