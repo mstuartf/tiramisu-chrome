@@ -16,9 +16,8 @@ import {
 import ProspectMessages from "./ProspectMessages";
 import Retry from "../atoms/Retry";
 import { selectSelectedTemplate } from "../../redux/templates/selectors";
-import SelectTemplate from "./SelectTemplate";
-import Btn from "../atoms/Btn";
 import LoadingPercent from "./LoadingPercent";
+import DraftMsgsContainer from "./DraftMsgsContainer";
 
 const ProspectMessagesContainer = () => {
   const dispatch = useDispatch();
@@ -60,12 +59,7 @@ const ProspectMessagesContainer = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-2">
-        <SelectTemplate />
-        <Btn onClick={generate} disabled={isLoading}>
-          {!!messages ? "Re-draft" : "Draft messages"}
-        </Btn>
-      </div>
+      <DraftMsgsContainer />
       <div className="py-4">
         {isLoading ? (
           <div className="flex items-center justify-center py-8">
