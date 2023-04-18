@@ -24,7 +24,7 @@ module.exports = {
             paths.appIndexJs,
           ].filter(Boolean),
           background: "./src/chrome/background.ts",
-          msgListener: "./src/chrome/msgListener.ts",
+          activity: "./src/chrome/activity.ts",
         },
         output: {
           ...webpackConfig.output,

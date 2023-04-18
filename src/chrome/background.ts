@@ -1,7 +1,7 @@
 import { wrapStore } from "webext-redux";
 import { RootState, store } from "../redux/store";
 import { loadState, saveState } from "../cache";
-import { LinkedInMsg } from "./msgListener";
+import { LinkedInMsg } from "./types";
 
 wrapStore(store);
 
