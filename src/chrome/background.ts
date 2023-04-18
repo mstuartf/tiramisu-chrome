@@ -95,7 +95,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // return true to indicate you want to send a response asynchronously
   }
   if (request.type === "post_liked") {
-    // const { profile_slug, profile_name, content } = request as LinkedInMsg;
+    console.log(request);
+    setTimeout(() => {
+      sendResponse({ success: true, detail: "mock" });
+    });
+    return true; // return true to indicate you want to send a response asynchronously
+  }
+  if (request.type === "post_comment") {
+    console.log(request);
     setTimeout(() => {
       sendResponse({ success: true, detail: "mock" });
     });

@@ -16,7 +16,6 @@ export const createMsgSentListener =
     const form = event.target as HTMLFormElement;
     if (!form.className.includes("msg-form")) {
       logger("submit event did not come from a message form");
-      logger(form.className);
       return;
     }
     const input = form.querySelector(".msg-form__contenteditable");
@@ -69,7 +68,7 @@ export const createMsgSentListener =
 
     showToast({
       type: "default",
-      message: `Record this message to ${profile_name} in Salesforce?`,
+      message: `You sent a message to ${profile_name}. Record in CRM?`,
       buttons: [
         {
           text: "Yes",

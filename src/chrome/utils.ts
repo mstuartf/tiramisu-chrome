@@ -121,3 +121,42 @@ export const findMatchingParent = (
   }
   return wrapper;
 };
+
+export const isPostContainer = (el: HTMLElement): boolean => {
+  return el.classList.contains("feed-shared-update-v2");
+};
+
+export const collectPostData = (
+  post: HTMLElement
+): { profile_slug: string; profile_name: string; post_content: string } => {
+  let profile_url: string;
+  let profile_name: string;
+  const shareHeader = post.querySelector(".update-components-header");
+
+  if (!!shareHeader) {
+    const profileLink = shareHeader.querySelector(
+      "a.app-aware-link"
+    ) as HTMLAnchorElement;
+    const nameLink = shareHeader.querySelector("a:not(.app-aware-link)");
+    profile_url = profileLink!.href;
+    profile_name = nameLink!.textContent!;
+  } else {
+    const actorHeader = post.querySelector(".update-components-actor")!;
+    const profileLink = actorHeader.querySelector(
+      "a.app-aware-link"
+    ) as HTMLAnchorElement;
+    const nameSpan = actorHeader.querySelector(
+      "span.update-components-actor__name > span:not(.visually-hidden)"
+    ) as HTMLSpanElement;
+    profile_url = profileLink!.href;
+    profile_name = nameSpan!.textContent!;
+  }
+
+  const body = post.querySelector("div.update-components-text");
+
+  return {
+    profile_slug: extractProfileSlug(profile_url),
+    profile_name,
+    post_content: body!.textContent!.trim().slice(0, 100),
+  };
+};
