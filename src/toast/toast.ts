@@ -9,7 +9,9 @@ interface ToastOptions {
   }[];
 }
 
-export const createToastManager = () => {
+export type ShowToast = (options: ToastOptions) => void;
+
+export const createToastManager = (): ShowToast => {
   const open = (slideContainer: HTMLDivElement, options: ToastOptions) => {
     slideContainer.innerHTML = "";
     slideContainer.setAttribute("aria-hidden", "false");

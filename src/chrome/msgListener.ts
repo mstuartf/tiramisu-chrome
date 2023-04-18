@@ -1,4 +1,4 @@
-import { createToastManager } from "../toast/toast";
+import { createToastManager, ShowToast } from "../toast/toast";
 import { Omit } from "react-redux";
 import { extractProfileSlug } from "../linkedin";
 
@@ -68,13 +68,10 @@ const getProfileUrlAfterRedirect = async (href: string): Promise<string> => {
   });
 };
 
-const saveMsg = (payload: Omit<LinkedInMsg, "type">): Promise<null> =>
+const saveEvent = <T extends Msg>(payload: T): Promise<null> =>
   new Promise((resolve, reject) => {
     chrome.runtime
-      .sendMessage<LinkedInMsg, SendMsgRes>({
-        type: "msg_sent",
-        ...payload,
-      })
+      .sendMessage<T, SendMsgRes>(payload)
       .then(({ success, detail }) => {
         if (success) {
           resolve(null);
@@ -85,44 +82,52 @@ const saveMsg = (payload: Omit<LinkedInMsg, "type">): Promise<null> =>
       .catch((err) => reject(err));
   });
 
-export const addListeners = () => {
-  const showToast = createToastManager();
+const genericChecks = async (event: Event): Promise<boolean> => {
+  const {
+    success,
+    detail: { auth, msg_tracking_activated, msg_tracking_enabled },
+  } = await chrome.runtime.sendMessage<
+    Msg,
+    SendMsgRes<{
+      auth: { access: string; refresh: string };
+      msg_tracking_activated: boolean;
+      msg_tracking_enabled: boolean;
+    }>
+  >({ type: "check_auth" });
+  if (!success) {
+    logger("error checking auth status");
+    return false;
+  }
 
-  document.addEventListener("submit", async (event) => {
-    const {
-      success,
-      detail: { auth, msg_tracking_activated, msg_tracking_enabled },
-    } = await chrome.runtime.sendMessage<
-      Msg,
-      SendMsgRes<{
-        auth: { access: string; refresh: string };
-        msg_tracking_activated: boolean;
-        msg_tracking_enabled: boolean;
-      }>
-    >({ type: "check_auth" });
-    if (!success) {
-      logger("error checking auth status");
+  if (!auth) {
+    logger("user is not logged in");
+    return false;
+  }
+
+  if (!msg_tracking_enabled) {
+    logger("user does not have msg_tracking_enabled");
+    return false;
+  }
+
+  if (!msg_tracking_activated) {
+    logger("user does not have msg_tracking_activated");
+    return false;
+  }
+
+  if (!event.target) {
+    return false;
+  }
+
+  return true;
+};
+
+const createMsgSentListener =
+  (showToast: ShowToast) => async (event: SubmitEvent) => {
+    const passesGenericChecks = await genericChecks(event);
+    if (!passesGenericChecks) {
       return;
     }
 
-    if (!auth) {
-      logger("user is not logged in");
-      return;
-    }
-
-    if (!msg_tracking_enabled) {
-      logger("user does not have msg_tracking_enabled");
-      return;
-    }
-
-    if (!msg_tracking_activated) {
-      logger("user does not have msg_tracking_activated");
-      return;
-    }
-
-    if (!event.target) {
-      return;
-    }
     const form = event.target as HTMLFormElement;
     if (!form.className.includes("msg-form")) {
       logger("submit event did not come from a message form");
@@ -185,7 +190,8 @@ export const addListeners = () => {
           text: "Yes",
           onClick: () =>
             getProfileUrlAfterRedirect(href).then((profile_slug) =>
-              saveMsg({
+              saveEvent({
+                type: "msg_sent",
                 profile_slug,
                 content,
                 profile_name,
@@ -198,7 +204,11 @@ export const addListeners = () => {
         },
       ],
     });
-  });
+  };
+
+export const addListeners = () => {
+  const showToast = createToastManager();
+  document.addEventListener("submit", createMsgSentListener(showToast));
 };
 
 addListeners();
