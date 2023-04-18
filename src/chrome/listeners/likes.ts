@@ -75,6 +75,9 @@ export const createLikeListener =
       profile_name = nameSpan!.textContent!;
     }
 
+    const body = post.querySelector("div.update-components-text");
+    const content = body!.textContent!.trim().slice(0, 100);
+
     showToast({
       type: "default",
       message: `You liked ${profile_name}'s post. Record in Salesforce?`,
@@ -86,6 +89,7 @@ export const createLikeListener =
               type: "post_liked",
               profile_slug: extractProfileSlug(profile_url),
               profile_name,
+              content,
             }),
         },
         {
