@@ -103,3 +103,21 @@ export const genericChecks = async (event: Event): Promise<boolean> => {
 
   return true;
 };
+
+export const findMatchingParent = (
+  el: HTMLElement,
+  matcher: (el: HTMLElement) => boolean
+): HTMLElement | undefined => {
+  let wrapper;
+  let parent: HTMLElement = el;
+  while (!wrapper) {
+    if (!parent.parentElement) {
+      break;
+    }
+    parent = parent.parentElement;
+    if (matcher(parent)) {
+      wrapper = parent;
+    }
+  }
+  return wrapper;
+};
