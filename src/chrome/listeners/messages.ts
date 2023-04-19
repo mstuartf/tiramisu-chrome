@@ -8,7 +8,10 @@ import {
 
 export const createMsgSentListener =
   (showToast: ShowToast) => async (event: SubmitEvent) => {
-    const passesGenericChecks = await genericChecks(event);
+    const passesGenericChecks = await genericChecks(
+      event,
+      "msg_tracking_activated"
+    );
     if (!passesGenericChecks) {
       return;
     }

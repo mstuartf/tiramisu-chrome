@@ -10,7 +10,10 @@ import {
 
 export const createCommentListener =
   (showToast: ShowToast) => async (event: SubmitEvent) => {
-    const passesGenericChecks = await genericChecks(event);
+    const passesGenericChecks = await genericChecks(
+      event,
+      "comment_tracking_activated"
+    );
     if (!passesGenericChecks) {
       return;
     }

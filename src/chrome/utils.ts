@@ -1,5 +1,5 @@
 import { extractProfileSlug } from "../linkedin";
-import { Msg, SendMsgRes } from "./types";
+import { CheckAuthRes, Msg, SendMsgRes } from "./types";
 
 export const logger = (msg: string) => console.log(`TIRAMISU: ${msg}`);
 
@@ -65,18 +65,19 @@ export const saveEvent = <T extends Msg>(payload: T): Promise<null> =>
       .catch((err) => reject(err));
   });
 
-export const genericChecks = async (event: Event): Promise<boolean> => {
+export const genericChecks = async (
+  event: Event,
+  prop:
+    | "msg_tracking_activated"
+    | "like_tracking_activated"
+    | "comment_tracking_activated"
+): Promise<boolean> => {
   const {
     success,
-    detail: { auth, msg_tracking_activated, linkedin_tracking_enabled },
-  } = await chrome.runtime.sendMessage<
-    Msg,
-    SendMsgRes<{
-      auth: { access: string; refresh: string };
-      msg_tracking_activated: boolean;
-      linkedin_tracking_enabled: boolean;
-    }>
-  >({ type: "check_auth" });
+    detail: { auth, linkedin_tracking_enabled, ...rest },
+  } = await chrome.runtime.sendMessage<Msg, SendMsgRes<CheckAuthRes>>({
+    type: "check_auth",
+  });
   if (!success) {
     logger("error checking auth status");
     return false;
@@ -92,8 +93,8 @@ export const genericChecks = async (event: Event): Promise<boolean> => {
     return false;
   }
 
-  if (!msg_tracking_activated) {
-    logger("user does not have msg_tracking_activated");
+  if (!rest[prop]) {
+    logger(`user does not have ${prop}`);
     return false;
   }
 

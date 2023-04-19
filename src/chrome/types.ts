@@ -12,3 +12,11 @@ export interface SendMsgRes<T = string> {
   success: boolean;
   detail: T;
 }
+
+export interface CheckAuthRes {
+  auth: { access: string; refresh: string };
+  linkedin_tracking_enabled?: boolean;
+  msg_tracking_activated: boolean;
+  like_tracking_activated: boolean;
+  comment_tracking_activated: boolean;
+}

@@ -32,7 +32,10 @@ const isLikeButton = (el: HTMLElement): boolean => {
 
 export const createLikeListener =
   (showToast: ShowToast) => async (event: Event) => {
-    const passesGenericChecks = await genericChecks(event);
+    const passesGenericChecks = await genericChecks(
+      event,
+      "like_tracking_activated"
+    );
     if (!passesGenericChecks) {
       return;
     }

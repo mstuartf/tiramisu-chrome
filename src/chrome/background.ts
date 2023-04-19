@@ -1,7 +1,7 @@
 import { wrapStore } from "webext-redux";
 import { RootState, store } from "../redux/store";
 import { loadState, saveState } from "../cache";
-import { LinkedInMsg } from "./types";
+import { CheckAuthRes, LinkedInMsg, SendMsgRes } from "./types";
 
 wrapStore(store);
 
@@ -111,15 +111,19 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === "check_auth") {
     loadState()
       .then((state) => {
-        sendResponse({
+        const res: SendMsgRes<CheckAuthRes> = {
           success: true,
           detail: {
-            auth: state?.user?.auth,
-            msg_tracking_activated: state?.user.user?.msg_tracking_activated,
+            auth: state?.user?.auth!,
             linkedin_tracking_enabled:
               state?.user.user?.linkedin_tracking_enabled,
+            msg_tracking_activated: state?.user.user?.msg_tracking_activated!,
+            like_tracking_activated: state?.user.user?.like_tracking_activated!,
+            comment_tracking_activated:
+              state?.user.user?.comment_tracking_activated!,
           },
-        });
+        };
+        sendResponse(res);
       })
       .catch(() => {
         sendResponse({ success: false });
