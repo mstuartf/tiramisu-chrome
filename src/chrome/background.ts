@@ -1,7 +1,13 @@
 import { wrapStore } from "webext-redux";
 import { RootState, store } from "../redux/store";
 import { loadState, saveState } from "../cache";
-import { CheckAuthRes, LinkedInMsg, SendMsgRes } from "./types";
+import {
+  CheckAuthRes,
+  LinkedInComment,
+  LinkedInLike,
+  LinkedInMsg,
+  SendMsgRes,
+} from "./types";
 
 wrapStore(store);
 
@@ -36,6 +42,35 @@ const saveMessageRequest = (
     body: JSON.stringify(payload),
   });
 
+const saveLikeRequest = (payload: Omit<LinkedInLike, "type">, token: string) =>
+  fetchWrapper(
+    `${process.env.REACT_APP_BACKEND_URL}/v2/messages/linkedin/like/`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+const saveCommentRequest = (
+  payload: Omit<LinkedInComment, "type">,
+  token: string
+) =>
+  fetchWrapper(
+    `${process.env.REACT_APP_BACKEND_URL}/v2/messages/linkedin/comment/`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
 const refreshTokenRequest = (payload: { refresh: string }) =>
   fetchWrapper(`${process.env.REACT_APP_BACKEND_URL}/auth/token/refresh/`, {
     method: "POST",
@@ -64,9 +99,15 @@ const updateAuth = (auth: {
     return saveState(updated);
   });
 
-const saveMsg = (payload: Omit<LinkedInMsg, "type">) =>
+const withAuthRetry = <Payload extends object>(
+  requestFn: (
+    payload: Payload,
+    access: string
+  ) => Promise<{ status: number; body: any }>,
+  payload: Payload
+) =>
   getAuth().then(({ access, refresh }) =>
-    saveMessageRequest(payload, access).then((res1) => {
+    requestFn(payload, access).then((res1) => {
       if (res1.status === 401) {
         return refreshTokenRequest({ refresh }).then(
           ({ body: { access: updatedAccess, refresh, exp } }) =>
@@ -74,7 +115,7 @@ const saveMsg = (payload: Omit<LinkedInMsg, "type">) =>
               access: updatedAccess,
               refresh,
               exp,
-            }).then(() => saveMessageRequest(payload, updatedAccess))
+            }).then(() => requestFn(payload, updatedAccess))
         );
       }
       return res1;
@@ -85,7 +126,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log(request);
   if (request.type === "msg_sent") {
     const { profile_slug, profile_name, content } = request as LinkedInMsg;
-    saveMsg({ profile_slug, profile_name, content })
+    withAuthRetry(saveMessageRequest, { profile_slug, profile_name, content })
       .then(({ status, body }) => {
         sendResponse({ success: status === 201, detail: body?.detail });
       })
@@ -95,17 +136,31 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // return true to indicate you want to send a response asynchronously
   }
   if (request.type === "post_liked") {
-    console.log(request);
-    setTimeout(() => {
-      sendResponse({ success: true, detail: "mock" });
-    });
+    const { profile_slug, profile_name, post_content } =
+      request as LinkedInLike;
+    withAuthRetry(saveLikeRequest, { profile_slug, profile_name, post_content })
+      .then(({ status, body }) => {
+        sendResponse({ success: status === 201, detail: body?.detail });
+      })
+      .catch((e) => {
+        sendResponse({ success: false });
+      });
     return true; // return true to indicate you want to send a response asynchronously
   }
   if (request.type === "post_comment") {
-    console.log(request);
-    setTimeout(() => {
-      sendResponse({ success: true, detail: "mock" });
-    });
+    const { profile_slug, profile_name, post_content } =
+      request as LinkedInComment;
+    withAuthRetry(saveCommentRequest, {
+      profile_slug,
+      profile_name,
+      post_content,
+    })
+      .then(({ status, body }) => {
+        sendResponse({ success: status === 201, detail: body?.detail });
+      })
+      .catch((e) => {
+        sendResponse({ success: false });
+      });
     return true; // return true to indicate you want to send a response asynchronously
   }
   if (request.type === "check_auth") {

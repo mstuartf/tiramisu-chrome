@@ -8,6 +8,18 @@ export interface LinkedInMsg extends Msg {
   content: string;
 }
 
+export interface LinkedInLike extends Msg {
+  profile_name: string;
+  profile_slug: string;
+  post_content: string;
+}
+
+export interface LinkedInComment extends Msg {
+  profile_name: string;
+  profile_slug: string;
+  post_content: string;
+}
+
 export interface SendMsgRes<T = string> {
   success: boolean;
   detail: T;
