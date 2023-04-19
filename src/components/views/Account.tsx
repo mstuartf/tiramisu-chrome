@@ -6,10 +6,11 @@ import { selectUser, selectUserIsLoading } from "../../redux/user/selectors";
 import Loading from "../molecules/Loading";
 import TeamContainer from "../molecules/TeamContainer";
 import packageJson from "../../../package.json";
-import MsgTracking from "../molecules/MsgTracking";
+import BoolConfig from "../molecules/BoolConfig";
 import RefreshBtn from "../atoms/RefreshBtn";
 import { createFetchUser } from "../../redux/user/actions";
 import SelectModel from "../molecules/SelectModel";
+import LinkedInTracking from "../molecules/LinkedInTracking";
 
 const Account = () => {
   const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const Account = () => {
         </Btn>
       </div>
       <SelectModel />
-      <MsgTracking />
+      <LinkedInTracking />
       {admin && <TeamContainer />}
     </div>
   );
