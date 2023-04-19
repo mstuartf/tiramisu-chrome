@@ -116,7 +116,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           detail: {
             auth: state?.user?.auth,
             msg_tracking_activated: state?.user.user?.msg_tracking_activated,
-            msg_tracking_enabled: state?.user.user?.msg_tracking_enabled,
+            linkedin_tracking_enabled:
+              state?.user.user?.linkedin_tracking_enabled,
           },
         });
       })

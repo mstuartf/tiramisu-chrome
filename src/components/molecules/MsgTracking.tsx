@@ -6,7 +6,7 @@ import { createPatchUser } from "../../redux/user/actions";
 
 const MsgTracking = () => {
   const dispatch = useDispatch();
-  const { msg_tracking_activated, msg_tracking_enabled } =
+  const { msg_tracking_activated, linkedin_tracking_enabled } =
     useSelector(selectUser)!;
 
   const [localActivated, setLocalActivated] = useState(
@@ -22,7 +22,7 @@ const MsgTracking = () => {
     dispatch(createPatchUser({ msg_tracking_activated: value }));
   };
 
-  if (!msg_tracking_enabled) {
+  if (!linkedin_tracking_enabled) {
     return null;
   }
 

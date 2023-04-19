@@ -28,10 +28,12 @@ export interface User {
   company: string;
 
   // feature flags
-  msg_tracking_enabled?: boolean;
+  linkedin_tracking_enabled?: boolean;
 
   // account config
   msg_tracking_activated?: boolean;
+  like_tracking_activated?: boolean;
+  comment_tracking_activated?: boolean;
   openai_model: Model;
 }
 

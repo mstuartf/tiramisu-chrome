@@ -68,13 +68,13 @@ export const saveEvent = <T extends Msg>(payload: T): Promise<null> =>
 export const genericChecks = async (event: Event): Promise<boolean> => {
   const {
     success,
-    detail: { auth, msg_tracking_activated, msg_tracking_enabled },
+    detail: { auth, msg_tracking_activated, linkedin_tracking_enabled },
   } = await chrome.runtime.sendMessage<
     Msg,
     SendMsgRes<{
       auth: { access: string; refresh: string };
       msg_tracking_activated: boolean;
-      msg_tracking_enabled: boolean;
+      linkedin_tracking_enabled: boolean;
     }>
   >({ type: "check_auth" });
   if (!success) {
@@ -87,8 +87,8 @@ export const genericChecks = async (event: Event): Promise<boolean> => {
     return false;
   }
 
-  if (!msg_tracking_enabled) {
-    logger("user does not have msg_tracking_enabled");
+  if (!linkedin_tracking_enabled) {
+    logger("user does not have linkedin_tracking_enabled");
     return false;
   }
 
