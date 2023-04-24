@@ -2,7 +2,7 @@ import { LinkedInProfile } from "./redux/prospect/types";
 
 export const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
-    `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/in\\/([^\\/]*)\\?`
+    `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/in\\/([^\\/?]*)[\\?]?`
   );
   const match = url.match(regex);
   if (!match) {
