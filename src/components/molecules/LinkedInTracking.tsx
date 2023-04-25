@@ -23,6 +23,7 @@ const LinkedInTracking = () => {
           prop="comment_tracking_activated"
           label="Save comments to CRM?"
         />
+        <BoolConfig prop="auto_save" label="Auto save activity to CRM?" />
       </div>
     </div>
   );
