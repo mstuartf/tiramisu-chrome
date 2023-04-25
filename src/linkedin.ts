@@ -4,7 +4,7 @@ export const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
     `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/in\\/([^\\/?]*)[\\?]?`
   );
-  const match = url.match(regex);
+  const match = decodeURI(url).match(regex);
   if (!match) {
     throw new Error("invalid url");
   }
