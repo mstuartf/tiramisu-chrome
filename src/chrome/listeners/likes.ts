@@ -40,10 +40,23 @@ export const createLikeListener =
       return;
     }
 
-    const btn = findMatchingParent(
-      event.target as HTMLButtonElement,
-      isLikeButton
-    );
+    let el: HTMLElement | null = event.target as HTMLElement | null;
+    if (!el) {
+      return;
+    }
+
+    // The SVG is removed from the dom as soon as the button is clicked. So if the original event
+    // target is the SVG, then event.target.parentElement is null and we cannot find the ancestor
+    // button element. In this case, we can use the event coordinates to find the button.
+    if (
+      el.tagName.toLowerCase() === "svg" &&
+      el.dataset.testIcon === "thumbs-up-outline-medium"
+    ) {
+      const { clientX, clientY } = event as any;
+      el = document.elementFromPoint(clientX, clientY) as HTMLElement;
+    }
+
+    const btn = findMatchingParent(el, isLikeButton);
 
     if (!btn) {
       logger("not a like button");
