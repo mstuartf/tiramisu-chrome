@@ -8,11 +8,11 @@ import {
 
 export const createMsgSentListener =
   (showToast: ShowToast) => async (event: SubmitEvent) => {
-    const passesGenericChecks = await genericChecks(
+    const { passed, auto_save } = await genericChecks(
       event,
       "msg_tracking_activated"
     );
-    if (!passesGenericChecks) {
+    if (!passed) {
       return;
     }
 
@@ -67,6 +67,18 @@ export const createMsgSentListener =
     let href = profileLink.href;
     if (!href.includes("https")) {
       href = `${window.location.origin}${href}`;
+    }
+
+    if (auto_save) {
+      logger("auto-saving msg_sent event");
+      const profile_slug = await getProfileUrlAfterRedirect(href);
+      await saveEvent({
+        type: "msg_sent",
+        profile_slug,
+        content,
+        profile_name,
+      });
+      return;
     }
 
     showToast({

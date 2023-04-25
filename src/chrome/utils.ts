@@ -71,38 +71,38 @@ export const genericChecks = async (
     | "msg_tracking_activated"
     | "like_tracking_activated"
     | "comment_tracking_activated"
-): Promise<boolean> => {
+): Promise<{ passed: boolean; auto_save?: boolean }> => {
   const {
     success,
-    detail: { auth, linkedin_tracking_enabled, ...rest },
+    detail: { auth, linkedin_tracking_enabled, auto_save, ...rest },
   } = await chrome.runtime.sendMessage<Msg, SendMsgRes<CheckAuthRes>>({
     type: "check_auth",
   });
   if (!success) {
     logger("error checking auth status");
-    return false;
+    return { passed: false };
   }
 
   if (!auth) {
     logger("user is not logged in");
-    return false;
+    return { passed: false };
   }
 
   if (!linkedin_tracking_enabled) {
     logger("user does not have linkedin_tracking_enabled");
-    return false;
+    return { passed: false };
   }
 
   if (!rest[prop]) {
     logger(`user does not have ${prop}`);
-    return false;
+    return { passed: false };
   }
 
   if (!event.target) {
-    return false;
+    return { passed: false };
   }
 
-  return true;
+  return { passed: true, auto_save };
 };
 
 export const findMatchingParent = (

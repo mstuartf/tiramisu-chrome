@@ -176,6 +176,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             like_tracking_activated: state?.user.user?.like_tracking_activated!,
             comment_tracking_activated:
               state?.user.user?.comment_tracking_activated!,
+            auto_save: state?.user.user?.auto_save!,
           },
         };
         sendResponse(res);

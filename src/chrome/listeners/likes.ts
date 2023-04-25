@@ -32,11 +32,11 @@ const isLikeButton = (el: HTMLElement): boolean => {
 
 export const createLikeListener =
   (showToast: ShowToast) => async (event: Event) => {
-    const passesGenericChecks = await genericChecks(
+    const { passed, auto_save } = await genericChecks(
       event,
       "like_tracking_activated"
     );
-    if (!passesGenericChecks) {
+    if (!passed) {
       return;
     }
 
@@ -49,8 +49,11 @@ export const createLikeListener =
     // target is the SVG, then event.target.parentElement is null and we cannot find the ancestor
     // button element. In this case, we can use the event coordinates to find the button.
     if (
-      el.tagName.toLowerCase() === "svg" &&
-      el.dataset.testIcon === "thumbs-up-outline-medium"
+      (el.tagName.toLowerCase() === "svg" &&
+        el.dataset.testIcon === "thumbs-up-outline-medium") ||
+      (el.tagName.toLowerCase() === "use" &&
+        (el as unknown as SVGUseElement).href.baseVal ===
+          "#thumbs-up-outline-medium")
     ) {
       const { clientX, clientY } = event as any;
       el = document.elementFromPoint(clientX, clientY) as HTMLElement;
@@ -71,6 +74,17 @@ export const createLikeListener =
     }
 
     const { profile_name, profile_slug, post_content } = collectPostData(post);
+
+    if (auto_save) {
+      logger("auto-saving post_liked event");
+      await saveEvent({
+        type: "post_liked",
+        profile_slug,
+        profile_name,
+        post_content,
+      });
+      return;
+    }
 
     showToast({
       type: "default",

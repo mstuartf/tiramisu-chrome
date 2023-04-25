@@ -10,11 +10,11 @@ import {
 
 export const createCommentListener =
   (showToast: ShowToast) => async (event: SubmitEvent) => {
-    const passesGenericChecks = await genericChecks(
+    const { passed, auto_save } = await genericChecks(
       event,
       "comment_tracking_activated"
     );
-    if (!passesGenericChecks) {
+    if (!passed) {
       return;
     }
 
@@ -40,6 +40,17 @@ export const createCommentListener =
     // const content = (input as HTMLDivElement).innerText;
 
     const { profile_name, profile_slug, post_content } = collectPostData(post);
+
+    if (auto_save) {
+      logger("auto-saving post_comment event");
+      await saveEvent({
+        type: "post_comment",
+        profile_slug,
+        profile_name,
+        post_content,
+      });
+      return;
+    }
 
     showToast({
       type: "default",

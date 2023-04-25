@@ -31,4 +31,5 @@ export interface CheckAuthRes {
   msg_tracking_activated: boolean;
   like_tracking_activated: boolean;
   comment_tracking_activated: boolean;
+  auto_save: boolean;
 }
