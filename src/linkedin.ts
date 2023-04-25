@@ -2,13 +2,16 @@ import { LinkedInProfile } from "./redux/prospect/types";
 
 export const extractProfileSlug = (url: string): string => {
   const regex = new RegExp(
-    `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/in\\/([^\\/?]*)[\\?]?`
+    `https:\\/\\/[^\\/\\.]*\\.linkedin\\.com\\/([A-z]+)\\/([^\\/?]*)[\\?]?`
   );
   const match = decodeURI(url).match(regex);
   if (!match) {
     throw new Error("invalid url");
   }
-  return match[1];
+  if (match[1] !== "in") {
+    throw new Error(`unsupported page type: ${match[1]}`);
+  }
+  return match[2];
 };
 
 export const scrapeProfile = ():

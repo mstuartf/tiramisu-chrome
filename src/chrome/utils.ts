@@ -132,26 +132,16 @@ export const collectPostData = (
 ): { profile_slug: string; profile_name: string; post_content: string } => {
   let profile_url: string;
   let profile_name: string;
-  const shareHeader = post.querySelector(".update-components-header");
+  const actorHeader = post.querySelector(".update-components-actor")!;
 
-  if (!!shareHeader) {
-    const profileLink = shareHeader.querySelector(
-      "a.app-aware-link"
-    ) as HTMLAnchorElement;
-    const nameLink = shareHeader.querySelector("a:not(.app-aware-link)");
-    profile_url = profileLink!.href;
-    profile_name = nameLink!.textContent!;
-  } else {
-    const actorHeader = post.querySelector(".update-components-actor")!;
-    const profileLink = actorHeader.querySelector(
-      "a.app-aware-link"
-    ) as HTMLAnchorElement;
-    const nameSpan = actorHeader.querySelector(
-      "span.update-components-actor__name > span:not(.visually-hidden)"
-    ) as HTMLSpanElement;
-    profile_url = profileLink!.href;
-    profile_name = nameSpan!.textContent!;
-  }
+  const profileLink = actorHeader.querySelector(
+    "a.app-aware-link"
+  ) as HTMLAnchorElement;
+  const nameSpan = actorHeader.querySelector(
+    "span.update-components-actor__name > span:not(.visually-hidden)"
+  ) as HTMLSpanElement;
+  profile_url = profileLink!.href;
+  profile_name = nameSpan!.textContent!;
 
   const body = post.querySelector("div.update-components-text");
 
