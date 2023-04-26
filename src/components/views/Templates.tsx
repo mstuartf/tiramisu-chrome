@@ -74,7 +74,7 @@ const Templates = () => {
       <NavBar />
       <div className="grid gap-4">
         <div className="flex items-center justify-between">
-          <ul className="flex h-full">
+          <ul className="grid grid-cols-2">
             <NavBarItem to="/templates/my" text="My templates" />
             <NavBarItem to="/templates/shared" text="Shared with me" />
           </ul>
