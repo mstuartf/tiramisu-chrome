@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BoolConfig from "../molecules/BoolConfig";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/user/selectors";
 import NavBar from "../molecules/NavBar";
 
+const setBadge = async (auto_save: boolean) => {
+  await chrome.action.setBadgeText({
+    text: auto_save ? "ON" : "",
+  });
+  await chrome.action.setBadgeBackgroundColor({
+    color: "#00FF00",
+  });
+};
+
 const LinkedInTracking = () => {
-  const { linkedin_tracking_enabled } = useSelector(selectUser)!;
+  const { linkedin_tracking_enabled, auto_save } = useSelector(selectUser)!;
+
+  useEffect(() => {
+    setBadge(!!auto_save);
+  }, [auto_save]);
 
   return (
     <div>
