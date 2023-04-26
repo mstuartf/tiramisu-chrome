@@ -25,7 +25,7 @@ export const NavBarItem = ({ to, text }: { to: string; text: string }) => {
 const NavBar = () => {
   return (
     <div className="mb-4">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         <H>Tiramisu</H>
         <IconButton to="/account">
           <Cog8ToothIcon />

@@ -33,9 +33,6 @@ const Templates = () => {
   const templateStyleIds = useSelector(selectTemplateStyleIds);
   const templateSectionTypeIds = useSelector(selectTemplateSectionTypeIds);
 
-  const location = useLocation();
-  console.log(location);
-
   useEffect(() => {
     if (!templateStyleIds) {
       dispatch(createListTemplateStyles());

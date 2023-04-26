@@ -7,15 +7,15 @@ import NavBar from "../molecules/NavBar";
 const LinkedInTracking = () => {
   const { linkedin_tracking_enabled } = useSelector(selectUser)!;
 
-  if (!linkedin_tracking_enabled) {
-    return null;
-  }
-
   return (
     <div>
       <NavBar />
-      <div className="grid gap-4">
-        <div className="grid gap-2">
+      {!linkedin_tracking_enabled ? (
+        <div className="text-md text-gray-700">
+          This feature has not been enabled.
+        </div>
+      ) : (
+        <div className="grid gap-4">
           <BoolConfig
             prop="msg_tracking_activated"
             label="Save messages to CRM?"
@@ -30,7 +30,7 @@ const LinkedInTracking = () => {
           />
           <BoolConfig prop="auto_save" label="Auto save activity to CRM?" />
         </div>
-      </div>
+      )}
     </div>
   );
 };
