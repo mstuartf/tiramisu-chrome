@@ -20,7 +20,7 @@ import { selectUser } from "../../redux/user/selectors";
 import RefreshBtn from "../atoms/RefreshBtn";
 import TemplateList from "../molecules/TemplateList";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
-import { NavBarItem } from "../molecules/NavBar";
+import NavBar, { NavBarItem } from "../molecules/NavBar";
 
 const Templates = () => {
   const dispatch = useDispatch();
@@ -73,32 +73,35 @@ const Templates = () => {
   }
 
   return (
-    <div className="grid gap-4">
-      <div className="border-b flex items-center justify-between">
-        <ul className="flex h-full">
-          <NavBarItem to="/templates/my" text="My templates" />
-          <NavBarItem to="/templates/shared" text="Shared with me" />
-        </ul>
-        <RefreshBtn onClick={refresh} />
+    <div>
+      <NavBar />
+      <div className="grid gap-4">
+        <div className="border-b flex items-center justify-between">
+          <ul className="flex h-full">
+            <NavBarItem to="/templates/my" text="My templates" />
+            <NavBarItem to="/templates/shared" text="Shared with me" />
+          </ul>
+          <RefreshBtn onClick={refresh} />
+        </div>
+        <Switch>
+          <Route path="/templates/my">
+            <TemplateList
+              templateIds={myTemplateIds}
+              onEdit={setEditTemplateId}
+            />
+            <Btn onClick={() => setIsAdding(true)}>Create new template</Btn>
+          </Route>
+          <Route path="/templates/shared">
+            <TemplateList
+              templateIds={sharedTemplateIds}
+              onEdit={setEditTemplateId}
+            />
+          </Route>
+          <Route path="*">
+            <Redirect to="/templates/my" />
+          </Route>
+        </Switch>
       </div>
-      <Switch>
-        <Route path="/templates/my">
-          <TemplateList
-            templateIds={myTemplateIds}
-            onEdit={setEditTemplateId}
-          />
-          <Btn onClick={() => setIsAdding(true)}>Create new template</Btn>
-        </Route>
-        <Route path="/templates/shared">
-          <TemplateList
-            templateIds={sharedTemplateIds}
-            onEdit={setEditTemplateId}
-          />
-        </Route>
-        <Route path="*">
-          <Redirect to="/templates/my" />
-        </Route>
-      </Switch>
     </div>
   );
 };

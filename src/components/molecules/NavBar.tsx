@@ -1,5 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import H from "../atoms/H";
+import IconButton from "../atoms/IconButton";
+import { Cog8ToothIcon } from "@heroicons/react/24/outline";
 
 export const NavBarItem = ({ to, text }: { to: string; text: string }) => {
   const { pathname } = useLocation();
@@ -21,12 +24,20 @@ export const NavBarItem = ({ to, text }: { to: string; text: string }) => {
 
 const NavBar = () => {
   return (
-    <div className="border-b">
-      <ul className="grid grid-cols-3 h-10">
-        <NavBarItem to="/prospect" text="Scan profile" />
-        <NavBarItem to="/templates" text="Message templates" />
-        <NavBarItem to="/account" text="My account" />
-      </ul>
+    <div className="mb-4">
+      <div className="flex justify-between items-center">
+        <H>Tiramisu</H>
+        <IconButton to="/account">
+          <Cog8ToothIcon />
+        </IconButton>
+      </div>
+      <div className="border-b">
+        <ul className="grid grid-cols-3 h-10">
+          <NavBarItem to="/prospect" text="Scan profile" />
+          <NavBarItem to="/templates" text="Templates" />
+          <NavBarItem to="/tracking" text="Tracking" />
+        </ul>
+      </div>
     </div>
   );
 };

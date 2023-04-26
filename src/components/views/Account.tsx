@@ -4,16 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/user/slice";
 import { selectUser, selectUserIsLoading } from "../../redux/user/selectors";
 import Loading from "../molecules/Loading";
-import TeamContainer from "../molecules/TeamContainer";
 import packageJson from "../../../package.json";
-import BoolConfig from "../molecules/BoolConfig";
 import RefreshBtn from "../atoms/RefreshBtn";
 import { createFetchUser } from "../../redux/user/actions";
 import SelectModel from "../molecules/SelectModel";
-import LinkedInTracking from "../molecules/LinkedInTracking";
+import { useHistory } from "react-router-dom";
+import IconButton from "../atoms/IconButton";
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
+import H from "../atoms/H";
 
 const Account = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
+
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectUserIsLoading);
 
@@ -49,24 +52,37 @@ const Account = () => {
   const { admin, email } = user;
 
   return (
-    <div className="grid gap-4">
-      <div className="flex justify-between items-center">
-        <div>{email}</div>
-        <RefreshBtn onClick={refresh} />
+    <div>
+      <div className="flex items-center gap-2 mb-4">
+        {history.length > 1 ? (
+          <IconButton onClick={() => history.goBack()}>
+            <ChevronLeftIcon />
+          </IconButton>
+        ) : (
+          <IconButton to="/prospect">
+            <ChevronLeftIcon />
+          </IconButton>
+        )}
+        <H>Settings</H>
       </div>
-      <div className="flex justify-between items-center">
-        <div>You are currently running version {packageJson.version}.</div>
-        <Btn onClick={onLogout}>Logout</Btn>
+      <div className="grid gap-4">
+        <div className="flex justify-between items-center">
+          <div>{email}</div>
+          <RefreshBtn onClick={refresh} />
+        </div>
+        <div className="flex justify-between items-center">
+          <div>You are currently running version {packageJson.version}.</div>
+          <Btn onClick={onLogout}>Logout</Btn>
+        </div>
+        <div className="flex justify-between items-center">
+          <div>{update}</div>
+          <Btn onClick={checkForUpdates} disabled={isChecking}>
+            Check for updates
+          </Btn>
+        </div>
+        <SelectModel />
+        {/*{admin && <TeamContainer />}*/}
       </div>
-      <div className="flex justify-between items-center">
-        <div>{update}</div>
-        <Btn onClick={checkForUpdates} disabled={isChecking}>
-          Check for updates
-        </Btn>
-      </div>
-      <SelectModel />
-      <LinkedInTracking />
-      {admin && <TeamContainer />}
     </div>
   );
 };

@@ -12,6 +12,7 @@ import ProspectMessagesContainer from "../molecules/ProspectMessagesContainer";
 import { extractProfileSlug, scrapeProfile } from "../../linkedin";
 import Btn from "../atoms/Btn";
 import { selectUser } from "../../redux/user/selectors";
+import NavBar from "../molecules/NavBar";
 
 const Prospect = () => {
   const [isChecking, setIsChecking] = useState(false);
@@ -66,6 +67,7 @@ const Prospect = () => {
 
   return (
     <div>
+      <NavBar />
       {isChecking || !templateIds ? (
         <Loading />
       ) : (
