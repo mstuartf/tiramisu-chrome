@@ -10,10 +10,10 @@ export const NavBarItem = ({ to, text }: { to: string; text: string }) => {
     <li>
       <Link
         to={to}
-        className={`inline-block py-1 text-center w-full h-full flex items-center justify-center border-b-2 px-2 ${
+        className={`inline-block font-bold py-2 px-4 rounded-full hover:bg-blue-600 hover:text-white ${
           pathname.includes(to)
-            ? "border-blue-600 text-blue-600"
-            : "text-gray-500 border-transparent hover:text-gray-600 hover:border-gray-300"
+            ? "bg-gray-200 text-gray-700"
+            : "bg-gray-50 text-gray-600"
         }`}
       >
         {text}
@@ -31,13 +31,11 @@ const NavBar = () => {
           <Cog8ToothIcon />
         </IconButton>
       </div>
-      <div className="border-b">
-        <ul className="grid grid-cols-3 h-10">
-          <NavBarItem to="/prospect" text="Scan profile" />
-          <NavBarItem to="/templates" text="Templates" />
-          <NavBarItem to="/tracking" text="Tracking" />
-        </ul>
-      </div>
+      <ul className="grid grid-cols-3">
+        <NavBarItem to="/prospect" text="Scan profile" />
+        <NavBarItem to="/templates" text="Templates" />
+        <NavBarItem to="/tracking" text="Tracking" />
+      </ul>
     </div>
   );
 };
